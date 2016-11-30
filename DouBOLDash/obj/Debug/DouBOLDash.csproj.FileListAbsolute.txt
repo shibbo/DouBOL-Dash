@@ -7,3 +7,12 @@ c:\users\mrrean\documents\visual studio 2015\Projects\DouBOLDash\DouBOLDash\obj\
 c:\users\mrrean\documents\visual studio 2015\Projects\DouBOLDash\DouBOLDash\obj\Debug\DouBOLDash.csproj.GenerateResource.Cache
 c:\users\mrrean\documents\visual studio 2015\Projects\DouBOLDash\DouBOLDash\obj\Debug\DouBOLDash.exe
 c:\users\mrrean\documents\visual studio 2015\Projects\DouBOLDash\DouBOLDash\obj\Debug\DouBOLDash.pdb
+C:\Users\MrRean\DouBOL-Dash\DouBOLDash\bin\Debug\DouBOLDash.exe.config
+C:\Users\MrRean\DouBOL-Dash\DouBOLDash\obj\Debug\DouBOLDash.exe
+C:\Users\MrRean\DouBOL-Dash\DouBOLDash\obj\Debug\DouBOLDash.pdb
+C:\Users\MrRean\DouBOL-Dash\DouBOLDash\bin\Debug\DouBOLDash.exe
+C:\Users\MrRean\DouBOL-Dash\DouBOLDash\bin\Debug\DouBOLDash.pdb
+C:\Users\MrRean\DouBOL-Dash\DouBOLDash\obj\Debug\DouBOLDash.csprojResolveAssemblyReference.cache
+C:\Users\MrRean\DouBOL-Dash\DouBOLDash\obj\Debug\DouBOLDash.Form1.resources
+C:\Users\MrRean\DouBOL-Dash\DouBOLDash\obj\Debug\DouBOLDash.Properties.Resources.resources
+C:\Users\MrRean\DouBOL-Dash\DouBOLDash\obj\Debug\DouBOLDash.csproj.GenerateResource.Cache

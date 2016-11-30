@@ -13,7 +13,6 @@ namespace DouBOLDash
 {
     public partial class Form1 : Form
     {
-
         List<LevelObj> objects = new List<LevelObj>();
 
         public Form1()
@@ -43,19 +42,26 @@ namespace DouBOLDash
                     uint offs2 = bol.returnOffset(1);
                     uint offs3 = bol.returnOffset(2);
 
-                    // despite us having the numbers for this, we cannot use them
-                    // not every single section has a count, so let's keep the methods the same
+                    uint count1 = bol.returnCount(1); // group count
+
                     uint sec1Count = offs2 - offs1;
                     sec1Count = sec1Count / 0x20;
 
                     EnemyRoutes enmRoutes = new EnemyRoutes();
+                    enmRoutes.Parse(reader, sec1Count);
 
-                    reader.Close(); // close the reader at the end
+                    CheckpointGroup chckGroups = new CheckpointGroup();
+                    chckGroups.Parse(reader, count1);
+                    Dictionary<uint, uint> dictionary1 = chckGroups.returnDictionary();
+
+                    Checkpoint chckPt = new Checkpoint();
+                    chckPt.Parse(reader, dictionary1, count1);
+
                 }
 
                 foreach (LevelObj obj in objects)
                 {
-                    Console.WriteLine(obj.ToString());
+                    // parsing code here
                 }
             }
         }

@@ -13,6 +13,8 @@ namespace DouBOLDash
         // this will store the offsets we use in Form1.cs
         // we call the other parse methods with these variables
         List<uint> offsets = new List<uint>();
+        List<uint> counts = new List<uint>();
+
         string type;
         float unk3;
         uint magic, unk1, unk2, unk4, unk5;
@@ -84,6 +86,14 @@ namespace DouBOLDash
             this.sec3Count = reader.ReadUInt16();
             this.sec9Count = reader.ReadUInt16();
 
+            counts.Add(this.sec1Count);
+            counts.Add(this.sec2Count);
+            counts.Add(this.sec5Count);
+            counts.Add(this.sec7Count);
+            counts.Add(this.sec8Count);
+            counts.Add(this.sec3Count);
+            counts.Add(this.sec9Count);
+
             this.unk6 = reader.ReadUInt32();
             this.unk7 = reader.ReadUInt32();
             this.unk8 = reader.ReadUInt32();
@@ -124,6 +134,12 @@ namespace DouBOLDash
             uint[] offsetArry = offsets.ToArray();
             return offsetArry[id];
         }
+
+        public uint returnCount(int id)
+        {
+            uint[] countArry = counts.ToArray();
+            return countArry[id];
+        }
     }
 
     class EnemyRoutes : LevelObj
@@ -148,15 +164,129 @@ namespace DouBOLDash
             this.pointSetting2 = 0;
         }
 
-        public void Parse(EndianBinaryReader reader)
+        public void Parse(EndianBinaryReader reader, uint count)
         {
-            
+            for (int i = 0; i < count; i++)
+            {
+                this.xPos = reader.ReadSingle();
+                this.yPos = reader.ReadSingle();
+                this.zPos = reader.ReadSingle();
+
+                this.pointSetting = reader.ReadInt16();
+                this.link = reader.ReadInt16();
+                this.scale = reader.ReadSingle();
+                this.groupSetting = reader.ReadUInt16();
+
+                this.group = reader.ReadByte();
+                this.pointSetting2 = reader.ReadByte();
+
+                reader.ReadBytes(8);
+            }
         }
     }
 
-    class Checkpoints : LevelObj
+    class CheckpointGroup : LevelObj
     {
+        uint pointLength, groupLink, index;
+        int prev1, prev2, prev3, prev4;
+        int next1, next2, next3, next4;
 
+        Dictionary<uint, uint> dict1 = new Dictionary<uint, uint>();
+
+        public CheckpointGroup()
+        {
+            this.pointLength = 0;
+            this.groupLink = 0;
+            this.prev1 = 0;
+            this.prev2 = 0;
+            this.prev3 = 0;
+            this.prev4 = 0;
+
+            this.next1 = 0;
+            this.next2 = 0;
+            this.next3 = 0;
+            this.next4 = 0;
+
+            this.index = 0;
+        }
+
+        public void Parse(EndianBinaryReader reader, uint count)
+        {
+            for (uint i = 0; i < count; i++)
+            {
+                this.pointLength = reader.ReadUInt16();
+                this.groupLink = reader.ReadUInt16();
+
+                this.prev1 = reader.ReadInt16();
+                this.prev2 = reader.ReadInt16();
+                this.prev3 = reader.ReadInt16();
+                this.prev4 = reader.ReadInt16();
+
+                this.next1 = reader.ReadInt16();
+                this.next2 = reader.ReadInt16();
+                this.next3 = reader.ReadInt16();
+                this.next4 = reader.ReadInt16();
+
+                this.index = i;
+
+                dict1.Add(this.index, this.pointLength);
+            }
+        }
+
+        public Dictionary<uint, uint> returnDictionary()
+        {
+            return dict1;
+        }
+    }
+
+    class Checkpoint : LevelObj
+    {
+        float xPosStart, yPosStart, zPosStart;
+        float xPosEnd, yPosEnd, zPosEnd;
+        uint groupID;
+
+        public Checkpoint()
+        {
+            this.xPosStart = 0;
+            this.yPosStart = 0;
+            this.zPosStart = 0;
+
+            this.xPosEnd = 0;
+            this.yPosEnd = 0;
+            this.zPosEnd = 0;
+
+            this.groupID = 0;
+        }
+
+        public void Parse(EndianBinaryReader reader, Dictionary<uint, uint> dictionary, uint count)
+        {
+           /* 
+            * I haven't seen a multi-grouped checkpoint track
+            * this should allow support for these just in case
+           */
+           for (uint i = 0; i < count; i++)
+           {
+                uint countInSec = dictionary[i];
+                for (uint j =  0; j < countInSec; j++)
+                {
+                    this.groupID = j;
+
+                    this.xPosStart = reader.ReadSingle();
+                    this.yPosStart = reader.ReadSingle();
+                    this.zPosStart = reader.ReadSingle();
+
+                    this.xPosEnd = reader.ReadSingle();
+                    this.yPosEnd = reader.ReadSingle();
+                    this.zPosEnd = reader.ReadSingle();
+
+                    Console.WriteLine(this.zPosEnd);
+
+                    reader.ReadBytes(4);
+                }
+
+                Console.WriteLine("Finished Group " + i);
+           }
+        }
     }
 
     class Respawns : LevelObj
