@@ -22,3 +22,5 @@ C:\Users\MrRean\DouBOL-Dash\DouBOLDash\bin\Debug\OpenTK.xml
 C:\Users\MrRean\DouBOL-Dash\DouBOLDash\bin\Debug\OpenTK.Compatibility.xml
 C:\Users\MrRean\DouBOL-Dash\DouBOLDash\bin\Debug\OpenTK.GLControl.xml
 C:\Users\MrRean\DouBOL-Dash\DouBOLDash\obj\Debug\DouBOLDash.MainWindow.resources
+C:\Users\MrRean\DouBOL-Dash\DouBOLDash\obj\Debug\DouBOLDash.SettingsWindow.resources
+C:\Users\MrRean\DouBOL-Dash\DouBOLDash\obj\Debug\DouBOLDash.BMDViewer.resources

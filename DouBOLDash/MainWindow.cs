@@ -237,6 +237,8 @@ namespace DouBOLDash
                     if (course != null)
                         DrawBMD(course);
                     GL.EndList();
+
+                    loadingLabel.Text = "Ready!";
                 }
             }
         }
@@ -352,6 +354,18 @@ namespace DouBOLDash
             glControl1.Refresh();
         }
 
+        public static void changeGLRender(bool isWireframe)
+        {
+            if (isWireframe)
+                GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Line);
+            else
+                GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Fill);
+
+            MainWindow main = new MainWindow();
+            main.glControl1.Refresh();
+        }
+
+
         private void glControl1_Paint(object sender, PaintEventArgs e)
         {           
             if (!loaded)
@@ -409,6 +423,18 @@ namespace DouBOLDash
 
             m_PixelFactorX = ((2f * (float)Math.Tan(k_FOV / 2f) * m_AspectRatio) / (float)(glControl1.Width));
             m_PixelFactorY = ((2f * (float)Math.Tan(k_FOV / 2f)) / (float)(glControl1.Height));
+        }
+
+        private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SettingsWindow settings = new SettingsWindow();
+            settings.Show();
+        }
+
+        private void BMDViewerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            BMDViewer bmdviewer = new BMDViewer();
+            bmdviewer.Show();
         }
 
         private void UpdateCamera()

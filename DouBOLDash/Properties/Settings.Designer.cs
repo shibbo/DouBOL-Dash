@@ -94,5 +94,17 @@ namespace DouBOLDash.Properties {
                 this["curFile"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool isWireframe {
+            get {
+                return ((bool)(this["isWireframe"]));
+            }
+            set {
+                this["isWireframe"] = value;
+            }
+        }
     }
 }
