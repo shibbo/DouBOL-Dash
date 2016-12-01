@@ -7,6 +7,7 @@ using System.IO;
 
 namespace DouBOLDash
 {
+
     class BOL : LevelObj
     {
         /* class that represents a BOL header */
@@ -252,6 +253,8 @@ namespace DouBOLDash
 
     class Checkpoint : LevelObj
     {
+        CheckpointObject chkobj = new CheckpointObject();
+        List<CheckpointObject> chkdict = new List<CheckpointObject>();
         float xPosStart, yPosStart, zPosStart;
         float xPosEnd, yPosEnd, zPosEnd;
         uint groupID;
@@ -284,15 +287,17 @@ namespace DouBOLDash
                     uint countInSec = dictionary[i];
                     for (uint j = 0; j < countInSec; j++)
                     {
-                        this.groupID = i;
+                        chkobj.groupID = i;
 
-                        this.xPosStart = reader.ReadSingle();
-                        this.yPosStart = reader.ReadSingle();
-                        this.zPosStart = reader.ReadSingle();
+                        chkobj.xPosStart = reader.ReadSingle();
+                        chkobj.yPosStart = reader.ReadSingle();
+                        chkobj.zPosStart = reader.ReadSingle();
 
-                        this.xPosEnd = reader.ReadSingle();
-                        this.yPosEnd = reader.ReadSingle();
-                        this.zPosEnd = reader.ReadSingle();
+                        chkobj.xPosEnd = reader.ReadSingle();
+                        chkobj.yPosEnd = reader.ReadSingle();
+                        chkobj.zPosEnd = reader.ReadSingle();
+
+                        chkdict.Add(chkobj);
 
                         reader.ReadBytes(4);
                     }
@@ -300,6 +305,11 @@ namespace DouBOLDash
                     Console.WriteLine("Finished Group " + i);
                 }
             }
+        }
+
+        public List<CheckpointObject> returnList()
+        {
+            return chkdict;
         }
     }
 
@@ -370,15 +380,18 @@ namespace DouBOLDash
         }
     }
 
-    class Object : LevelObj
+    class Object
     {
-        float xPos, yPos, zPos;
-        float xScale, yScale, zScale;
-        int xRot, yRot, zRot;
-        double rotation;
-        uint objID;
-        int routeID;
-        long unk1, unk2, unk3;
+        LevelObject lvlobj = new LevelObject();
+        List<LevelObject> lvldict = new List<LevelObject>();
+
+        public float xPos, yPos, zPos;
+        public float xScale, yScale, zScale;
+        public int xRot, yRot, zRot;
+        public double rotation;
+        public uint objID;
+        public int routeID;
+        public long unk1, unk2, unk3;
 
         public Object()
         {
@@ -402,29 +415,39 @@ namespace DouBOLDash
 
         public void Parse(EndianBinaryReader reader, uint count)
         {
+
             for (uint i = 0; i < count; i++)
             {
-                this.xPos = reader.ReadSingle();
-                this.yPos = reader.ReadSingle();
-                this.zPos = reader.ReadSingle();
+                lvlobj.xPos = reader.ReadSingle();
+                lvlobj.yPos = reader.ReadSingle();
+                lvlobj.zPos = reader.ReadSingle();
 
-                this.xScale = reader.ReadSingle();
-                this.yScale = reader.ReadSingle();
-                this.zScale = reader.ReadSingle();
+                lvlobj.xScale = reader.ReadSingle();
+                lvlobj.yScale = reader.ReadSingle();
+                lvlobj.zScale = reader.ReadSingle();
 
-                this.xRot = reader.ReadInt32();
-                this.yRot = reader.ReadInt32();
-                this.zRot = reader.ReadInt32();
+                lvlobj.xRot = reader.ReadInt32();
+                lvlobj.yRot = reader.ReadInt32();
+                lvlobj.zRot = reader.ReadInt32();
 
-                this.objID = reader.ReadUInt16();
-                this.routeID = reader.ReadInt16();
+                lvlobj.objID = reader.ReadUInt16();
+                lvlobj.routeID = reader.ReadInt16();
 
-                this.unk1 = reader.ReadInt64();
-                this.unk2 = reader.ReadInt64();
-                this.unk3 = reader.ReadInt64();
+                lvlobj.unk1 = reader.ReadInt64();
+                lvlobj.unk2 = reader.ReadInt64();
+                lvlobj.unk3 = reader.ReadInt64();
 
-                rotation = MiscHacks.returnRotations(this.xRot, this.yRot);
+                lvlobj.ID = i;
+
+                lvlobj.rotation = MiscHacks.returnRotations(this.xRot, this.yRot);
+
+                lvldict.Add(lvlobj);
             }
+        }
+
+        public List<LevelObject> returnList()
+        {
+            return lvldict;
         }
     }
 
@@ -485,9 +508,6 @@ namespace DouBOLDash
                     this.xPos = reader.ReadSingle();
                     this.yPos = reader.ReadSingle();
                     this.zPos = reader.ReadSingle();
-                    Console.WriteLine(this.xPos);
-                    Console.WriteLine(this.yPos);
-                    Console.WriteLine(this.zPos);
 
                     this.xScale = reader.ReadSingle();
                     this.yScale = reader.ReadSingle();
@@ -707,5 +727,24 @@ namespace DouBOLDash
     {
         public uint pointLength;
         public uint pointStart;
+    }
+
+    struct LevelObject
+    {
+        public float xPos, yPos, zPos;
+        public float xScale, yScale, zScale;
+        public int xRot, yRot, zRot;
+        public double rotation;
+        public uint objID;
+        public int routeID;
+        public long unk1, unk2, unk3;
+        public uint ID;
+    }
+
+    struct CheckpointObject
+    {
+        public float xPosStart, yPosStart, zPosStart;
+        public float xPosEnd, yPosEnd, zPosEnd;
+        public uint groupID;
     }
 }

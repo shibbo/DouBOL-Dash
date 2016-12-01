@@ -13,6 +13,12 @@ C:\Users\MrRean\DouBOL-Dash\DouBOLDash\obj\Debug\DouBOLDash.pdb
 C:\Users\MrRean\DouBOL-Dash\DouBOLDash\bin\Debug\DouBOLDash.exe
 C:\Users\MrRean\DouBOL-Dash\DouBOLDash\bin\Debug\DouBOLDash.pdb
 C:\Users\MrRean\DouBOL-Dash\DouBOLDash\obj\Debug\DouBOLDash.csprojResolveAssemblyReference.cache
-C:\Users\MrRean\DouBOL-Dash\DouBOLDash\obj\Debug\DouBOLDash.Form1.resources
 C:\Users\MrRean\DouBOL-Dash\DouBOLDash\obj\Debug\DouBOLDash.Properties.Resources.resources
 C:\Users\MrRean\DouBOL-Dash\DouBOLDash\obj\Debug\DouBOLDash.csproj.GenerateResource.Cache
+C:\Users\MrRean\DouBOL-Dash\DouBOLDash\bin\Debug\OpenTK.Compatibility.dll
+C:\Users\MrRean\DouBOL-Dash\DouBOLDash\bin\Debug\OpenTK.dll
+C:\Users\MrRean\DouBOL-Dash\DouBOLDash\bin\Debug\OpenTK.GLControl.dll
+C:\Users\MrRean\DouBOL-Dash\DouBOLDash\bin\Debug\OpenTK.xml
+C:\Users\MrRean\DouBOL-Dash\DouBOLDash\bin\Debug\OpenTK.Compatibility.xml
+C:\Users\MrRean\DouBOL-Dash\DouBOLDash\bin\Debug\OpenTK.GLControl.xml
+C:\Users\MrRean\DouBOL-Dash\DouBOLDash\obj\Debug\DouBOLDash.MainWindow.resources
