@@ -434,6 +434,7 @@ namespace DouBOLDash
         float xScale, yScale, zScale;
         int xRot, yRot, zRot;
         byte polePos, playerID;
+        double rotation;
 
         public KartPoint()
         {
@@ -452,6 +453,90 @@ namespace DouBOLDash
             this.playerID = 0;
         }
 
+        public void Parse(EndianBinaryReader reader)
+        {
+            this.xPos = reader.ReadSingle();
+            this.yPos = reader.ReadSingle();
+            this.zPos = reader.ReadSingle();
+
+            this.xScale = reader.ReadSingle();
+            this.yScale = reader.ReadSingle();
+            this.zScale = reader.ReadSingle();
+
+            this.xRot = reader.ReadInt32();
+            this.yRot = reader.ReadInt32();
+            this.zRot = reader.ReadInt32();
+
+            rotation = MiscHacks.returnRotations(this.xRot, this.yRot);
+
+            this.polePos = reader.ReadByte();
+            this.playerID = reader.ReadByte();
+
+            reader.ReadBytes(2);
+
+            // if the player id is 0xFF, that means each player is in a race mode
+            // if it's not, that means they're on a battle map
+            // if it's a battle map, we read through the entries 3 more times
+            // this is something that the old BOL editor lacks
+            if (this.playerID != 0xFF)
+            {
+                for (uint z = 0; z < 3; z++)
+                { 
+                    this.xPos = reader.ReadSingle();
+                    this.yPos = reader.ReadSingle();
+                    this.zPos = reader.ReadSingle();
+                    Console.WriteLine(this.xPos);
+                    Console.WriteLine(this.yPos);
+                    Console.WriteLine(this.zPos);
+
+                    this.xScale = reader.ReadSingle();
+                    this.yScale = reader.ReadSingle();
+                    this.zScale = reader.ReadSingle();
+
+                    this.xRot = reader.ReadInt32();
+                    this.yRot = reader.ReadInt32();
+                    this.zRot = reader.ReadInt32();
+
+                    rotation = MiscHacks.returnRotations(this.xRot, this.yRot);
+
+                    this.polePos = reader.ReadByte();
+                    this.playerID = reader.ReadByte();
+
+                    reader.ReadBytes(2);
+                }
+            }
+        }
+    }
+
+    class Area : LevelObj
+    {
+        float xPos, yPos, zPos;
+        float xScale, yScale, zScale;
+        int xRot, yRot, zRot;
+        uint unk1, unk2;
+        long unk3, unk4;
+        double rotation;
+
+        public Area()
+        {
+            this.xPos = 0;
+            this.yPos = 0;
+            this.zPos = 0;
+
+            this.xScale = 0;
+            this.yScale = 0;
+            this.zScale = 0;
+
+            this.xRot = 0;
+            this.yRot = 0;
+            this.zRot = 0;
+
+            this.unk1 = 0;
+            this.unk2 = 0;
+            this.unk3 = 0;
+            this.unk4 = 0;
+        }
+
         public void Parse(EndianBinaryReader reader, uint count)
         {
             for (uint i = 0; i < count; i++)
@@ -468,34 +553,112 @@ namespace DouBOLDash
                 this.yRot = reader.ReadInt32();
                 this.zRot = reader.ReadInt32();
 
-                this.polePos = reader.ReadByte();
-                this.playerID = reader.ReadByte();
+                rotation = MiscHacks.returnRotations(this.xRot, this.yRot);
 
-                reader.ReadBytes(2);
+                this.unk1 = reader.ReadUInt16();
+                this.unk2 = reader.ReadUInt16();
+
+                this.unk3 = reader.ReadInt64();
+                this.unk4 = reader.ReadInt64();
             }
-        }
-    }
-
-    class Area : LevelObj
-    {
-        public Area()
-        {
-
         }
     }
 
     class Camera : LevelObj
     {
+        float xView1, yView1, zView1;
+        int xRot, yRot, zRot;
+        float xView2, yView2, zView2;
+        float xView3, yView3, zView3;
+        byte unk1, type;
+        uint startZoom, duration, unk2, unk3, unk4;
+        int routeID;
+        uint routeSpeed, endZoom;
+        int nextCamera;
+        string name;
+        double rotation;
+
         public Camera()
         {
+            this.xView1 = 0;
+            this.yView1 = 0;
+            this.zView1 = 0;
 
+            this.xRot = 0;
+            this.yRot = 0;
+            this.zRot = 0;
+
+            this.xView2 = 0;
+            this.yView2 = 0;
+            this.zView2 = 0;
+
+            this.xView3 = 0;
+            this.yView3 = 0;
+            this.zView3 = 0;
+
+            this.unk1 = 0;
+            this.type = 0;
+
+            this.startZoom = 0;
+            this.duration = 0;
+            this.unk2 = 0;
+            this.unk3 = 0;
+            this.unk4 = 0;
+            this.routeID = 0;
+
+            this.routeSpeed = 0;
+            this.endZoom = 0;
+            this.nextCamera = 0;
+            this.name = "";
+        }
+
+        public void Parse(EndianBinaryReader reader, uint count)
+        {
+            for (uint i = 0; i < count; i++)
+            {
+                this.xView1 = reader.ReadSingle();
+                this.yView1 = reader.ReadSingle();
+                this.zView1 = reader.ReadSingle();
+
+                this.xRot = reader.ReadInt32();
+                this.yRot = reader.ReadInt32();
+                this.zRot = reader.ReadInt32();
+
+                rotation = MiscHacks.returnRotations(this.xRot, this.yRot);
+
+                this.xView2 = reader.ReadSingle();
+                this.yView2 = reader.ReadSingle();
+                this.zView2 = reader.ReadSingle();
+
+                this.xView3 = reader.ReadSingle();
+                this.yView3 = reader.ReadSingle();
+                this.zView3 = reader.ReadSingle();
+
+                this.unk1 = reader.ReadByte();
+                this.type = reader.ReadByte();
+
+                this.startZoom = reader.ReadUInt16();
+                this.duration = reader.ReadUInt16();
+                this.unk2 = reader.ReadUInt16();
+                this.unk3 = reader.ReadUInt16();
+                this.unk4 = reader.ReadUInt16();
+
+                this.routeID = reader.ReadInt16();
+                this.routeSpeed = reader.ReadUInt16();
+                this.endZoom = reader.ReadUInt16();
+
+                this.nextCamera = reader.ReadInt16();
+                this.name = Encoding.ASCII.GetString(reader.ReadBytes(4));
+            }
         }
     }
 
     class Respawn : LevelObj
     {
         float xPos, yPos, zPos;
-        int xRot, yRot, zRot, respawnID, unk1, unk2, unk3;
+        int xRot, yRot, zRot;
+        uint respawnID, unk1, unk2, unk3;
+        double rotation;
 
         public Respawn()
         {
@@ -513,9 +676,25 @@ namespace DouBOLDash
             this.unk3 = 0;
         }
 
-        public void Parse(EndianBinaryReader reader)
+        public void Parse(EndianBinaryReader reader, uint count)
         {
+            for (uint i = 0; i < count; i++)
+            {
+                this.xPos = reader.ReadSingle();
+                this.yPos = reader.ReadSingle();
+                this.zPos = reader.ReadSingle();
 
+                this.xRot = reader.ReadInt32();
+                this.yRot = reader.ReadInt32();
+                this.zRot = reader.ReadInt32();
+
+                rotation = MiscHacks.returnRotations(this.xRot, this.yRot);
+
+                this.respawnID = reader.ReadUInt16();
+                this.unk1 = reader.ReadUInt16();
+                this.unk2 = reader.ReadUInt16();
+                this.unk3 = reader.ReadUInt16();
+            }
         }
     }
 
