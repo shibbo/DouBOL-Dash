@@ -41,11 +41,24 @@ namespace DouBOLDash
                     uint offs1 = bol.returnOffset(0);
                     uint offs2 = bol.returnOffset(1);
                     uint offs3 = bol.returnOffset(2);
+                    uint offs4 = bol.returnOffset(3);
 
+                    uint count0 = bol.returnCount(0); // enemy/item route count
                     uint count1 = bol.returnCount(1); // group count
+                    uint count2 = bol.returnCount(2); // object count
 
-                    uint sec1Count = offs2 - offs1;
-                    sec1Count = sec1Count / 0x20;
+                    uint sec1Count = 0;
+                    if (count0 > 0)
+                    {
+                        // this is a failsafe that the old BOL editor doesn't do
+                        sec1Count = offs2 - offs1;
+                        sec1Count = sec1Count / 0x20;
+                    }
+                    else
+                        sec1Count = 0;
+
+                    uint sec3Count = offs4 - offs3;
+                    sec3Count = sec3Count / 0x10;
 
                     EnemyRoutes enmRoutes = new EnemyRoutes();
                     enmRoutes.Parse(reader, sec1Count);
@@ -56,6 +69,16 @@ namespace DouBOLDash
 
                     Checkpoint chckPt = new Checkpoint();
                     chckPt.Parse(reader, dictionary1, count1);
+
+                    RouteGroup routeGrp = new RouteGroup();
+                    routeGrp.Parse(reader, sec3Count);
+                    Dictionary<uint, GroupStruct> dictionary2 = routeGrp.returnDictionary();
+
+                    RoutePoint routePt = new RoutePoint();
+                    routePt.Parse(reader, dictionary2);
+
+                    Object obj = new Object();
+                    obj.Parse(reader, count2);
 
                 }
 

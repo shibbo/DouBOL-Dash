@@ -166,21 +166,27 @@ namespace DouBOLDash
 
         public void Parse(EndianBinaryReader reader, uint count)
         {
-            for (int i = 0; i < count; i++)
+            // failsafe part 2
+            if (count == 0)
+                Console.WriteLine("EnemyCount is 0, skipping...");
+            else
             {
-                this.xPos = reader.ReadSingle();
-                this.yPos = reader.ReadSingle();
-                this.zPos = reader.ReadSingle();
+                for (int i = 0; i < count; i++)
+                {
+                    this.xPos = reader.ReadSingle();
+                    this.yPos = reader.ReadSingle();
+                    this.zPos = reader.ReadSingle();
 
-                this.pointSetting = reader.ReadInt16();
-                this.link = reader.ReadInt16();
-                this.scale = reader.ReadSingle();
-                this.groupSetting = reader.ReadUInt16();
+                    this.pointSetting = reader.ReadInt16();
+                    this.link = reader.ReadInt16();
+                    this.scale = reader.ReadSingle();
+                    this.groupSetting = reader.ReadUInt16();
 
-                this.group = reader.ReadByte();
-                this.pointSetting2 = reader.ReadByte();
+                    this.group = reader.ReadByte();
+                    this.pointSetting2 = reader.ReadByte();
 
-                reader.ReadBytes(8);
+                    reader.ReadBytes(8);
+                }
             }
         }
     }
@@ -212,24 +218,29 @@ namespace DouBOLDash
 
         public void Parse(EndianBinaryReader reader, uint count)
         {
-            for (uint i = 0; i < count; i++)
+            if (count == 0)
+                Console.WriteLine("CheckpointGroup is 0, skipping...");
+            else
             {
-                this.pointLength = reader.ReadUInt16();
-                this.groupLink = reader.ReadUInt16();
+                for (uint i = 0; i < count; i++)
+                {
+                    this.pointLength = reader.ReadUInt16();
+                    this.groupLink = reader.ReadUInt16();
 
-                this.prev1 = reader.ReadInt16();
-                this.prev2 = reader.ReadInt16();
-                this.prev3 = reader.ReadInt16();
-                this.prev4 = reader.ReadInt16();
+                    this.prev1 = reader.ReadInt16();
+                    this.prev2 = reader.ReadInt16();
+                    this.prev3 = reader.ReadInt16();
+                    this.prev4 = reader.ReadInt16();
 
-                this.next1 = reader.ReadInt16();
-                this.next2 = reader.ReadInt16();
-                this.next3 = reader.ReadInt16();
-                this.next4 = reader.ReadInt16();
+                    this.next1 = reader.ReadInt16();
+                    this.next2 = reader.ReadInt16();
+                    this.next3 = reader.ReadInt16();
+                    this.next4 = reader.ReadInt16();
 
-                this.index = i;
+                    this.index = i;
 
-                dict1.Add(this.index, this.pointLength);
+                    dict1.Add(this.index, this.pointLength);
+                }
             }
         }
 
@@ -260,41 +271,233 @@ namespace DouBOLDash
 
         public void Parse(EndianBinaryReader reader, Dictionary<uint, uint> dictionary, uint count)
         {
-           /* 
-            * I haven't seen a multi-grouped checkpoint track
-            * this should allow support for these just in case
-           */
-           for (uint i = 0; i < count; i++)
-           {
-                uint countInSec = dictionary[i];
-                for (uint j =  0; j < countInSec; j++)
+            /* 
+             * I haven't seen a multi-grouped checkpoint track
+             * this should allow support for these just in case
+            */
+            if (count == 0)
+                Console.WriteLine("CheckpointCount is 0, skipping...");
+            else
+            {
+                for (uint i = 0; i < count; i++)
                 {
-                    this.groupID = j;
+                    uint countInSec = dictionary[i];
+                    for (uint j = 0; j < countInSec; j++)
+                    {
+                        this.groupID = i;
 
-                    this.xPosStart = reader.ReadSingle();
-                    this.yPosStart = reader.ReadSingle();
-                    this.zPosStart = reader.ReadSingle();
+                        this.xPosStart = reader.ReadSingle();
+                        this.yPosStart = reader.ReadSingle();
+                        this.zPosStart = reader.ReadSingle();
 
-                    this.xPosEnd = reader.ReadSingle();
-                    this.yPosEnd = reader.ReadSingle();
-                    this.zPosEnd = reader.ReadSingle();
+                        this.xPosEnd = reader.ReadSingle();
+                        this.yPosEnd = reader.ReadSingle();
+                        this.zPosEnd = reader.ReadSingle();
 
-                    Console.WriteLine(this.zPosEnd);
+                        reader.ReadBytes(4);
+                    }
 
-                    reader.ReadBytes(4);
+                    Console.WriteLine("Finished Group " + i);
                 }
-
-                Console.WriteLine("Finished Group " + i);
-           }
+            }
         }
     }
 
-    class Respawns : LevelObj
+    class RouteGroup : LevelObj
+    {
+        Dictionary<uint, GroupStruct> groupDict = new Dictionary<uint, GroupStruct>();
+        GroupStruct group = new GroupStruct();
+        uint pointLength, pointStart, groupID;
+
+        public RouteGroup()
+        {
+            this.pointLength = 0;
+            this.pointStart = 0;
+            this.groupID = 0; // program generated, not part of BOL
+        }
+
+        public void Parse(EndianBinaryReader reader, uint count)
+        {
+            for (uint i = 0; i < count; i++)
+            {
+                this.pointLength = reader.ReadUInt16();
+                this.pointStart = reader.ReadUInt16();
+                this.groupID = i;
+
+                reader.ReadBytes(12);
+
+                group.pointLength = this.pointLength;
+                group.pointStart = this.pointStart;
+
+                groupDict.Add(i, group);
+                
+            }
+        }
+
+        public Dictionary<uint, GroupStruct> returnDictionary()
+        {
+            return groupDict;
+        }
+    }
+
+    class RoutePoint : LevelObj
+    {
+        float xPos, yPos, zPos;
+
+        public RoutePoint()
+        {
+            this.xPos = 0;
+            this.yPos = 0;
+            this.zPos = 0;
+        }
+        
+        public void Parse(EndianBinaryReader reader, Dictionary<uint, GroupStruct> groupDict)
+        {
+            uint count = (uint)groupDict.Count();
+
+            for (uint i = 0; i < count; i++)
+            {
+                GroupStruct group = groupDict[i];
+                for (uint j = 0; j < group.pointLength; j++)
+                {
+                    this.xPos = reader.ReadSingle();
+                    this.yPos = reader.ReadSingle();
+                    this.zPos = reader.ReadSingle();
+
+                    reader.ReadBytes(20);
+                }
+            }
+        }
+    }
+
+    class Object : LevelObj
+    {
+        float xPos, yPos, zPos;
+        float xScale, yScale, zScale;
+        int xRot, yRot, zRot;
+        double rotation;
+        uint objID;
+        int routeID;
+        long unk1, unk2, unk3;
+
+        public Object()
+        {
+            this.xPos = 0;
+            this.yPos = 0;
+            this.zPos = 0;
+            this.xScale = 0;
+            this.yScale = 0;
+            this.zScale = 0;
+
+            this.xRot = 0;
+            this.yRot = 0;
+            this.zRot = 0;
+
+            this.objID = 0;
+            this.routeID = 0;
+            this.unk1 = 0;
+            this.unk2 = 0;
+            this.unk3 = 0;
+        }
+
+        public void Parse(EndianBinaryReader reader, uint count)
+        {
+            for (uint i = 0; i < count; i++)
+            {
+                this.xPos = reader.ReadSingle();
+                this.yPos = reader.ReadSingle();
+                this.zPos = reader.ReadSingle();
+
+                this.xScale = reader.ReadSingle();
+                this.yScale = reader.ReadSingle();
+                this.zScale = reader.ReadSingle();
+
+                this.xRot = reader.ReadInt32();
+                this.yRot = reader.ReadInt32();
+                this.zRot = reader.ReadInt32();
+
+                this.objID = reader.ReadUInt16();
+                this.routeID = reader.ReadInt16();
+
+                this.unk1 = reader.ReadInt64();
+                this.unk2 = reader.ReadInt64();
+                this.unk3 = reader.ReadInt64();
+
+                rotation = MiscHacks.returnRotations(this.xRot, this.yRot);
+            }
+        }
+    }
+
+    class KartPoint : LevelObj
+    {
+        float xPos, yPos, zPos;
+        float xScale, yScale, zScale;
+        int xRot, yRot, zRot;
+        byte polePos, playerID;
+
+        public KartPoint()
+        {
+            this.xPos = 0;
+            this.yPos = 0;
+            this.zPos = 0;
+            this.xScale = 0;
+            this.yScale = 0;
+            this.zScale = 0;
+
+            this.xRot = 0;
+            this.yRot = 0;
+            this.zRot = 0;
+
+            this.polePos = 0;
+            this.playerID = 0;
+        }
+
+        public void Parse(EndianBinaryReader reader, uint count)
+        {
+            for (uint i = 0; i < count; i++)
+            {
+                this.xPos = reader.ReadSingle();
+                this.yPos = reader.ReadSingle();
+                this.zPos = reader.ReadSingle();
+
+                this.xScale = reader.ReadSingle();
+                this.yScale = reader.ReadSingle();
+                this.zScale = reader.ReadSingle();
+
+                this.xRot = reader.ReadInt32();
+                this.yRot = reader.ReadInt32();
+                this.zRot = reader.ReadInt32();
+
+                this.polePos = reader.ReadByte();
+                this.playerID = reader.ReadByte();
+
+                reader.ReadBytes(2);
+            }
+        }
+    }
+
+    class Area : LevelObj
+    {
+        public Area()
+        {
+
+        }
+    }
+
+    class Camera : LevelObj
+    {
+        public Camera()
+        {
+
+        }
+    }
+
+    class Respawn : LevelObj
     {
         float xPos, yPos, zPos;
         int xRot, yRot, zRot, respawnID, unk1, unk2, unk3;
 
-        public Respawns()
+        public Respawn()
         {
             this.xPos = 0;
             this.yPos = 0;
@@ -319,5 +522,11 @@ namespace DouBOLDash
     abstract class LevelObj
     {
 
+    }
+
+    struct GroupStruct
+    {
+        public uint pointLength;
+        public uint pointStart;
     }
 }
