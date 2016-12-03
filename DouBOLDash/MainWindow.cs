@@ -710,7 +710,7 @@ namespace DouBOLDash
 
             string curItem = listBox1.SelectedItem.ToString();
 
-            if (curItem == "DouBOLDash.KartPointObject")
+            if (curItem == "DouBOLDash.RespawnObject")
             {
                 RespawnObject respawn = new RespawnObject();
                 respawn = (RespawnObject)listBox1.SelectedItem;

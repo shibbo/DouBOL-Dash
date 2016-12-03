@@ -11,3 +11,5 @@ If you want to run the EXE, it's located in DouBOLDash/bin/Debug. Note: You have
 # What's supported
 DouBOL Dash can parse every single section in the file except for the last one (that's unknown). It can also render objects, and checkpoints.
 
+# Credits
+Thanks to StapleButter for the main BMD rendering code, and miluaces for minor changes. Icon was made by Kaio.
