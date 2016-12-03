@@ -34,16 +34,20 @@
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.chooseFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.glControl1 = new OpenTK.GLControl();
+            this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.BMDViewerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.loadingLabel = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.mousePosLabel = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.BMDViewerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.glControl1 = new OpenTK.GLControl();
+            this.selectionInfo = new System.Windows.Forms.ToolStripLabel();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -53,7 +57,7 @@
             this.optionsToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(569, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(935, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -85,27 +89,23 @@
             // chooseFolderToolStripMenuItem
             // 
             this.chooseFolderToolStripMenuItem.Name = "chooseFolderToolStripMenuItem";
-            this.chooseFolderToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.chooseFolderToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.chooseFolderToolStripMenuItem.Text = "Choose folder";
             this.chooseFolderToolStripMenuItem.Click += new System.EventHandler(this.chooseFolderToolStripMenuItem_Click);
             // 
-            // glControl1
+            // settingsToolStripMenuItem
             // 
-            this.glControl1.BackColor = System.Drawing.Color.Black;
-            this.glControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.glControl1.Location = new System.Drawing.Point(0, 24);
-            this.glControl1.Name = "glControl1";
-            this.glControl1.Size = new System.Drawing.Size(569, 310);
-            this.glControl1.TabIndex = 1;
-            this.glControl1.VSync = false;
-            this.glControl1.Load += new System.EventHandler(this.glControl1_Load);
-            this.glControl1.Paint += new System.Windows.Forms.PaintEventHandler(this.glControl1_Paint);
-            this.glControl1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.glControl1_KeyDown);
-            this.glControl1.KeyUp += new System.Windows.Forms.KeyEventHandler(this.glControl1_KeyUp);
-            this.glControl1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.glControl1_MouseDown);
-            this.glControl1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.glControl1_MouseMove);
-            this.glControl1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.glControl1_MouseUp);
-            this.glControl1.Resize += new System.EventHandler(this.glControl1_Resize);
+            this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.settingsToolStripMenuItem.Text = "Settings";
+            this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
+            // 
+            // BMDViewerToolStripMenuItem
+            // 
+            this.BMDViewerToolStripMenuItem.Name = "BMDViewerToolStripMenuItem";
+            this.BMDViewerToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.BMDViewerToolStripMenuItem.Text = "BMD Viewer";
+            this.BMDViewerToolStripMenuItem.Click += new System.EventHandler(this.BMDViewerToolStripMenuItem_Click);
             // 
             // toolStrip1
             // 
@@ -114,10 +114,11 @@
             this.loadingLabel,
             this.toolStripSeparator1,
             this.mousePosLabel,
-            this.toolStripSeparator2});
-            this.toolStrip1.Location = new System.Drawing.Point(0, 309);
+            this.toolStripSeparator2,
+            this.selectionInfo});
+            this.toolStrip1.Location = new System.Drawing.Point(0, 513);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(569, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(935, 25);
             this.toolStrip1.TabIndex = 2;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -143,27 +144,61 @@
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
             // 
-            // settingsToolStripMenuItem
+            // listBox1
             // 
-            this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.settingsToolStripMenuItem.Text = "Settings";
-            this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
+            this.listBox1.Dock = System.Windows.Forms.DockStyle.Left;
+            this.listBox1.Enabled = false;
+            this.listBox1.FormattingEnabled = true;
+            this.listBox1.Location = new System.Drawing.Point(0, 24);
+            this.listBox1.Name = "listBox1";
+            this.listBox1.Size = new System.Drawing.Size(219, 489);
+            this.listBox1.TabIndex = 3;
+            this.listBox1.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
+            this.listBox1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listBox1_MouseDoubleClick);
             // 
-            // BMDViewerToolStripMenuItem
+            // panel1
             // 
-            this.BMDViewerToolStripMenuItem.Name = "BMDViewerToolStripMenuItem";
-            this.BMDViewerToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.BMDViewerToolStripMenuItem.Text = "BMD Viewer";
-            this.BMDViewerToolStripMenuItem.Click += new System.EventHandler(this.BMDViewerToolStripMenuItem_Click);
+            this.panel1.Controls.Add(this.glControl1);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel1.Location = new System.Drawing.Point(219, 24);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(716, 489);
+            this.panel1.TabIndex = 4;
+            this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
+            // 
+            // glControl1
+            // 
+            this.glControl1.AutoSize = true;
+            this.glControl1.BackColor = System.Drawing.Color.Black;
+            this.glControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.glControl1.Location = new System.Drawing.Point(0, 0);
+            this.glControl1.Name = "glControl1";
+            this.glControl1.Size = new System.Drawing.Size(716, 489);
+            this.glControl1.TabIndex = 2;
+            this.glControl1.VSync = false;
+            this.glControl1.Load += new System.EventHandler(this.glControl1_Load);
+            this.glControl1.Paint += new System.Windows.Forms.PaintEventHandler(this.glControl1_Paint);
+            this.glControl1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.glControl1_KeyDown);
+            this.glControl1.KeyUp += new System.Windows.Forms.KeyEventHandler(this.glControl1_KeyUp);
+            this.glControl1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.glControl1_MouseDown);
+            this.glControl1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.glControl1_MouseMove);
+            this.glControl1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.glControl1_MouseUp);
+            this.glControl1.Resize += new System.EventHandler(this.glControl1_Resize);
+            // 
+            // selectionInfo
+            // 
+            this.selectionInfo.Name = "selectionInfo";
+            this.selectionInfo.Size = new System.Drawing.Size(100, 22);
+            this.selectionInfo.Text = "Nothing selected.";
             // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(569, 334);
+            this.ClientSize = new System.Drawing.Size(935, 538);
+            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.listBox1);
             this.Controls.Add(this.toolStrip1);
-            this.Controls.Add(this.glControl1);
             this.Controls.Add(this.menuStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
@@ -175,6 +210,8 @@
             this.menuStrip1.PerformLayout();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -193,8 +230,11 @@
         private System.Windows.Forms.ToolStripLabel mousePosLabel;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
-        private OpenTK.GLControl glControl1;
         private System.Windows.Forms.ToolStripMenuItem BMDViewerToolStripMenuItem;
+        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.Panel panel1;
+        private OpenTK.GLControl glControl1;
+        private System.Windows.Forms.ToolStripLabel selectionInfo;
     }
 }
 

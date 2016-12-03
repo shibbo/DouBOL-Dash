@@ -106,5 +106,113 @@ namespace DouBOLDash.Properties {
                 this["isWireframe"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool showAxis {
+            get {
+                return ((bool)(this["showAxis"]));
+            }
+            set {
+                this["showAxis"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool showEnemyRoutes {
+            get {
+                return ((bool)(this["showEnemyRoutes"]));
+            }
+            set {
+                this["showEnemyRoutes"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool showRoutes {
+            get {
+                return ((bool)(this["showRoutes"]));
+            }
+            set {
+                this["showRoutes"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool showCheckpoints {
+            get {
+                return ((bool)(this["showCheckpoints"]));
+            }
+            set {
+                this["showCheckpoints"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool showItems {
+            get {
+                return ((bool)(this["showItems"]));
+            }
+            set {
+                this["showItems"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool showRespawns {
+            get {
+                return ((bool)(this["showRespawns"]));
+            }
+            set {
+                this["showRespawns"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool showStarting {
+            get {
+                return ((bool)(this["showStarting"]));
+            }
+            set {
+                this["showStarting"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool showAreas {
+            get {
+                return ((bool)(this["showAreas"]));
+            }
+            set {
+                this["showAreas"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool showCameras {
+            get {
+                return ((bool)(this["showCameras"]));
+            }
+            set {
+                this["showCameras"] = value;
+            }
+        }
     }
 }

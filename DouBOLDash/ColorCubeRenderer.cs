@@ -9,12 +9,13 @@ namespace DouBOLDash
 {
     public class ColorCubeRenderer : RendererBase
     {
-        public ColorCubeRenderer(float size, Vector4 border, Vector4 fill, bool axes)
+        public ColorCubeRenderer(float size, Vector4 border, Vector4 fill, bool axes, bool useFill)
         {
             m_Size = size;
             m_BorderColor = border;
             m_FillColor = fill;
             m_ShowAxes = axes;
+            m_useFill = useFill;
         }
 
         public override bool GottaRender(RenderInfo info)
@@ -36,43 +37,51 @@ namespace DouBOLDash
                     GL.Disable(EnableCap.Texture2D);
                 }
 
-                GL.DepthFunc(DepthFunction.Lequal);
-                GL.DepthMask(true);
-                GL.Color4(m_FillColor);
-                GL.Disable(EnableCap.Lighting);
-                GL.Disable(EnableCap.Blend);
-                GL.Disable(EnableCap.ColorLogicOp);
-                GL.Disable(EnableCap.AlphaTest);
-                GL.CullFace(CullFaceMode.Front);
-                try { GL.UseProgram(0); } catch { }
+                // if useFill is set to true, we fill in the cube
+                if (m_useFill)
+                {
+                    GL.DepthFunc(DepthFunction.Lequal);
+                    GL.DepthMask(true);
+                    GL.Color4(m_FillColor);
+                    GL.Disable(EnableCap.Lighting);
+                    GL.Disable(EnableCap.Blend);
+                    GL.Disable(EnableCap.ColorLogicOp);
+                    GL.Disable(EnableCap.AlphaTest);
+                    GL.CullFace(CullFaceMode.Front);
+                    try { GL.UseProgram(0); } catch { }
+                }
             }
 
-            GL.Begin(BeginMode.TriangleStrip);
-            GL.Vertex3(-s, -s, -s);
-            GL.Vertex3(-s, s, -s);
-            GL.Vertex3(s, -s, -s);
-            GL.Vertex3(s, s, -s);
-            GL.Vertex3(s, -s, s);
-            GL.Vertex3(s, s, s);
-            GL.Vertex3(-s, -s, s);
-            GL.Vertex3(-s, s, s);
-            GL.Vertex3(-s, -s, -s);
-            GL.Vertex3(-s, s, -s);
-            GL.End();
 
-            GL.Begin(BeginMode.TriangleStrip);
-            GL.Vertex3(-s, s, -s);
-            GL.Vertex3(-s, s, s);
-            GL.Vertex3(s, s, -s);
-            GL.Vertex3(s, s, s);
-            GL.End();
+            if (m_useFill)
+            {
+                GL.Begin(BeginMode.TriangleStrip);
+                GL.Vertex3(-s, -s, -s);
+                GL.Vertex3(-s, s, -s);
+                GL.Vertex3(s, -s, -s);
+                GL.Vertex3(s, s, -s);
+                GL.Vertex3(s, -s, s);
+                GL.Vertex3(s, s, s);
+                GL.Vertex3(-s, -s, s);
+                GL.Vertex3(-s, s, s);
+                GL.Vertex3(-s, -s, -s);
+                GL.Vertex3(-s, s, -s);
+                GL.End();
 
-            GL.Begin(BeginMode.TriangleStrip);
-            GL.Vertex3(-s, -s, -s);
-            GL.Vertex3(s, -s, -s);
-            GL.Vertex3(-s, -s, s);
-            GL.Vertex3(s, -s, s);
-            GL.End();
+                GL.Begin(BeginMode.TriangleStrip);
+                GL.Vertex3(-s, s, -s);
+                GL.Vertex3(-s, s, s);
+                GL.Vertex3(s, s, -s);
+                GL.Vertex3(s, s, s);
+                GL.End();
+
+                GL.Begin(BeginMode.TriangleStrip);
+                GL.Vertex3(-s, -s, -s);
+                GL.Vertex3(s, -s, -s);
+                GL.Vertex3(-s, -s, s);
+                GL.Vertex3(s, -s, s);
+                GL.End();
+            }
 
             if (info.Mode != RenderMode.Picking)
             {
@@ -124,6 +133,6 @@ namespace DouBOLDash
 
         private float m_Size;
         private Vector4 m_BorderColor, m_FillColor;
-        private bool m_ShowAxes;
+        private bool m_ShowAxes, m_useFill;
     }
 }

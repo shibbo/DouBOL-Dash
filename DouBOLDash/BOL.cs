@@ -7,7 +7,6 @@ using System.IO;
 
 namespace DouBOLDash
 {
-
     class BOL : LevelObj
     {
         /* class that represents a BOL header */
@@ -145,6 +144,9 @@ namespace DouBOLDash
 
     class EnemyRoutes : LevelObj
     {
+        EnemyRoute enmObj = new EnemyRoute();
+        List<EnemyRoute> enmdict = new List<EnemyRoute>();
+
         float xPos, yPos, zPos;
         int pointSetting, link;
         float scale;
@@ -174,22 +176,30 @@ namespace DouBOLDash
             {
                 for (int i = 0; i < count; i++)
                 {
-                    this.xPos = reader.ReadSingle();
-                    this.yPos = reader.ReadSingle();
-                    this.zPos = reader.ReadSingle();
+                    enmObj.xPos = reader.ReadSingle();
+                    enmObj.yPos = reader.ReadSingle();
+                    enmObj.zPos = reader.ReadSingle();
 
-                    this.pointSetting = reader.ReadInt16();
-                    this.link = reader.ReadInt16();
-                    this.scale = reader.ReadSingle();
-                    this.groupSetting = reader.ReadUInt16();
+                    enmObj.pointSetting = reader.ReadInt16();
+                    enmObj.link = reader.ReadInt16();
+                    enmObj.scale = reader.ReadSingle();
+                    enmObj.groupSetting = reader.ReadUInt16();
 
-                    this.group = reader.ReadByte();
-                    this.pointSetting2 = reader.ReadByte();
+                    enmObj.group = reader.ReadByte();
+                    enmObj.pointSetting2 = reader.ReadByte();
+
+                    enmdict.Add(enmObj);
 
                     reader.ReadBytes(8);
                 }
             }
         }
+
+        public List<EnemyRoute> returnList()
+        {
+            return enmdict;
+        }
+
     }
 
     class CheckpointGroup : LevelObj
@@ -352,13 +362,18 @@ namespace DouBOLDash
 
     class RoutePoint : LevelObj
     {
+        RoutePointObject rpobj = new RoutePointObject();
+        List<RoutePointObject> rpdict = new List<RoutePointObject>();
+
         float xPos, yPos, zPos;
+        uint groupID;
 
         public RoutePoint()
         {
             this.xPos = 0;
             this.yPos = 0;
             this.zPos = 0;
+            this.groupID = 0;
         }
         
         public void Parse(EndianBinaryReader reader, Dictionary<uint, GroupStruct> groupDict)
@@ -370,17 +385,26 @@ namespace DouBOLDash
                 GroupStruct group = groupDict[i];
                 for (uint j = 0; j < group.pointLength; j++)
                 {
-                    this.xPos = reader.ReadSingle();
-                    this.yPos = reader.ReadSingle();
-                    this.zPos = reader.ReadSingle();
+                    rpobj.xPos = reader.ReadSingle();
+                    rpobj.yPos = reader.ReadSingle();
+                    rpobj.zPos = reader.ReadSingle();
+
+                    rpobj.groupID = i;
+
+                    rpdict.Add(rpobj);
 
                     reader.ReadBytes(20);
                 }
             }
         }
+
+        public List<RoutePointObject> returnList()
+        {
+            return rpdict;
+        }
     }
 
-    class Object
+    class TrackObject : PositionObject
     {
         LevelObject lvlobj = new LevelObject();
         List<LevelObject> lvldict = new List<LevelObject>();
@@ -393,7 +417,7 @@ namespace DouBOLDash
         public int routeID;
         public long unk1, unk2, unk3;
 
-        public Object()
+        public TrackObject()
         {
             this.xPos = 0;
             this.yPos = 0;
@@ -451,9 +475,11 @@ namespace DouBOLDash
         }
     }
 
-    class KartPoint : LevelObj
+    class KartPoint : PositionObject
     {
-        float xPos, yPos, zPos;
+        KartPointObject kpobj = new KartPointObject();
+        List<KartPointObject> kpdict = new List<KartPointObject>();
+
         float xScale, yScale, zScale;
         int xRot, yRot, zRot;
         byte polePos, playerID;
@@ -478,22 +504,28 @@ namespace DouBOLDash
 
         public void Parse(EndianBinaryReader reader)
         {
-            this.xPos = reader.ReadSingle();
-            this.yPos = reader.ReadSingle();
-            this.zPos = reader.ReadSingle();
+            kpobj.xPos = reader.ReadSingle();
+            kpobj.yPos = reader.ReadSingle();
+            kpobj.zPos = reader.ReadSingle();
 
-            this.xScale = reader.ReadSingle();
-            this.yScale = reader.ReadSingle();
-            this.zScale = reader.ReadSingle();
+            xPos = kpobj.xPos;
+            yPos = kpobj.yPos;
+            zPos = kpobj.zPos;
 
-            this.xRot = reader.ReadInt32();
-            this.yRot = reader.ReadInt32();
-            this.zRot = reader.ReadInt32();
+            kpobj.xScale = reader.ReadSingle();
+            kpobj.yScale = reader.ReadSingle();
+            kpobj.zScale = reader.ReadSingle();
 
-            rotation = MiscHacks.returnRotations(this.xRot, this.yRot);
+            kpobj.xRot = reader.ReadInt32();
+            kpobj.yRot = reader.ReadInt32();
+            kpobj.zRot = reader.ReadInt32();
 
-            this.polePos = reader.ReadByte();
-            this.playerID = reader.ReadByte();
+            kpobj.rotation = MiscHacks.returnRotations(kpobj.xRot, kpobj.yRot);
+
+            kpobj.polePos = reader.ReadByte();
+            kpobj.playerID = reader.ReadByte();
+
+            kpdict.Add(kpobj);
 
             reader.ReadBytes(2);
 
@@ -501,30 +533,37 @@ namespace DouBOLDash
             // if it's not, that means they're on a battle map
             // if it's a battle map, we read through the entries 3 more times
             // this is something that the old BOL editor lacks
-            if (this.playerID != 0xFF)
+            if (kpobj.playerID != 0xFF)
             {
                 for (uint z = 0; z < 3; z++)
-                { 
-                    this.xPos = reader.ReadSingle();
-                    this.yPos = reader.ReadSingle();
-                    this.zPos = reader.ReadSingle();
+                {
+                    kpobj.xPos = reader.ReadSingle();
+                    kpobj.yPos = reader.ReadSingle();
+                    kpobj.zPos = reader.ReadSingle();
 
-                    this.xScale = reader.ReadSingle();
-                    this.yScale = reader.ReadSingle();
-                    this.zScale = reader.ReadSingle();
+                    kpobj.xScale = reader.ReadSingle();
+                    kpobj.yScale = reader.ReadSingle();
+                    kpobj.zScale = reader.ReadSingle();
 
-                    this.xRot = reader.ReadInt32();
-                    this.yRot = reader.ReadInt32();
-                    this.zRot = reader.ReadInt32();
+                    kpobj.xRot = reader.ReadInt32();
+                    kpobj.yRot = reader.ReadInt32();
+                    kpobj.zRot = reader.ReadInt32();
 
-                    rotation = MiscHacks.returnRotations(this.xRot, this.yRot);
+                    kpobj.rotation = MiscHacks.returnRotations(kpobj.xRot, kpobj.yRot);
 
-                    this.polePos = reader.ReadByte();
-                    this.playerID = reader.ReadByte();
+                    kpobj.polePos = reader.ReadByte();
+                    kpobj.playerID = reader.ReadByte();
+
+                    kpdict.Add(kpobj);
 
                     reader.ReadBytes(2);
                 }
             }
+        }
+
+        public List<KartPointObject> returnList()
+        {
+            return kpdict;
         }
     }
 
@@ -634,6 +673,7 @@ namespace DouBOLDash
 
         public void Parse(EndianBinaryReader reader, uint count)
         {
+            Console.WriteLine(count);
             for (uint i = 0; i < count; i++)
             {
                 this.xView1 = reader.ReadSingle();
@@ -675,6 +715,9 @@ namespace DouBOLDash
 
     class Respawn : LevelObj
     {
+        RespawnObject resObj = new RespawnObject();
+        List<RespawnObject> resLis = new List<RespawnObject>();
+
         float xPos, yPos, zPos;
         int xRot, yRot, zRot;
         uint respawnID, unk1, unk2, unk3;
@@ -700,21 +743,28 @@ namespace DouBOLDash
         {
             for (uint i = 0; i < count; i++)
             {
-                this.xPos = reader.ReadSingle();
-                this.yPos = reader.ReadSingle();
-                this.zPos = reader.ReadSingle();
+                resObj.xPos = reader.ReadSingle();
+                resObj.yPos = reader.ReadSingle();
+                resObj.zPos = reader.ReadSingle();
 
-                this.xRot = reader.ReadInt32();
-                this.yRot = reader.ReadInt32();
-                this.zRot = reader.ReadInt32();
+                resObj.xRot = reader.ReadInt32();
+                resObj.yRot = reader.ReadInt32();
+                resObj.zRot = reader.ReadInt32();
 
-                rotation = MiscHacks.returnRotations(this.xRot, this.yRot);
+                resObj.rotation = MiscHacks.returnRotations(this.xRot, this.yRot);
 
-                this.respawnID = reader.ReadUInt16();
-                this.unk1 = reader.ReadUInt16();
-                this.unk2 = reader.ReadUInt16();
-                this.unk3 = reader.ReadUInt16();
+                resObj.respawnID = reader.ReadUInt16();
+                resObj.unk1 = reader.ReadUInt16();
+                resObj.unk2 = reader.ReadUInt16();
+                resObj.unk3 = reader.ReadUInt16();
+
+                resLis.Add(resObj);
             }
+        }
+
+        public List<RespawnObject> returnList()
+        {
+            return resLis;
         }
     }
 
@@ -723,10 +773,30 @@ namespace DouBOLDash
 
     }
 
+    class PositionObject
+    {
+        public float xPos, yPos, zPos;
+    }
+
     struct GroupStruct
     {
         public uint pointLength;
         public uint pointStart;
+    }
+
+    struct EnemyRoute
+    {
+        public float xPos, yPos, zPos;
+        public int pointSetting, link;
+        public float scale;
+        public uint groupSetting;
+        public byte group, pointSetting2;
+    }
+
+    struct RoutePointObject
+    {
+        public float xPos, yPos, zPos;
+        public uint groupID;
     }
 
     struct LevelObject
@@ -746,5 +816,22 @@ namespace DouBOLDash
         public float xPosStart, yPosStart, zPosStart;
         public float xPosEnd, yPosEnd, zPosEnd;
         public uint groupID;
+    }
+
+    struct KartPointObject
+    {
+        public float xPos, yPos, zPos;
+        public float xScale, yScale, zScale;
+        public int xRot, yRot, zRot;
+        public byte polePos, playerID;
+        public double rotation;
+    }
+
+    public struct RespawnObject
+    {
+        public float xPos, yPos, zPos;
+        public int xRot, yRot, zRot;
+        public uint respawnID, unk1, unk2, unk3;
+        public double rotation;
     }
 }
