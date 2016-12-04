@@ -404,15 +404,15 @@ namespace DouBOLDash
         }
     }
 
-    class TrackObject : PositionObject
+    class TrackObject : LevelObj
     {
         LevelObject lvlobj = new LevelObject();
         List<LevelObject> lvldict = new List<LevelObject>();
 
         public float xPos, yPos, zPos;
         public float xScale, yScale, zScale;
-        public int xRot, yRot, zRot;
         public double rotation;
+        public int xRot, yRot, zRot;
         public uint objID;
         public int routeID;
         public long unk1, unk2, unk3;
@@ -429,6 +429,8 @@ namespace DouBOLDash
             this.xRot = 0;
             this.yRot = 0;
             this.zRot = 0;
+
+            this.rotation = 0;
 
             this.objID = 0;
             this.routeID = 0;
@@ -457,13 +459,16 @@ namespace DouBOLDash
                 lvlobj.objID = reader.ReadUInt16();
                 lvlobj.routeID = reader.ReadInt16();
 
+                MiscHacks misc = new MiscHacks();
+                lvlobj.modelName = misc.returnModel(lvlobj.objID);
+
                 lvlobj.unk1 = reader.ReadInt64();
                 lvlobj.unk2 = reader.ReadInt64();
                 lvlobj.unk3 = reader.ReadInt64();
 
                 lvlobj.ID = i;
 
-                lvlobj.rotation = MiscHacks.returnRotations(this.xRot, this.yRot);
+                lvlobj.rotation = MiscHacks.returnRotations(lvlobj.xRot, lvlobj.yRot);
 
                 lvldict.Add(lvlobj);
             }
@@ -569,6 +574,9 @@ namespace DouBOLDash
 
     class Area : LevelObj
     {
+        AreaObject areaObj = new AreaObject();
+        List<AreaObject> areaDict = new List<AreaObject>();
+
         float xPos, yPos, zPos;
         float xScale, yScale, zScale;
         int xRot, yRot, zRot;
@@ -600,31 +608,41 @@ namespace DouBOLDash
         {
             for (uint i = 0; i < count; i++)
             {
-                this.xPos = reader.ReadSingle();
-                this.yPos = reader.ReadSingle();
-                this.zPos = reader.ReadSingle();
+                areaObj.xPos = reader.ReadSingle();
+                areaObj.yPos = reader.ReadSingle();
+                areaObj.zPos = reader.ReadSingle();
 
-                this.xScale = reader.ReadSingle();
-                this.yScale = reader.ReadSingle();
-                this.zScale = reader.ReadSingle();
+                areaObj.xScale = reader.ReadSingle();
+                areaObj.yScale = reader.ReadSingle();
+                areaObj.zScale = reader.ReadSingle();
 
-                this.xRot = reader.ReadInt32();
-                this.yRot = reader.ReadInt32();
-                this.zRot = reader.ReadInt32();
+                areaObj.xRot = reader.ReadInt32();
+                areaObj.yRot = reader.ReadInt32();
+                areaObj.zRot = reader.ReadInt32();
 
-                rotation = MiscHacks.returnRotations(this.xRot, this.yRot);
+                rotation = MiscHacks.returnRotations(areaObj.xRot, areaObj.yRot);
 
-                this.unk1 = reader.ReadUInt16();
-                this.unk2 = reader.ReadUInt16();
+                areaObj.unk1 = reader.ReadUInt16();
+                areaObj.unk2 = reader.ReadUInt16();
 
-                this.unk3 = reader.ReadInt64();
-                this.unk4 = reader.ReadInt64();
+                areaObj.unk3 = reader.ReadInt64();
+                areaObj.unk4 = reader.ReadInt64();
+
+                areaDict.Add(areaObj);
             }
+        }
+
+        public List<AreaObject> returnList()
+        {
+            return areaDict;
         }
     }
 
     class Camera : LevelObj
     {
+        CameraObject camObj = new CameraObject();
+        List<CameraObject> camDict = new List<CameraObject>();
+
         float xView1, yView1, zView1;
         int xRot, yRot, zRot;
         float xView2, yView2, zView2;
@@ -673,43 +691,49 @@ namespace DouBOLDash
 
         public void Parse(EndianBinaryReader reader, uint count)
         {
-            Console.WriteLine(count);
             for (uint i = 0; i < count; i++)
             {
-                this.xView1 = reader.ReadSingle();
-                this.yView1 = reader.ReadSingle();
-                this.zView1 = reader.ReadSingle();
+                camObj.xView1 = reader.ReadSingle();
+                camObj.yView1 = reader.ReadSingle();
+                camObj.zView1 = reader.ReadSingle();
 
-                this.xRot = reader.ReadInt32();
-                this.yRot = reader.ReadInt32();
-                this.zRot = reader.ReadInt32();
+                camObj.xRot = reader.ReadInt32();
+                camObj.yRot = reader.ReadInt32();
+                camObj.zRot = reader.ReadInt32();
 
-                rotation = MiscHacks.returnRotations(this.xRot, this.yRot);
+                rotation = MiscHacks.returnRotations(camObj.xRot, camObj.yRot);
 
-                this.xView2 = reader.ReadSingle();
-                this.yView2 = reader.ReadSingle();
-                this.zView2 = reader.ReadSingle();
+                camObj.xView2 = reader.ReadSingle();
+                camObj.yView2 = reader.ReadSingle();
+                camObj.zView2 = reader.ReadSingle();
 
-                this.xView3 = reader.ReadSingle();
-                this.yView3 = reader.ReadSingle();
-                this.zView3 = reader.ReadSingle();
+                camObj.xView3 = reader.ReadSingle();
+                camObj.yView3 = reader.ReadSingle();
+                camObj.zView3 = reader.ReadSingle();
 
-                this.unk1 = reader.ReadByte();
-                this.type = reader.ReadByte();
+                camObj.unk1 = reader.ReadByte();
+                camObj.type = reader.ReadByte();
 
-                this.startZoom = reader.ReadUInt16();
-                this.duration = reader.ReadUInt16();
-                this.unk2 = reader.ReadUInt16();
-                this.unk3 = reader.ReadUInt16();
-                this.unk4 = reader.ReadUInt16();
+                camObj.startZoom = reader.ReadUInt16();
+                camObj.duration = reader.ReadUInt16();
+                camObj.unk2 = reader.ReadUInt16();
+                camObj.unk3 = reader.ReadUInt16();
+                camObj.unk4 = reader.ReadUInt16();
 
-                this.routeID = reader.ReadInt16();
-                this.routeSpeed = reader.ReadUInt16();
-                this.endZoom = reader.ReadUInt16();
+                camObj.routeID = reader.ReadInt16();
+                camObj.routeSpeed = reader.ReadUInt16();
+                camObj.endZoom = reader.ReadUInt16();
 
-                this.nextCamera = reader.ReadInt16();
-                this.name = Encoding.ASCII.GetString(reader.ReadBytes(4));
+                camObj.nextCamera = reader.ReadInt16();
+                camObj.name = Encoding.ASCII.GetString(reader.ReadBytes(4));
+
+                camDict.Add(camObj);
             }
+        }
+
+        public List<CameraObject> returnList()
+        {
+            return camDict;
         }
     }
 
@@ -725,18 +749,18 @@ namespace DouBOLDash
 
         public Respawn()
         {
-            this.xPos = 0;
-            this.yPos = 0;
-            this.zPos = 0;
 
-            this.xRot = 0;
-            this.yRot = 0;
-            this.zRot = 0;
-
-            this.respawnID = 0;
-            this.unk1 = 0;
-            this.unk2 = 0;
-            this.unk3 = 0;
+            xPos = 0;
+            yPos = 0;
+            zPos = 0;
+            xRot = 0;
+            yRot = 0;
+            zRot = 0;
+            respawnID = 0;
+            unk1 = 0;
+            unk2 = 0;
+            unk3 = 0;
+            rotation = 0;
         }
 
         public void Parse(EndianBinaryReader reader, uint count)
@@ -751,7 +775,7 @@ namespace DouBOLDash
                 resObj.yRot = reader.ReadInt32();
                 resObj.zRot = reader.ReadInt32();
 
-                resObj.rotation = MiscHacks.returnRotations(this.xRot, this.yRot);
+                resObj.rotation = MiscHacks.returnRotations(resObj.xRot, resObj.yRot);
 
                 resObj.respawnID = reader.ReadUInt16();
                 resObj.unk1 = reader.ReadUInt16();
@@ -809,6 +833,7 @@ namespace DouBOLDash
         public int routeID;
         public long unk1, unk2, unk3;
         public uint ID;
+        public string modelName;
     }
 
     struct CheckpointObject
@@ -824,6 +849,31 @@ namespace DouBOLDash
         public float xScale, yScale, zScale;
         public int xRot, yRot, zRot;
         public byte polePos, playerID;
+        public double rotation;
+    }
+
+    struct AreaObject
+    {
+        public float xPos, yPos, zPos;
+        public float xScale, yScale, zScale;
+        public int xRot, yRot, zRot;
+        public uint unk1, unk2;
+        public long unk3, unk4;
+        public double rotation;
+    }
+
+    struct CameraObject
+    {
+        public float xView1, yView1, zView1;
+        public int xRot, yRot, zRot;
+        public float xView2, yView2, zView2;
+        public float xView3, yView3, zView3;
+        public byte unk1, type;
+        public uint startZoom, duration, unk2, unk3, unk4;
+        public int routeID;
+        public uint routeSpeed, endZoom;
+        public int nextCamera;
+        public string name;
         public double rotation;
     }
 

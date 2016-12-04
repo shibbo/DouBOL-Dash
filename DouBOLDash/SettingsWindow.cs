@@ -44,6 +44,14 @@ namespace DouBOLDash
                 showKartPos.Checked = true;
             else
                 showKartPos.Checked = false;
+            if (Properties.Settings.Default.showAreas == true)
+                showAreas.Checked = true;
+            else
+                showAreas.Checked = false;
+            if (Properties.Settings.Default.showCameras == true)
+                showCameras.Checked = true;
+            else
+                showCameras.Checked = false;
             if (Properties.Settings.Default.showRespawns == true)
                 showRespawns.Checked = true;
             else

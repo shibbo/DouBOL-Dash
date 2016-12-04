@@ -30,5 +30,10 @@ namespace DouBOLDash
             unk2.Value = (int)obj.unk2;
             unk3.Value = (int)obj.unk3;
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

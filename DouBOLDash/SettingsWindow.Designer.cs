@@ -142,7 +142,6 @@
             // showAreas
             // 
             this.showAreas.AutoSize = true;
-            this.showAreas.Enabled = false;
             this.showAreas.Location = new System.Drawing.Point(8, 195);
             this.showAreas.Name = "showAreas";
             this.showAreas.Size = new System.Drawing.Size(83, 17);
@@ -154,7 +153,6 @@
             // showCameras
             // 
             this.showCameras.AutoSize = true;
-            this.showCameras.Enabled = false;
             this.showCameras.Location = new System.Drawing.Point(8, 218);
             this.showCameras.Name = "showCameras";
             this.showCameras.Size = new System.Drawing.Size(97, 17);
