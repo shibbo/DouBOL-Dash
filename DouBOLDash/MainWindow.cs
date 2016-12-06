@@ -1218,13 +1218,20 @@ namespace DouBOLDash
                 bolInfo.sec1Offs = offset; // first entry ALWAYS has to be 0x7C
                 offset += (uint)bolInfo.sec1Count * 0x20;
 
-                bolInfo.sec2Offs = offset;
+                if (enemyRouteList.Items.Count == 0)
+                    bolInfo.sec1Offs = 0x7C;
+                else
+                    bolInfo.sec1Offs = offset;
 
                 uint sec2GroupSize = (uint)chckGroup.Items.Count * 0x14;
                 uint sec2EntrySize = (uint)chckList.Items.Count * 0x1C;
                 offset += sec2GroupSize + sec2EntrySize;
 
-                bolInfo.sec3Offs = offset;
+                if (chckGroup.Items.Count == 0)
+                    bolInfo.sec2Offs = 0x7C;
+                else
+                    bolInfo.sec2Offs = offset;
+
                 // after this is a breeze
 
                 uint sec3Size = (uint)routeGroupList.Items.Count * 0x10;
@@ -1255,7 +1262,10 @@ namespace DouBOLDash
                 uint sec8Size = (uint)cameraList.Items.Count * 0x48;
                 offset += sec8Size;
 
-                bolInfo.sec9Offs = offset;
+                if (respList.Items.Count == 0)
+                    bolInfo.sec9Offs = (uint)bolInfo.fileSize;
+                else
+                    bolInfo.sec9Offs = offset;
 
                 uint sec9Size = (uint)respList.Items.Count * 0x20;
                 offset += sec9Size;

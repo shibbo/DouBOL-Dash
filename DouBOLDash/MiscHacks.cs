@@ -16,7 +16,7 @@ namespace DouBOLDash
             double angle1;
             double radToDeg = 57.2957795;
             angle1 = radToDeg * Math.Atan2((double)yrot, (double)xrot);
-            angle1 = angle1 + 90;
+            angle1 = angle1 - 90;
 
             return Math.Round(angle1);
         }
@@ -42,10 +42,12 @@ namespace DouBOLDash
             {"E7F", "kuribo1"},
             {"E80", "pakkun"},
             {"E82", "mash_balloon"},
+            {"11A1", "nossie"},
             {"125D", "dossun1"},
             {"1389", "sanbo1"},
             {"1392", "deserttree1"},
-            {"138F", "antlion"}
+            {"138F", "antlion"},
+            {"13ED", "snowrock1"}
         };
 
         string name, obj;
