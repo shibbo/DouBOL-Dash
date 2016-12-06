@@ -22,6 +22,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -65,6 +66,7 @@
       <DependentUpon>BMDViewer.cs</DependentUpon>
     </Compile>
     <Compile Include="BOL.cs" />
+    <Compile Include="BTI.cs" />
     <Compile Include="ColorCubeRenderer.cs" />
     <Compile Include="Filesystembase.cs" />
     <Compile Include="Helper.cs" />

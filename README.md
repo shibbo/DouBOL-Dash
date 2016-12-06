@@ -9,7 +9,7 @@ First, clone or download the repo. To run from source, simply click the solution
 If you want to run the EXE, it's located in DouBOLDash/bin/Debug. Note: You have to have the game extracted, and be sure that the BOL you're opening is in the same directory as the bmd course model! If you just extracted the arc and did nothing else, it should be structured fine to work with the editor.
 
 # What's supported
-DouBOL Dash can parse every single section in the file except for the last one (that's unknown). It can also render objects, and checkpoints.
+Currently DouBOL Dash can read, render, and save everything except for the last 2 sections, which don't crash the game if removed. The editor just defaults their offsets to the filesize (which is what retail does), so it avoids a crash. Also, rotations are not saved, as they are defaulted to 0f, 0f, 0f until reversing the algorithm is fixed. Please report saving bugs to me!
 
 # Credits
 Thanks to StapleButter for the main BMD rendering code, and miluaces for minor changes. Icon was made by Kaio.

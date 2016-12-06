@@ -34,9 +34,9 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.groupInput = new System.Windows.Forms.NumericUpDown();
-            this.unk1 = new System.Windows.Forms.NumericUpDown();
-            this.unk2 = new System.Windows.Forms.NumericUpDown();
-            this.unk3 = new System.Windows.Forms.NumericUpDown();
+            this.unknown1 = new System.Windows.Forms.NumericUpDown();
+            this.unknown2 = new System.Windows.Forms.NumericUpDown();
+            this.unknown3 = new System.Windows.Forms.NumericUpDown();
             this.xInput = new System.Windows.Forms.NumericUpDown();
             this.yInput = new System.Windows.Forms.NumericUpDown();
             this.zInput = new System.Windows.Forms.NumericUpDown();
@@ -46,9 +46,9 @@
             this.label8 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.groupInput)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.unk1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.unk2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.unk3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.unknown1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.unknown2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.unknown3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xInput)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.yInput)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.zInput)).BeginInit();
@@ -117,56 +117,56 @@
             this.groupInput.Size = new System.Drawing.Size(140, 20);
             this.groupInput.TabIndex = 10;
             // 
-            // unk1
+            // unknown1
             // 
-            this.unk1.Location = new System.Drawing.Point(71, 143);
-            this.unk1.Maximum = new decimal(new int[] {
+            this.unknown1.Location = new System.Drawing.Point(71, 143);
+            this.unknown1.Maximum = new decimal(new int[] {
             999999,
             0,
             0,
             0});
-            this.unk1.Minimum = new decimal(new int[] {
+            this.unknown1.Minimum = new decimal(new int[] {
             999999,
             0,
             0,
             -2147483648});
-            this.unk1.Name = "unk1";
-            this.unk1.Size = new System.Drawing.Size(140, 20);
-            this.unk1.TabIndex = 11;
+            this.unknown1.Name = "unknown1";
+            this.unknown1.Size = new System.Drawing.Size(140, 20);
+            this.unknown1.TabIndex = 11;
             // 
-            // unk2
+            // unknown2
             // 
-            this.unk2.Location = new System.Drawing.Point(71, 169);
-            this.unk2.Maximum = new decimal(new int[] {
+            this.unknown2.Location = new System.Drawing.Point(71, 169);
+            this.unknown2.Maximum = new decimal(new int[] {
             999999,
             0,
             0,
             0});
-            this.unk2.Minimum = new decimal(new int[] {
+            this.unknown2.Minimum = new decimal(new int[] {
             999999,
             0,
             0,
             -2147483648});
-            this.unk2.Name = "unk2";
-            this.unk2.Size = new System.Drawing.Size(140, 20);
-            this.unk2.TabIndex = 12;
+            this.unknown2.Name = "unknown2";
+            this.unknown2.Size = new System.Drawing.Size(140, 20);
+            this.unknown2.TabIndex = 12;
             // 
-            // unk3
+            // unknown3
             // 
-            this.unk3.Location = new System.Drawing.Point(71, 195);
-            this.unk3.Maximum = new decimal(new int[] {
+            this.unknown3.Location = new System.Drawing.Point(71, 195);
+            this.unknown3.Maximum = new decimal(new int[] {
             999999,
             0,
             0,
             0});
-            this.unk3.Minimum = new decimal(new int[] {
+            this.unknown3.Minimum = new decimal(new int[] {
             999999,
             0,
             0,
             -2147483648});
-            this.unk3.Name = "unk3";
-            this.unk3.Size = new System.Drawing.Size(140, 20);
-            this.unk3.TabIndex = 13;
+            this.unknown3.Name = "unknown3";
+            this.unknown3.Size = new System.Drawing.Size(140, 20);
+            this.unknown3.TabIndex = 13;
             // 
             // xInput
             // 
@@ -289,9 +289,9 @@
             this.Controls.Add(this.zInput);
             this.Controls.Add(this.yInput);
             this.Controls.Add(this.xInput);
-            this.Controls.Add(this.unk3);
-            this.Controls.Add(this.unk2);
-            this.Controls.Add(this.unk1);
+            this.Controls.Add(this.unknown3);
+            this.Controls.Add(this.unknown2);
+            this.Controls.Add(this.unknown1);
             this.Controls.Add(this.groupInput);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
@@ -301,9 +301,9 @@
             this.Name = "RespawnEditor";
             this.Text = "Respawn Editor";
             ((System.ComponentModel.ISupportInitialize)(this.groupInput)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.unk1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.unk2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.unk3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.unknown1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.unknown2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.unknown3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.xInput)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.yInput)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.zInput)).EndInit();
@@ -320,9 +320,9 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.NumericUpDown groupInput;
-        private System.Windows.Forms.NumericUpDown unk1;
-        private System.Windows.Forms.NumericUpDown unk2;
-        private System.Windows.Forms.NumericUpDown unk3;
+        private System.Windows.Forms.NumericUpDown unknown1;
+        private System.Windows.Forms.NumericUpDown unknown2;
+        private System.Windows.Forms.NumericUpDown unknown3;
         private System.Windows.Forms.NumericUpDown xInput;
         private System.Windows.Forms.NumericUpDown yInput;
         private System.Windows.Forms.NumericUpDown zInput;

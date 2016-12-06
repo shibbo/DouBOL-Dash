@@ -16,7 +16,7 @@ namespace DouBOLDash
 {
     public partial class MainWindow : Form
     {
-
+        /* Here, variables that will be used throughout the file are here*/
         public string FORM_NAME = "DouBOL Dash";
         public string VERSION = " v0.1 ";
         public string CURRENT_FILE = "";
@@ -43,14 +43,48 @@ namespace DouBOLDash
         private const float CUBESIZE = 50f;
         bool loaded = false;
 
+        List<BOLInformation> bolInf;
+
         List<EnemyRoute> enmRoute;
+
         List<RoutePointObject> rpobj;
+        List<RouteGroupSetup> grpSetup;
+
         List<CheckpointObject> chkobj;
+        List<CheckpointGroupObject> chkGRP;
+
         List<LevelObject> lvlobj;
         List<KartPointObject> kartobj;
         List<AreaObject> areaobj;
         List<CameraObject> camobj;
         List<RespawnObject> resObj;
+
+        // vars for TrackInfoEditor
+        public float unk1;
+        public byte musicID, lapCount;
+
+        Dictionary<int, string> idToMusic = new Dictionary<int, string>()
+        {
+            {0x21, "Baby Park"},
+            {0x22, "Peach Beach"},
+            {0x23, "Daisy Cruiser"},
+            {0x24, "Luigi Circuit"},
+            {0x25, "Mario Circuit"},
+            {0x26, "Yoshi Circuit"},
+            {0x27, "Unknown"},
+            {0x28, "Mushroom Bridge"},
+            {0x29, "Mushroom City"},
+            {0x2A, "Waluigi Stadium"},
+            {0x2B, "Wario Colosseum"},
+            {0x2C, "Dino Dino Jungle"},
+            {0x2D, "DK Mountain"},
+            {0x2E, "Unknown"},
+            {0x2F, "Bowser's Castle"},
+            {0x30, "Unknown"},
+            {0x31, "Rainbow Road"},
+            {0x32, "Dry Dry Desert"},
+            {0x33, "Sherbet Land"}
+        };
 
         Dictionary<string, Bmd> objModelList = new Dictionary<string, Bmd>();
 
@@ -69,6 +103,8 @@ namespace DouBOLDash
         int camList = 0;
         public int respawnList = 0;
 
+        Image minimap;
+
         // selected object render box
         int selectedList = 0;
 
@@ -82,8 +118,21 @@ namespace DouBOLDash
             tabControl1.SizeMode = TabSizeMode.Fixed;
             tabControl1.ShowToolTips = true;
 
+            foreach(KeyValuePair<int, string> entry in idToMusic)
+            {
+                musicSelect.Items.Add(entry.Value);
+            }
+
             if (Properties.Settings.Default.envDir == "")
                 doFolderChoose();
+        }
+
+        private void setMusic(int id)
+        {
+            if (idToMusic.ContainsKey(id))
+                musicSelect.Text = idToMusic[id];
+            else
+                musicSelect.Text = "wat";
         }
 
         private void doFolderChoose()
@@ -115,17 +164,30 @@ namespace DouBOLDash
 
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                
-                //enemyRouteList.Enabled = true;
-                //enemyRouteList.Items.Clear();
-                //enemyRouteList.SelectedItem = null;
+                saveToolStripMenuItem.Enabled = true;
+                saveAsToolStripMenuItem.Enabled = true;
+                addToolStripMenuItem.Enabled = true;
+                deleteToolStripMenuItem.Enabled = true;
+
+                // clear all listboxes
+                enemyRouteList.Items.Clear();
+                chckGroup.Items.Clear();
+                chckList.Items.Clear();
+                routeGroupList.Items.Clear();
+                routeList.Items.Clear();
+                objList.Items.Clear();
+                kartPointList.Items.Clear();
+                areaList.Items.Clear();
+                cameraList.Items.Clear();
+                respList.Items.Clear();
+
                 string dirName = Path.GetDirectoryName(openFileDialog1.FileName);
                 string fileName = Path.GetFileNameWithoutExtension(openFileDialog1.FileName);
 
                 Properties.Settings.Default.curDir = dirName;
-                Properties.Settings.Default.Save();
                 Properties.Settings.Default.curFile = fileName;
                 Properties.Settings.Default.Save();
+
                 if (loaded)
                 {
                     // if these aren't cleared, then we get an out of bounds
@@ -140,6 +202,7 @@ namespace DouBOLDash
                 {
                     BOL bol = new BOL();
                     bol.Parse(reader);
+                    bolInf = bol.returnList();
 
                     uint offs0 = bol.returnOffset(0); // enemy/item point offset
                     uint offs1 = bol.returnOffset(1); // checkpoint groups
@@ -170,6 +233,13 @@ namespace DouBOLDash
                     uint sec3Count = offs3 - offs2;
                     sec3Count = sec3Count / 0x10;
 
+                    // get the filesize for future offset reference
+                    foreach (BOLInformation bolInfo in bolInf)
+                    {
+                        FileInfo f = new FileInfo(openFileDialog1.FileName);
+                        bolInfo.fileSize = (int)f.Length;
+                    }
+
                     EnemyRoutes enmRoutes = new EnemyRoutes();
                     enmRoutes.Parse(reader, sec1Count);
                     enmRoute = enmRoutes.returnList();
@@ -177,6 +247,7 @@ namespace DouBOLDash
                     CheckpointGroup chckGroups = new CheckpointGroup();
                     chckGroups.Parse(reader, count1);
                     Dictionary<uint, uint> dictionary1 = chckGroups.returnDictionary();
+                    chkGRP = chckGroups.returnList();
 
                     Checkpoint chckPt = new Checkpoint();
                     chckPt.Parse(reader, dictionary1, count1);
@@ -184,7 +255,8 @@ namespace DouBOLDash
 
                     RouteGroup routeGrp = new RouteGroup();
                     routeGrp.Parse(reader, sec3Count);
-                    Dictionary<uint, GroupStruct> dictionary2 = routeGrp.returnDictionary();
+                    Dictionary<uint, RouteGroupSetup> dictionary2 = routeGrp.returnDictionary();
+                    grpSetup = routeGrp.returnList();
 
                     RoutePoint routePt = new RoutePoint();
                     routePt.Parse(reader, dictionary2);
@@ -219,6 +291,15 @@ namespace DouBOLDash
                     // BuildScene will also handle changed objects in the scene, so we don't
                     // want to load the same course model again. waste of time.
 
+                    string bti_path = Properties.Settings.Default.curFile.Replace("course", "map");
+                    int mapWidth, mapHeight;
+
+                    FileBase fileb = new FileBase();
+                    fileb.Stream = new FileStream(Properties.Settings.Default.curDir  + "\\" + bti_path + ".bti", FileMode.Open);
+                    minimap = BTIFile.ReadBTIToBitmap(fileb);
+                    pictureBox1.Image = minimap;
+                    fileb.Close();
+
                     courseList = GL.GenLists(1);
 
                     if (Properties.Settings.Default.bmdEnabled != false)
@@ -251,6 +332,19 @@ namespace DouBOLDash
 
         public void BuildScene()
         {
+            foreach (BOLInformation bolEntry in bolInf)
+            {
+                musicID = bolEntry.musicID;
+                lapCount = bolEntry.numLaps;
+
+                unknown3.Value = (decimal)bolEntry.unk3;
+                unknown4.Value = (decimal)bolEntry.unk4;
+                unknown5.Value = (decimal)bolEntry.unk5;
+
+                setMusic(musicID);
+                lapCounter.Value = lapCount;
+            }
+
             uint count = 0;
             float posX1, posY1, posZ1;
             float posX2 = 0, posY2 = 0, posZ2 = 0;
@@ -318,11 +412,22 @@ namespace DouBOLDash
             }
             GL.EndList();
 
+            foreach(CheckpointGroupObject objEntry in chkGRP)
+            {
+                chckGroup.Items.Add(objEntry);
+            }
+
+            foreach(RouteGroupSetup routeSetup in grpSetup)
+            {
+                routeGroupList.Items.Add(routeSetup);
+            }
+
             uint groupID;
             uint currentID = 0;
             float curX, curY, curZ;
             float prevX = 0, prevY = 0, prevZ = 0;
             bool firstEntry = true;
+            int seccount = 0;
             routePointList = GL.GenLists(1);
             GL.NewList(routePointList, ListMode.Compile);
             foreach (RoutePointObject objEntry in rpobj)
@@ -344,6 +449,7 @@ namespace DouBOLDash
                     // if it's the first entry, we set this to false so it doesn't run through again
                     if (firstEntry)
                     {
+                        seccount += 1;
                         GL.PushMatrix();
                         GL.Translate(curX, curY, curZ);
                         GL.Scale(1f, 1f, 1f);
@@ -459,14 +565,12 @@ namespace DouBOLDash
                 {
                     if (objModelList.ContainsKey(objEntry.modelName))
                     {
-                        Console.WriteLine("BMD entry exists. Using that one.");
                         objModelList.TryGetValue(objEntry.modelName, out objModel);
                         GL.Scale(objEntry.xScale, objEntry.yScale, objEntry.zScale);
                         DrawBMD(objModel);
                     }
                     else
                     {
-                        Console.WriteLine("BMD entry doesn't exist, making new one.");
                         FileBase objFB = new FileBase();
                         objFB.Stream = new FileStream(Properties.Settings.Default.curDir + "\\objects\\" + objEntry.modelName + ".bmd", FileMode.Open);
                         Bmd obj = new Bmd(objFB);
@@ -537,7 +641,6 @@ namespace DouBOLDash
             GL.NewList(respawnList, ListMode.Compile);
             foreach (RespawnObject objEntry in resObj)
             {
-                respList.Items.Add(objEntry);
                 loadingLabel.Text = "Loading respawn...";
                 GL.PushMatrix();
                 GL.Translate(objEntry.xPos, objEntry.yPos, objEntry.zPos);
@@ -546,6 +649,7 @@ namespace DouBOLDash
                 GL.Scale(1f, 1f, 1f);
                 DrawCube(1f, 0.863f, 0f, true, true, false);
                 GL.PopMatrix();
+                respList.Items.Add(objEntry);
             }
             GL.EndList();
 
@@ -833,11 +937,6 @@ namespace DouBOLDash
             bmdviewer.Show();
         }
 
-        private void listBox1_MouseDoubleClick(object sender, MouseEventArgs e)
-        {
-
-        }
-
         private void panel1_Paint(object sender, PaintEventArgs e)
         {
 
@@ -950,8 +1049,13 @@ namespace DouBOLDash
 
         private void respList_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            RespawnEditor res = new RespawnEditor();
-            res.Show();
+            if (respList.SelectedIndex != -1)
+            {
+                RespawnEditor res = new RespawnEditor();
+                res.getLists(respList, glControl1, respawnList);
+                res.loadData((RespawnObject)respList.SelectedItem);
+                res.Show();
+            }
         }
 
         private void respawnToolStripMenuItem1_Click(object sender, EventArgs e)
@@ -1077,6 +1181,217 @@ namespace DouBOLDash
 
                 selectionInfo.Text = "Currently selected: Route point at (" + camObj.xView1 + ", " + camObj.yView1 + ", " + camObj.zView1 + ") with name " + camObj.name + ".";
                 glControl1.Refresh();
+            }
+        }
+
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // saves to the file already open
+            saveCourse(Properties.Settings.Default.curDir + "\\" + Properties.Settings.Default.curFile + ".bol");
+        }
+
+
+        private void saveCourse(string file)
+        {
+            enmRoute.Clear(); // enemy route list
+            chkobj.Clear(); // checkpoint list
+            rpobj.Clear(); // route point list
+            lvlobj.Clear(); // object list
+            kartobj.Clear(); // kart list
+            areaobj.Clear(); // area list
+            camobj.Clear(); // camera list
+            resObj.Clear(); // respawn list
+
+            // here we set the information that goes into the reader (mostly caluclated crap though)
+            foreach (BOLInformation bolInfo in bolInf)
+            {
+                // why would you even need negative entry counts
+                bolInfo.sec1Count = (ushort)enemyRouteList.Items.Count;
+                //bolInfo.sec2Count this doesn't have to be calculated until we make a list for it
+                bolInfo.sec5Count = (ushort)objList.Items.Count;
+                bolInfo.sec7Count = (ushort)areaList.Items.Count;
+                bolInfo.sec8Count = (ushort)cameraList.Items.Count;
+                //bolInfo.sec3Count this doesn't have to be calculated until we make a list for it
+                bolInfo.sec9Count = (ushort)respList.Items.Count;
+
+                uint offset = 0x7C;
+                bolInfo.sec1Offs = offset; // first entry ALWAYS has to be 0x7C
+                offset += (uint)bolInfo.sec1Count * 0x20;
+
+                bolInfo.sec2Offs = offset;
+
+                uint sec2GroupSize = (uint)chckGroup.Items.Count * 0x14;
+                uint sec2EntrySize = (uint)chckList.Items.Count * 0x1C;
+                offset += sec2GroupSize + sec2EntrySize;
+
+                bolInfo.sec3Offs = offset;
+                // after this is a breeze
+
+                uint sec3Size = (uint)routeGroupList.Items.Count * 0x10;
+                offset += sec3Size;
+
+                bolInfo.sec4Offs = offset;
+
+                uint sec4Size = (uint)routeList.Items.Count * 0x20;
+                offset += sec4Size;
+
+                bolInfo.sec5Offs = offset;
+
+                uint sec5Size = (uint)objList.Items.Count * 0x40;
+                offset += sec5Size;
+
+                bolInfo.sec6Offs = offset;
+
+                uint sec6Size = (uint)kartPointList.Items.Count * 0x28;
+                offset += sec6Size;
+
+                bolInfo.sec7Offs = offset;
+
+                uint sec7Size = (uint)areaList.Items.Count * 0x38;
+                offset += sec7Size;
+
+                bolInfo.sec8Offs = offset;
+
+                uint sec8Size = (uint)cameraList.Items.Count * 0x48;
+                offset += sec8Size;
+
+                bolInfo.sec9Offs = offset;
+
+                uint sec9Size = (uint)respList.Items.Count * 0x20;
+                offset += sec9Size;
+
+                // insert section 10 offset here
+            }
+
+            foreach (EnemyRoute enmObj in enemyRouteList.Items)
+            {
+                enmRoute.Add(enmObj);
+            }
+
+            foreach (CheckpointObject chkObj in chckList.Items)
+            {
+                chkobj.Add(chkObj);
+            }
+
+            foreach (RoutePointObject routeObj in routeList.Items)
+            {
+                rpobj.Add(routeObj);
+            }
+
+            foreach (LevelObject lvlObj in objList.Items)
+            {
+                lvlobj.Add(lvlObj);
+            }
+
+            foreach (KartPointObject kpObj in kartPointList.Items)
+            {
+                kartobj.Add(kpObj);
+            }
+
+            foreach (AreaObject areaObj in areaList.Items)
+            {
+                areaobj.Add(areaObj);
+            }
+
+            foreach (CameraObject camObj in cameraList.Items)
+            {
+                camobj.Add(camObj);
+            }
+
+            foreach (RespawnObject respObj in respList.Items)
+            {
+                resObj.Add(respObj);
+            }
+
+            /* calling these methods in order is CRUCIAL! */
+            using (EndianBinaryWriter writer = new EndianBinaryWriter(File.Open(file, FileMode.Create)))
+            {
+                BOL bol = new BOL();
+                bol.Write(writer, bolInf);
+
+                EnemyRoutes routes = new EnemyRoutes();
+                routes.Write(writer, enmRoute);
+
+                CheckpointGroup chckGrp = new CheckpointGroup();
+                chckGrp.Write(writer, chkGRP);
+
+                Checkpoint checkpoint = new Checkpoint();
+                checkpoint.Write(writer, chkobj);
+
+                RouteGroup routeGrp = new RouteGroup();
+                routeGrp.Write(writer, grpSetup);
+
+                RoutePoint routePt = new RoutePoint();
+                routePt.Write(writer, rpobj);
+
+                TrackObject levelObj = new TrackObject();
+                levelObj.Write(writer, lvlobj);
+
+                KartPoint kartpoint = new KartPoint();
+                kartpoint.Write(writer, kartobj);
+
+                Area area = new Area();
+                area.Write(writer, areaobj);
+
+                Camera cameraObj = new Camera();
+                cameraObj.Write(writer, camobj);
+
+                Respawn respObj = new Respawn();
+                respObj.Write(writer, resObj);
+
+                writer.Close();
+            }
+        }
+
+        private void unknown1_ValueChanged(object sender, EventArgs e)
+        {
+            foreach (BOLInformation bol in bolInf)
+            {
+                bol.unk3 = (float)unknown3.Value;
+            }
+        }
+
+        private void lapCounter_ValueChanged(object sender, EventArgs e)
+        {
+            foreach (BOLInformation bol in bolInf)
+            {
+                bol.numLaps = (byte)lapCounter.Value;
+            }
+        }
+
+        private void unknown4_ValueChanged(object sender, EventArgs e)
+        {
+            foreach (BOLInformation bol in bolInf)
+            {
+                bol.unk4 = (float)unknown4.Value;
+            }
+        }
+
+        private void unknown5_ValueChanged(object sender, EventArgs e)
+        {
+            foreach (BOLInformation bol in bolInf)
+            {
+                bol.unk5 = (float)unknown5.Value;
+            }
+        }
+
+        private void musicSelect_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            foreach (BOLInformation bol in bolInf)
+            {
+                int id = musicSelect.SelectedIndex + 0x21;
+                bol.musicID = (byte)id;
+            }
+        }
+
+        private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog sfd = new SaveFileDialog();
+            sfd.Filter = "BOL files (*.bol)|*.bol|All files (*.*)|*.*";
+
+            if (sfd.ShowDialog() == DialogResult.OK)
+            {
+                saveCourse(sfd.FileName);
             }
         }
 

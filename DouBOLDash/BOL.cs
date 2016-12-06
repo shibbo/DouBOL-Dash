@@ -7,7 +7,7 @@ using System.IO;
 
 namespace DouBOLDash
 {
-    class BOL : LevelObj
+    class BOL
     {
         /* class that represents a BOL header */
         // this will store the offsets we use in Form1.cs
@@ -15,11 +15,14 @@ namespace DouBOLDash
         List<uint> offsets = new List<uint>();
         List<uint> counts = new List<uint>();
 
+        List<BOLInformation> bolList = new List<BOLInformation>();
+        BOLInformation bolInfo = new BOLInformation();
+
         string type;
-        float unk3;
-        uint magic, unk1, unk2, unk4, unk5;
+        float unk3, unk4, unk5;
+        uint magic, unk1, unk2;
         byte numLaps, musicID;
-        uint sec1Count, sec2Count, sec3Count, sec5Count, sec7Count, sec8Count, sec9Count;
+        ushort sec1Count, sec2Count, sec3Count, sec5Count, sec7Count, sec8Count, sec9Count;
         uint unk6, unk7, unk8, unk9, unk10, unk11, fileStart;
         uint sec1Offs, sec2Offs, sec3Offs, sec4Offs, sec5Offs, sec6Offs, sec7Offs, sec8Offs, sec9Offs, sec10Offs, sec11Offs;
 
@@ -66,67 +69,122 @@ namespace DouBOLDash
 
         public void Parse(EndianBinaryReader reader)
         {
-            this.magic = reader.ReadUInt32();
-            this.unk1 = reader.ReadUInt32();
-            this.unk2 = reader.ReadUInt32();
+            bolInfo.magic = reader.ReadUInt32();
+            bolInfo.unk1 = reader.ReadUInt32();
+            bolInfo.unk2 = reader.ReadUInt32();
 
-            this.unk3 = reader.ReadSingle();
+            bolInfo.unk3 = reader.ReadSingle();
+            bolInfo.unk4 = reader.ReadSingle();
+            bolInfo.unk5 = reader.ReadSingle();
 
-            this.unk4 = reader.ReadUInt32();
-            this.unk5 = reader.ReadUInt32();
+            bolInfo.numLaps = reader.ReadByte();
+            bolInfo.musicID = reader.ReadByte();
 
-            this.numLaps = reader.ReadByte();
-            this.musicID = reader.ReadByte();
+            bolInfo.sec1Count = reader.ReadUInt16();
+            bolInfo.sec2Count = reader.ReadUInt16();
+            bolInfo.sec5Count = reader.ReadUInt16();
+            bolInfo.sec7Count = reader.ReadUInt16();
+            bolInfo.sec8Count = reader.ReadUInt16();
+            bolInfo.sec3Count = reader.ReadUInt16();
+            bolInfo.sec9Count = reader.ReadUInt16();
 
-            this.sec1Count = reader.ReadUInt16();
-            this.sec2Count = reader.ReadUInt16();
-            this.sec5Count = reader.ReadUInt16();
-            this.sec7Count = reader.ReadUInt16();
-            this.sec8Count = reader.ReadUInt16();
-            this.sec3Count = reader.ReadUInt16();
-            this.sec9Count = reader.ReadUInt16();
+            counts.Add(bolInfo.sec1Count);
+            counts.Add(bolInfo.sec2Count);
+            counts.Add(bolInfo.sec5Count);
+            counts.Add(bolInfo.sec7Count);
+            counts.Add(bolInfo.sec8Count);
+            counts.Add(bolInfo.sec3Count);
+            counts.Add(bolInfo.sec9Count);
 
-            counts.Add(this.sec1Count);
-            counts.Add(this.sec2Count);
-            counts.Add(this.sec5Count);
-            counts.Add(this.sec7Count);
-            counts.Add(this.sec8Count);
-            counts.Add(this.sec3Count);
-            counts.Add(this.sec9Count);
+            bolInfo.unk6 = reader.ReadUInt32();
+            bolInfo.unk7 = reader.ReadUInt32();
+            bolInfo.unk8 = reader.ReadUInt32();
+            bolInfo.unk9 = reader.ReadUInt32();
+            bolInfo.unk10 = reader.ReadUInt32();
+            bolInfo.unk11 = reader.ReadUInt32();
+            bolInfo.fileStart = reader.ReadUInt32();
 
-            this.unk6 = reader.ReadUInt32();
-            this.unk7 = reader.ReadUInt32();
-            this.unk8 = reader.ReadUInt32();
-            this.unk9 = reader.ReadUInt32();
-            this.unk10 = reader.ReadUInt32();
-            this.unk11 = reader.ReadUInt32();
-            this.fileStart = reader.ReadUInt32();
+            bolInfo.sec1Offs = reader.ReadUInt32();
+            bolInfo.sec2Offs = reader.ReadUInt32();
+            bolInfo.sec3Offs = reader.ReadUInt32();
+            bolInfo.sec4Offs = reader.ReadUInt32();
+            bolInfo.sec5Offs = reader.ReadUInt32();
+            bolInfo.sec6Offs = reader.ReadUInt32();
+            bolInfo.sec7Offs = reader.ReadUInt32();
+            bolInfo.sec8Offs = reader.ReadUInt32();
+            bolInfo.sec9Offs = reader.ReadUInt32();
+            bolInfo.sec10Offs = reader.ReadUInt32();
+            bolInfo.sec11Offs = reader.ReadUInt32();
 
-            this.sec1Offs = reader.ReadUInt32();
-            this.sec2Offs = reader.ReadUInt32();
-            this.sec3Offs = reader.ReadUInt32();
-            this.sec4Offs = reader.ReadUInt32();
-            this.sec5Offs = reader.ReadUInt32();
-            this.sec6Offs = reader.ReadUInt32();
-            this.sec7Offs = reader.ReadUInt32();
-            this.sec8Offs = reader.ReadUInt32();
-            this.sec9Offs = reader.ReadUInt32();
-            this.sec10Offs = reader.ReadUInt32();
-            this.sec11Offs = reader.ReadUInt32();
-
-            offsets.Add(this.sec1Offs);
-            offsets.Add(this.sec2Offs);
-            offsets.Add(this.sec3Offs);
-            offsets.Add(this.sec4Offs);
-            offsets.Add(this.sec5Offs);
-            offsets.Add(this.sec6Offs);
-            offsets.Add(this.sec7Offs);
-            offsets.Add(this.sec8Offs);
-            offsets.Add(this.sec9Offs);
-            offsets.Add(this.sec10Offs);
-            offsets.Add(this.sec11Offs);
+            offsets.Add(bolInfo.sec1Offs);
+            offsets.Add(bolInfo.sec2Offs);
+            offsets.Add(bolInfo.sec3Offs);
+            offsets.Add(bolInfo.sec4Offs);
+            offsets.Add(bolInfo.sec5Offs);
+            offsets.Add(bolInfo.sec6Offs);
+            offsets.Add(bolInfo.sec7Offs);
+            offsets.Add(bolInfo.sec8Offs);
+            offsets.Add(bolInfo.sec9Offs);
+            offsets.Add(bolInfo.sec10Offs);
+            offsets.Add(bolInfo.sec11Offs);
 
             reader.ReadBytes(12); // padding
+
+            bolList.Add(bolInfo);
+        }
+
+        public void Write(EndianBinaryWriter writer, List<BOLInformation> listBOL)
+        {
+            byte pad = 0;
+            foreach (BOLInformation bolInfo in listBOL)
+            {
+                writer.Write(0x30303135);
+                writer.Write(bolInfo.unk1);
+                writer.Write(bolInfo.unk2);
+
+                writer.Write(bolInfo.unk3);
+                writer.Write(bolInfo.unk4);
+                writer.Write(bolInfo.unk5);
+
+                writer.Write(bolInfo.numLaps);
+                writer.Write(bolInfo.musicID);
+
+                writer.Write(bolInfo.sec1Count);
+                writer.Write(bolInfo.sec2Count);
+                writer.Write(bolInfo.sec5Count);
+                writer.Write(bolInfo.sec7Count);
+                writer.Write(bolInfo.sec8Count);
+                writer.Write(bolInfo.sec3Count);
+                writer.Write(bolInfo.sec9Count);
+
+                writer.Write(bolInfo.unk6);
+                writer.Write(bolInfo.unk7);
+                writer.Write(bolInfo.unk8);
+                writer.Write(bolInfo.unk9);
+                writer.Write(bolInfo.unk10);
+                writer.Write(bolInfo.unk11);
+                writer.Write(bolInfo.fileStart); // if this isn't 0, rip
+
+                writer.Write(bolInfo.sec1Offs);
+                writer.Write(bolInfo.sec2Offs);
+                writer.Write(bolInfo.sec3Offs);
+                writer.Write(bolInfo.sec4Offs);
+                writer.Write(bolInfo.sec5Offs);
+                writer.Write(bolInfo.sec6Offs);
+                writer.Write(bolInfo.sec7Offs);
+                writer.Write(bolInfo.sec8Offs);
+                writer.Write(bolInfo.sec9Offs);
+                writer.Write(bolInfo.fileSize); // just write the filesize here (section 10)
+                writer.Write(bolInfo.fileSize); // just write the filesize here (section 11)
+
+                for (int i = 0; i < 12; i++)
+                    writer.Write(pad);
+            }
+        }
+
+        public List<BOLInformation> returnList()
+        {
+            return bolList;
         }
 
         public uint returnOffset(int id)
@@ -142,15 +200,15 @@ namespace DouBOLDash
         }
     }
 
-    class EnemyRoutes : LevelObj
+    class EnemyRoutes
     {
         EnemyRoute enmObj = new EnemyRoute();
         List<EnemyRoute> enmdict = new List<EnemyRoute>();
 
         float xPos, yPos, zPos;
-        int pointSetting, link;
+        short pointSetting, link;
         float scale;
-        uint groupSetting;
+        ushort groupSetting;
         byte group, pointSetting2;
 
         public EnemyRoutes()
@@ -195,6 +253,29 @@ namespace DouBOLDash
             }
         }
 
+        public void Write(EndianBinaryWriter writer, List<EnemyRoute> enmList)
+        {
+            byte pad = 0;
+            foreach(EnemyRoute enmObj in enmList)
+            {
+                writer.Write(enmObj.xPos);
+                writer.Write(enmObj.yPos);
+                writer.Write(enmObj.zPos);
+
+                writer.Write(enmObj.pointSetting);
+                writer.Write(enmObj.link);
+                writer.Write(enmObj.scale);
+                writer.Write(enmObj.groupSetting);
+
+                writer.Write(enmObj.group);
+                writer.Write(enmObj.pointSetting2);
+
+                for (int i = 0; i < 8; i++)
+                    writer.Write(pad);
+
+            }
+        }
+
         public List<EnemyRoute> returnList()
         {
             return enmdict;
@@ -202,12 +283,14 @@ namespace DouBOLDash
 
     }
 
-    class CheckpointGroup : LevelObj
+    class CheckpointGroup
     {
-        uint pointLength, groupLink, index;
-        int prev1, prev2, prev3, prev4;
-        int next1, next2, next3, next4;
+        ushort pointLength, groupLink, index;
+        short prev1, prev2, prev3, prev4;
+        short next1, next2, next3, next4;
 
+        CheckpointGroupObject chckObj = new CheckpointGroupObject();
+        List<CheckpointGroupObject> chckGrp = new List<CheckpointGroupObject>();
         Dictionary<uint, uint> dict1 = new Dictionary<uint, uint>();
 
         public CheckpointGroup()
@@ -233,26 +316,51 @@ namespace DouBOLDash
                 Console.WriteLine("CheckpointGroup is 0, skipping...");
             else
             {
-                for (uint i = 0; i < count; i++)
+                for (ushort i = 0; i < count; i++)
                 {
-                    this.pointLength = reader.ReadUInt16();
-                    this.groupLink = reader.ReadUInt16();
+                    chckObj.pointLength = reader.ReadUInt16();
+                    chckObj.groupLink = reader.ReadUInt16();
 
-                    this.prev1 = reader.ReadInt16();
-                    this.prev2 = reader.ReadInt16();
-                    this.prev3 = reader.ReadInt16();
-                    this.prev4 = reader.ReadInt16();
+                    chckObj.prev1 = reader.ReadInt16();
+                    chckObj.prev2 = reader.ReadInt16();
+                    chckObj.prev3 = reader.ReadInt16();
+                    chckObj.prev4 = reader.ReadInt16();
 
-                    this.next1 = reader.ReadInt16();
-                    this.next2 = reader.ReadInt16();
-                    this.next3 = reader.ReadInt16();
-                    this.next4 = reader.ReadInt16();
+                    chckObj.next1 = reader.ReadInt16();
+                    chckObj.next2 = reader.ReadInt16();
+                    chckObj.next3 = reader.ReadInt16();
+                    chckObj.next4 = reader.ReadInt16();
 
-                    this.index = i;
+                    chckObj.index = i;
 
-                    dict1.Add(this.index, this.pointLength);
+                    dict1.Add(chckObj.index, chckObj.pointLength);
+                    chckGrp.Add(chckObj);
                 }
             }
+        }
+
+        public void Write(EndianBinaryWriter writer, List<CheckpointGroupObject> grpObj)
+        {
+            foreach(CheckpointGroupObject chckObj in grpObj)
+            {
+                writer.Write(chckObj.pointLength);
+                writer.Write(chckObj.groupLink);
+
+                writer.Write(chckObj.prev1);
+                writer.Write(chckObj.prev2);
+                writer.Write(chckObj.prev3);
+                writer.Write(chckObj.prev4);
+
+                writer.Write(chckObj.next1);
+                writer.Write(chckObj.next2);
+                writer.Write(chckObj.next3);
+                writer.Write(chckObj.next4);
+            }
+        }
+
+        public List<CheckpointGroupObject> returnList()
+        {
+            return chckGrp;
         }
 
         public Dictionary<uint, uint> returnDictionary()
@@ -261,7 +369,7 @@ namespace DouBOLDash
         }
     }
 
-    class Checkpoint : LevelObj
+    class Checkpoint
     {
         CheckpointObject chkobj = new CheckpointObject();
         List<CheckpointObject> chkdict = new List<CheckpointObject>();
@@ -311,9 +419,26 @@ namespace DouBOLDash
 
                         reader.ReadBytes(4);
                     }
-
-                    Console.WriteLine("Finished Group " + i);
                 }
+            }
+        }
+
+        public void Write(EndianBinaryWriter writer, List<CheckpointObject> chkObj)
+        {
+            byte shit = 0;
+
+            foreach (CheckpointObject checkObj in chkObj)
+            {
+                writer.Write(checkObj.xPosStart);
+                writer.Write(checkObj.yPosStart);
+                writer.Write(checkObj.zPosStart);
+
+                writer.Write(checkObj.xPosEnd);
+                writer.Write(checkObj.yPosEnd);
+                writer.Write(checkObj.zPosEnd);
+
+                for (int i = 0; i < 4; i++)
+                    writer.Write(shit);
             }
         }
 
@@ -323,11 +448,13 @@ namespace DouBOLDash
         }
     }
 
-    class RouteGroup : LevelObj
+
+    class RouteGroup
     {
-        Dictionary<uint, GroupStruct> groupDict = new Dictionary<uint, GroupStruct>();
-        GroupStruct group = new GroupStruct();
-        uint pointLength, pointStart, groupID;
+        Dictionary<uint, RouteGroupSetup> groupDict = new Dictionary<uint, RouteGroupSetup>();
+        List<RouteGroupSetup> grpSetup = new List<RouteGroupSetup>();
+        ushort pointLength, pointStart;
+        uint groupID;
 
         public RouteGroup()
         {
@@ -340,27 +467,44 @@ namespace DouBOLDash
         {
             for (uint i = 0; i < count; i++)
             {
-                this.pointLength = reader.ReadUInt16();
-                this.pointStart = reader.ReadUInt16();
+                RouteGroupSetup group = new RouteGroupSetup();
+                group.pointLength = reader.ReadUInt16();
+                group.pointStart = reader.ReadUInt16();
                 this.groupID = i;
 
                 reader.ReadBytes(12);
 
-                group.pointLength = this.pointLength;
-                group.pointStart = this.pointStart;
-
+                grpSetup.Add(group);
                 groupDict.Add(i, group);
                 
             }
         }
 
-        public Dictionary<uint, GroupStruct> returnDictionary()
+        public void Write(EndianBinaryWriter writer, List<RouteGroupSetup> grp)
+        {
+            byte pad = 0;
+            foreach (RouteGroupSetup routeObj in grp)
+            {
+                writer.Write(routeObj.pointLength);
+                writer.Write(routeObj.pointStart);
+
+                for (int i = 0; i < 12; i++)
+                    writer.Write(pad);
+            }
+        }
+
+        public Dictionary<uint, RouteGroupSetup> returnDictionary()
         {
             return groupDict;
         }
+
+        public List<RouteGroupSetup> returnList()
+        {
+            return grpSetup;
+        }
     }
 
-    class RoutePoint : LevelObj
+    class RoutePoint
     {
         RoutePointObject rpobj = new RoutePointObject();
         List<RoutePointObject> rpdict = new List<RoutePointObject>();
@@ -376,13 +520,13 @@ namespace DouBOLDash
             this.groupID = 0;
         }
         
-        public void Parse(EndianBinaryReader reader, Dictionary<uint, GroupStruct> groupDict)
+        public void Parse(EndianBinaryReader reader, Dictionary<uint, RouteGroupSetup> groupDict)
         {
             uint count = (uint)groupDict.Count();
 
             for (uint i = 0; i < count; i++)
             {
-                GroupStruct group = groupDict[i];
+                RouteGroupSetup group = groupDict[i];
                 for (uint j = 0; j < group.pointLength; j++)
                 {
                     rpobj.xPos = reader.ReadSingle();
@@ -398,13 +542,27 @@ namespace DouBOLDash
             }
         }
 
+        public void Write(EndianBinaryWriter writer, List<RoutePointObject> rpObj)
+        {
+            byte pad = 0;
+            foreach(RoutePointObject rObj in rpObj)
+            {
+                writer.Write(rObj.xPos);
+                writer.Write(rObj.yPos);
+                writer.Write(rObj.zPos);
+
+                for (int i = 0; i < 20; i++)
+                    writer.Write(pad);
+            }
+        }
+
         public List<RoutePointObject> returnList()
         {
             return rpdict;
         }
     }
 
-    class TrackObject : LevelObj
+    class TrackObject
     {
         LevelObject lvlobj = new LevelObject();
         List<LevelObject> lvldict = new List<LevelObject>();
@@ -413,8 +571,8 @@ namespace DouBOLDash
         public float xScale, yScale, zScale;
         public double rotation;
         public int xRot, yRot, zRot;
-        public uint objID;
-        public int routeID;
+        public ushort objID;
+        public short routeID;
         public long unk1, unk2, unk3;
 
         public TrackObject()
@@ -471,6 +629,30 @@ namespace DouBOLDash
                 lvlobj.rotation = MiscHacks.returnRotations(lvlobj.xRot, lvlobj.yRot);
 
                 lvldict.Add(lvlobj);
+            }
+        }
+
+        public void Write(EndianBinaryWriter writer, List<LevelObject> objList)
+        {
+            foreach (LevelObject lvlobj in objList)
+            {
+                writer.Write(lvlobj.xPos);
+                writer.Write(lvlobj.yPos);
+                writer.Write(lvlobj.zPos);
+
+                writer.Write(lvlobj.xScale);
+                writer.Write(lvlobj.yScale);
+                writer.Write(lvlobj.zScale);
+
+                writer.Write(655360000);
+                writer.Write(655360000);
+                writer.Write(655360000);
+
+                writer.Write(lvlobj.objID);
+                writer.Write(lvlobj.routeID);
+                writer.Write(lvlobj.unk1);
+                writer.Write(lvlobj.unk2);
+                writer.Write(lvlobj.unk3);
             }
         }
 
@@ -566,13 +748,38 @@ namespace DouBOLDash
             }
         }
 
+        public void Write(EndianBinaryWriter writer, List<KartPointObject> kartObj)
+        {
+            byte pad = 0;
+            foreach(KartPointObject kpobj in kartObj)
+            {
+                writer.Write(kpobj.xPos);
+                writer.Write(kpobj.yPos);
+                writer.Write(kpobj.zPos);
+
+                writer.Write(kpobj.xScale);
+                writer.Write(kpobj.yScale);
+                writer.Write(kpobj.zScale);
+
+                writer.Write(655360000);
+                writer.Write(655360000);
+                writer.Write(655360000);
+
+                writer.Write(kpobj.polePos);
+                writer.Write(kpobj.playerID);
+
+                for (int i = 0; i < 2; i++)
+                    writer.Write(pad);
+            }
+        }
+
         public List<KartPointObject> returnList()
         {
             return kpdict;
         }
     }
 
-    class Area : LevelObj
+    class Area
     {
         AreaObject areaObj = new AreaObject();
         List<AreaObject> areaDict = new List<AreaObject>();
@@ -580,7 +787,7 @@ namespace DouBOLDash
         float xPos, yPos, zPos;
         float xScale, yScale, zScale;
         int xRot, yRot, zRot;
-        uint unk1, unk2;
+        ushort unk1, unk2;
         long unk3, unk4;
         double rotation;
 
@@ -632,15 +839,37 @@ namespace DouBOLDash
             }
         }
 
+        public void Write(EndianBinaryWriter writer, List<AreaObject> areaObj)
+        {
+            foreach (AreaObject aObj in areaObj)
+            {
+                writer.Write(aObj.xPos);
+                writer.Write(aObj.yPos);
+                writer.Write(aObj.zPos);
+
+                writer.Write(aObj.xScale);
+                writer.Write(aObj.yScale);
+                writer.Write(aObj.zScale);
+
+                writer.Write(655360000);
+                writer.Write(655360000);
+                writer.Write(655360000);
+
+                writer.Write(aObj.unk1);
+                writer.Write(aObj.unk2);
+                writer.Write(aObj.unk3);
+                writer.Write(aObj.unk4);
+            }
+        }
+
         public List<AreaObject> returnList()
         {
             return areaDict;
         }
     }
 
-    class Camera : LevelObj
+    class Camera
     {
-        CameraObject camObj = new CameraObject();
         List<CameraObject> camDict = new List<CameraObject>();
 
         float xView1, yView1, zView1;
@@ -648,10 +877,10 @@ namespace DouBOLDash
         float xView2, yView2, zView2;
         float xView3, yView3, zView3;
         byte unk1, type;
-        uint startZoom, duration, unk2, unk3, unk4;
-        int routeID;
-        uint routeSpeed, endZoom;
-        int nextCamera;
+        ushort startZoom, duration, unk2, unk3, unk4;
+        short routeID;
+        ushort routeSpeed, endZoom;
+        short nextCamera;
         string name;
         double rotation;
 
@@ -693,6 +922,8 @@ namespace DouBOLDash
         {
             for (uint i = 0; i < count; i++)
             {
+                CameraObject camObj = new CameraObject();
+
                 camObj.xView1 = reader.ReadSingle();
                 camObj.yView1 = reader.ReadSingle();
                 camObj.zView1 = reader.ReadSingle();
@@ -731,25 +962,63 @@ namespace DouBOLDash
             }
         }
 
+        public void Write(EndianBinaryWriter writer, List<CameraObject> camList)
+        {
+            foreach (CameraObject camObj in camList)
+            {
+                writer.Write(camObj.xView1);
+                writer.Write(camObj.yView1);
+                writer.Write(camObj.zView1);
+
+                writer.Write(655360000);
+                writer.Write(655360000);
+                writer.Write(655360000);
+
+                writer.Write(camObj.xView2);
+                writer.Write(camObj.yView2);
+                writer.Write(camObj.zView2);
+
+                writer.Write(camObj.xView3);
+                writer.Write(camObj.yView3);
+                writer.Write(camObj.zView3);
+
+                writer.Write(camObj.unk1);
+                writer.Write(camObj.type);
+
+                writer.Write(camObj.startZoom);
+                writer.Write(camObj.duration);
+                writer.Write(camObj.unk2);
+                writer.Write(camObj.unk3);
+                writer.Write(camObj.unk4);
+
+                writer.Write(camObj.routeID);
+                writer.Write(camObj.routeSpeed);
+                writer.Write(camObj.endZoom);
+                writer.Write(camObj.nextCamera);
+
+                byte[] b = Encoding.ASCII.GetBytes(camObj.name);
+                for (int i = 0; i < 4; i++)
+                    writer.Write(b[i]);
+            }
+        }
+
         public List<CameraObject> returnList()
         {
             return camDict;
         }
     }
 
-    class Respawn : LevelObj
+    class Respawn : RespawnObject
     {
-        RespawnObject resObj = new RespawnObject();
         List<RespawnObject> resLis = new List<RespawnObject>();
 
         float xPos, yPos, zPos;
         int xRot, yRot, zRot;
-        uint respawnID, unk1, unk2, unk3;
+        ushort respawnID, unk1, unk2, unk3;
         double rotation;
 
         public Respawn()
         {
-
             xPos = 0;
             yPos = 0;
             zPos = 0;
@@ -767,6 +1036,7 @@ namespace DouBOLDash
         {
             for (uint i = 0; i < count; i++)
             {
+                RespawnObject resObj = new RespawnObject();
                 resObj.xPos = reader.ReadSingle();
                 resObj.yPos = reader.ReadSingle();
                 resObj.zPos = reader.ReadSingle();
@@ -786,15 +1056,47 @@ namespace DouBOLDash
             }
         }
 
+        public void Write(EndianBinaryWriter writer, List<RespawnObject> respawnList)
+        {
+            foreach (RespawnObject resObj in respawnList)
+            {
+                writer.Write(resObj.xPos);
+                writer.Write(resObj.yPos);
+                writer.Write(resObj.zPos);
+
+                double derp;
+                double derp2;
+
+                MiscHacks.inverseRotations((int)resObj.rotation, out derp, out derp2);
+
+                writer.Write(655360000);
+                writer.Write(655360000);
+                writer.Write(655360000);
+
+                writer.Write(resObj.respawnID);
+                writer.Write(resObj.unk1);
+                writer.Write(resObj.unk2);
+                writer.Write(resObj.unk3);
+            }
+        }
+
         public List<RespawnObject> returnList()
         {
             return resLis;
         }
     }
 
-    abstract class LevelObj
+    class BOLInformation
     {
-
+        public string type;
+        public float unk3, unk4, unk5;
+        public uint magic, unk1, unk2;
+        public byte numLaps, musicID;
+        public ushort sec1Count, sec2Count, sec3Count, sec4Count, sec5Count, sec6Count, sec7Count, sec8Count, sec9Count;
+        public uint unk6, unk7, unk8, unk9, unk10, unk11, fileStart;
+        public uint sec1Offs, sec2Offs, sec3Offs, sec4Offs, sec5Offs, sec6Offs, sec7Offs, sec8Offs, sec9Offs, sec10Offs, sec11Offs;
+        public int fileSize;
+        
     }
 
     class PositionObject
@@ -802,19 +1104,18 @@ namespace DouBOLDash
         public float xPos, yPos, zPos;
     }
 
-    struct GroupStruct
-    {
-        public uint pointLength;
-        public uint pointStart;
-    }
-
     struct EnemyRoute
     {
         public float xPos, yPos, zPos;
-        public int pointSetting, link;
+        public short pointSetting, link;
         public float scale;
-        public uint groupSetting;
+        public ushort groupSetting;
         public byte group, pointSetting2;
+    }
+
+    public class RouteGroupSetup
+    {
+        public ushort pointLength, pointStart;
     }
 
     struct RoutePointObject
@@ -827,13 +1128,13 @@ namespace DouBOLDash
     {
         public float xPos, yPos, zPos;
         public float xScale, yScale, zScale;
-        public int xRot, yRot, zRot;
         public double rotation;
-        public uint objID;
-        public int routeID;
+        public int xRot, yRot, zRot;
+        public ushort objID;
+        public short routeID;
         public long unk1, unk2, unk3;
-        public uint ID;
         public string modelName;
+        public uint ID;
     }
 
     struct CheckpointObject
@@ -841,6 +1142,13 @@ namespace DouBOLDash
         public float xPosStart, yPosStart, zPosStart;
         public float xPosEnd, yPosEnd, zPosEnd;
         public uint groupID;
+    }
+
+    struct CheckpointGroupObject
+    {
+        public ushort pointLength, groupLink, index;
+        public short prev1, prev2, prev3, prev4;
+        public short next1, next2, next3, next4;
     }
 
     struct KartPointObject
@@ -857,31 +1165,31 @@ namespace DouBOLDash
         public float xPos, yPos, zPos;
         public float xScale, yScale, zScale;
         public int xRot, yRot, zRot;
-        public uint unk1, unk2;
+        public ushort unk1, unk2;
         public long unk3, unk4;
         public double rotation;
     }
 
-    struct CameraObject
+    public class CameraObject
     {
         public float xView1, yView1, zView1;
         public int xRot, yRot, zRot;
         public float xView2, yView2, zView2;
         public float xView3, yView3, zView3;
         public byte unk1, type;
-        public uint startZoom, duration, unk2, unk3, unk4;
-        public int routeID;
-        public uint routeSpeed, endZoom;
-        public int nextCamera;
+        public ushort startZoom, duration, unk2, unk3, unk4;
+        public short routeID;
+        public ushort routeSpeed, endZoom;
+        public short nextCamera;
         public string name;
         public double rotation;
     }
 
-    public struct RespawnObject
+    public class RespawnObject
     {
         public float xPos, yPos, zPos;
         public int xRot, yRot, zRot;
-        public uint respawnID, unk1, unk2, unk3;
+        public ushort unk1, unk2, unk3, respawnID;
         public double rotation;
     }
 }

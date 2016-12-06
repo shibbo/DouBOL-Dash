@@ -16,6 +16,7 @@ namespace DouBOLDash
             double angle1;
             double radToDeg = 57.2957795;
             angle1 = radToDeg * Math.Atan2((double)yrot, (double)xrot);
+            angle1 = angle1 + 90;
 
             return Math.Round(angle1);
         }
