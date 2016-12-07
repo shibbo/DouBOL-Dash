@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using System.ComponentModel;
 
 namespace DouBOLDash
 {
@@ -506,7 +507,6 @@ namespace DouBOLDash
 
     class RoutePoint
     {
-        RoutePointObject rpobj = new RoutePointObject();
         List<RoutePointObject> rpdict = new List<RoutePointObject>();
 
         float xPos, yPos, zPos;
@@ -529,16 +529,22 @@ namespace DouBOLDash
                 RouteGroupSetup group = groupDict[i];
                 for (uint j = 0; j < group.pointLength; j++)
                 {
+                    RoutePointObject rpobj = new RoutePointObject();
                     rpobj.xPos = reader.ReadSingle();
                     rpobj.yPos = reader.ReadSingle();
                     rpobj.zPos = reader.ReadSingle();
 
                     rpobj.groupID = i;
 
+                    rpobj.groupNum = j;
+
+                    rpobj.pointLength = group.pointLength;
+
                     rpdict.Add(rpobj);
 
                     reader.ReadBytes(20);
                 }
+
             }
         }
 
@@ -1111,6 +1117,57 @@ namespace DouBOLDash
         public float scale;
         public ushort groupSetting;
         public byte group, pointSetting2;
+
+        [DisplayName("X Position"), Category("Position"), Description("The X position of the route point.")]
+        public float XPosition
+        {
+            get { return xPos; }
+            set { xPos = value; }
+        }
+
+        [DisplayName("Y Position"), Category("Position"), Description("The Y position of the route point.")]
+        public float YPosition
+        {
+            get { return yPos; }
+            set { yPos = value; }
+        }
+
+        [DisplayName("Z Position"), Category("Position"), Description("The Z position of the route point.")]
+        public float ZPosition
+        {
+            get { return zPos; }
+            set { zPos = value; }
+        }
+        [DisplayName("Scale"), Category("Position"), Description("The scale of the route point. This determines how far off from the placed point the CPUs go.")]
+        public float Scale
+        {
+            get { return zPos; }
+            set { zPos = value; }
+        }
+        [DisplayName("Point Setting 1"), Category("Settings"), Description("loldunno.")]
+        public short PointSetting
+        {
+            get { return pointSetting; }
+            set { pointSetting = value; }
+        }
+        [DisplayName("Point Setting 2"), Category("Settings"), Description("loldunno.")]
+        public byte PointSetting2
+        {
+            get { return pointSetting2; }
+            set { pointSetting2 = value; }
+        }
+        [DisplayName("Route Link"), Category("Settings"), Description("loldunno.")]
+        public short Link
+        {
+            get { return link; }
+            set { link = value; }
+        }
+        [DisplayName("Group Setting"), Category("Settings"), Description("loldunno.")]
+        public ushort GroupSetting
+        {
+            get { return groupSetting; }
+            set { groupSetting = value; }
+        }
     }
 
     public class RouteGroupSetup
@@ -1118,10 +1175,38 @@ namespace DouBOLDash
         public ushort pointLength, pointStart;
     }
 
-    struct RoutePointObject
+    public class RoutePointObject
     {
         public float xPos, yPos, zPos;
-        public uint groupID;
+        public uint groupID, groupNum, pointLength;
+
+        [DisplayName("X Position"), Category("Position"), Description("The X position of the point.")]
+        public float XPosition
+        {
+            get { return xPos; }
+            set { xPos = value; }
+        }
+
+        [DisplayName("Y Position"), Category("Position"), Description("The Y position of the point.")]
+        public float YPosition
+        {
+            get { return yPos; }
+            set { yPos = value; }
+        }
+
+        [DisplayName("Z Position"), Category("Position"), Description("The Z position of the point.")]
+        public float ZPosition
+        {
+            get { return zPos; }
+            set { zPos = value; }
+        }
+
+        [DisplayName("Group ID"), Category("Settings"), Description("The Group ID the route point is set to.")]
+        public uint GroupID
+        {
+            get { return groupID; }
+            set { groupID = value; }
+        }
     }
 
     struct LevelObject
@@ -1135,6 +1220,89 @@ namespace DouBOLDash
         public long unk1, unk2, unk3;
         public string modelName;
         public uint ID;
+
+        [DisplayName("X Position"), Category("Position"), Description("The X position of the object.")]
+        public float XPosition
+        {
+            get { return xPos; }
+            set { xPos = value; }
+        }
+
+        [DisplayName("Y Position"), Category("Position"), Description("The Y position of the object.")]
+        public float YPosition
+        {
+            get { return yPos; }
+            set { yPos = value; }
+        }
+
+        [DisplayName("Z Position"), Category("Position"), Description("The Z position of the object.")]
+        public float ZPosition
+        {
+            get { return zPos; }
+            set { zPos = value; }
+        }
+        [DisplayName("X Scale"), Category("Position"), Description("The X scale of the object.")]
+        public float XScale
+        {
+            get { return xScale; }
+            set { xScale = value; }
+        }
+
+        [DisplayName("Y Scale"), Category("Position"), Description("The Y scale of the object.")]
+        public float YScale
+        {
+            get { return yScale; }
+            set { yScale = value; }
+        }
+
+        [DisplayName("Z Scale"), Category("Position"), Description("The Z scale of the object.")]
+        public float ZScale
+        {
+            get { return zScale; }
+            set { zScale = value; }
+        }
+        [DisplayName("Rotation"), Category("Position"), Description("The rotation of the object.")]
+        public double Rotation
+        {
+            get { return rotation; }
+            set { rotation = value; }
+        }
+        [DisplayName("Object ID"), Category("Settings"), Description("The ID of the object, to determine what it is.")]
+        public ushort ObjectID
+        {
+            get { return objID; }
+            set { objID = value; }
+        }
+        [DisplayName("Route ID"), Category("Settings"), Description("The route ID of the object. The object will follow the path of the cooresponding ID. -1 is there is no route.")]
+        public short RouteID
+        {
+            get { return routeID; }
+            set { routeID = value; }
+        }
+        [DisplayName("Model"), Category("Settings"), Description("The model the object loads."), ReadOnly(true)]
+        public string Model
+        {
+            get { return modelName; }
+            set { modelName = value; }
+        }
+        [DisplayName("Settings 1"), Category("Settings"), Description("The settings that coorespond to the object.")]
+        public long Setting1
+        {
+            get { return unk1; }
+            set { unk1 = value; }
+        }
+        [DisplayName("Settings 2"), Category("Settings"), Description("The settings that coorespond to the object.")]
+        public long Setting2
+        {
+            get { return unk2; }
+            set { unk2 = value; }
+        }
+        [DisplayName("Settings 3"), Category("Settings"), Description("The settings that coorespond to the object.")]
+        public long Setting3
+        {
+            get { return unk3; }
+            set { unk3 = value; }
+        }
     }
 
     struct CheckpointObject
@@ -1142,6 +1310,47 @@ namespace DouBOLDash
         public float xPosStart, yPosStart, zPosStart;
         public float xPosEnd, yPosEnd, zPosEnd;
         public uint groupID;
+
+        [DisplayName("X Position"), Category("Checkpoint Side 1"), Description("The X position of one side of the checkpoint.")]
+        public float XPosition
+        {
+            get { return xPosStart; }
+            set { xPosStart = value; }
+        }
+
+        [DisplayName("Y Position"), Category("Checkpoint Side 1"), Description("The Y position of one side of the checkpoint.")]
+        public float YPosition
+        {
+            get { return yPosStart; }
+            set { yPosStart = value; }
+        }
+
+        [DisplayName("Z Position"), Category("Checkpoint Side 1"), Description("The Z position of one side of the checkpoint.")]
+        public float ZPosition
+        {
+            get { return zPosStart; }
+            set { zPosStart = value; }
+        }
+        [DisplayName("X Position"), Category("Checkpoint Side 2"), Description("The X position of one side of the checkpoint.")]
+        public float XPositionEnd
+        {
+            get { return xPosEnd; }
+            set { xPosEnd = value; }
+        }
+
+        [DisplayName("Y Position"), Category("Checkpoint Side 2"), Description("The Y position of one side of the checkpoint.")]
+        public float YPositionEnd
+        {
+            get { return yPosEnd; }
+            set { yPosEnd = value; }
+        }
+
+        [DisplayName("Z Position"), Category("Checkpoint Side 2"), Description("The Z position of one side of the checkpoint.")]
+        public float ZPositionEnd
+        {
+            get { return zPosEnd; }
+            set { zPosEnd = value; }
+        }
     }
 
     struct CheckpointGroupObject
@@ -1158,6 +1367,65 @@ namespace DouBOLDash
         public int xRot, yRot, zRot;
         public byte polePos, playerID;
         public double rotation;
+
+        [DisplayName("X Position"), Category("Position"), Description("The X position of the object.")]
+        public float XPosition
+        {
+            get { return xPos; }
+            set { xPos = value; }
+        }
+
+        [DisplayName("Y Position"), Category("Position"), Description("The Y position of the object.")]
+        public float YPosition
+        {
+            get { return yPos; }
+            set { yPos = value; }
+        }
+
+        [DisplayName("Z Position"), Category("Position"), Description("The Z position of the object.")]
+        public float ZPosition
+        {
+            get { return zPos; }
+            set { zPos = value; }
+        }
+        [DisplayName("X Scale"), Category("Position"), Description("The X scale of the object.")]
+        public float XScale
+        {
+            get { return xScale; }
+            set { xScale = value; }
+        }
+
+        [DisplayName("Y Scale"), Category("Position"), Description("The Y scale of the object.")]
+        public float YScale
+        {
+            get { return yScale; }
+            set { yScale = value; }
+        }
+
+        [DisplayName("Z Scale"), Category("Position"), Description("The Z scale of the object.")]
+        public float ZScale
+        {
+            get { return zScale; }
+            set { zScale = value; }
+        }
+        [DisplayName("Rotation"), Category("Position"), Description("The rotation of the object.")]
+        public double Rotation
+        {
+            get { return rotation; }
+            set { rotation = value; }
+        }
+        [DisplayName("Player ID"), Category("Settings"), Description("0xFF if this is a single player map. 0x00 to 0x03 for multiplayer maps.")]
+        public byte PlayerID
+        {
+            get { return playerID; }
+            set { playerID = value; }
+        }
+        [DisplayName("Pole Position"), Category("Settings"), Description("0 = Left, 1= Right")]
+        public byte PolePos
+        {
+            get { return polePos; }
+            set { polePos = value; }
+        }
     }
 
     struct AreaObject
@@ -1168,6 +1436,77 @@ namespace DouBOLDash
         public ushort unk1, unk2;
         public long unk3, unk4;
         public double rotation;
+
+        [DisplayName("X Position"), Category("Position"), Description("The X position of the area.")]
+        public float XPosition
+        {
+            get { return xPos; }
+            set { xPos = value; }
+        }
+
+        [DisplayName("Y Position"), Category("Position"), Description("The Y position of the area.")]
+        public float YPosition
+        {
+            get { return yPos; }
+            set { yPos = value; }
+        }
+
+        [DisplayName("Z Position"), Category("Position"), Description("The Z position of the area.")]
+        public float ZPosition
+        {
+            get { return zPos; }
+            set { zPos = value; }
+        }
+        [DisplayName("X Scale"), Category("Position"), Description("The X scale of the area.")]
+        public float XScale
+        {
+            get { return xScale; }
+            set { xScale = value; }
+        }
+
+        [DisplayName("Y Scale"), Category("Position"), Description("The Y scale of the area.")]
+        public float YScale
+        {
+            get { return yScale; }
+            set { yScale = value; }
+        }
+
+        [DisplayName("Z Scale"), Category("Position"), Description("The Z scale of the area.")]
+        public float ZScale
+        {
+            get { return zScale; }
+            set { zScale = value; }
+        }
+        [DisplayName("Rotation"), Category("Position"), Description("The rotation of the area.")]
+        public double Rotation
+        {
+            get { return rotation; }
+            set { rotation = value; }
+        }
+        [DisplayName("Unknown 1"), Category("Settings"), Description("Unknown.")]
+        public ushort Unknown1
+        {
+            get { return unk1; }
+            set { unk1 = value; }
+        }
+        [DisplayName("Unknown 2"), Category("Settings"), Description("Unknown.")]
+        public ushort Unknown2
+        {
+            get { return unk2; }
+            set { unk2 = value; }
+        }
+        [DisplayName("Unknown 3"), Category("Settings"), Description("Unknown.")]
+        public long Unknown3
+        {
+            get { return unk3; }
+            set { unk3 = value; }
+        }
+        [DisplayName("Unknown 4"), Category("Settings"), Description("Unknown.")]
+        public long Unknown4
+        {
+            get { return unk4; }
+            set { unk4 = value; }
+        }
     }
 
     public class CameraObject
@@ -1183,6 +1522,139 @@ namespace DouBOLDash
         public short nextCamera;
         public string name;
         public double rotation;
+
+        [DisplayName("X View 1"), Category("Position View 1"), Description("The X View 1 position of the camera.")]
+        public float XView1
+        {
+            get { return xView1; }
+            set { xView1 = value; }
+        }
+        [DisplayName("Y View 1"), Category("Position View 1"), Description("The Y View 1 position of the camera.")]
+        public float YView1
+        {
+            get { return yView1; }
+            set { yView1 = value; }
+        }
+        [DisplayName("Z View 1"), Category("Position View 1"), Description("The Z View 1 position of the camera.")]
+        public float ZView1
+        {
+            get { return zView1; }
+            set { zView1 = value; }
+        }
+        [DisplayName("X View 2"), Category("Position View 2"), Description("The X View 2 position of the camera.")]
+        public float XView2
+        {
+            get { return xView2; }
+            set { xView1 = value; }
+        }
+        [DisplayName("Y View 2"), Category("Position View 2"), Description("The Y View 2 position of the camera.")]
+        public float YView2
+        {
+            get { return yView2; }
+            set { yView1 = value; }
+        }
+        [DisplayName("Z View 2"), Category("Position View 2"), Description("The Z View 2 position of the camera.")]
+        public float ZView2
+        {
+            get { return zView2; }
+            set { zView2 = value; }
+        }
+        [DisplayName("X View 3"), Category("Position View 3"), Description("The X View 3 position of the camera.")]
+        public float XView3
+        {
+            get { return xView1; }
+            set { xView1 = value; }
+        }
+        [DisplayName("Y View 3"), Category("Position View 3"), Description("The Y View 3 position of the camera.")]
+        public float YView3
+        {
+            get { return yView3; }
+            set { yView3 = value; }
+        }
+        [DisplayName("Z View 3"), Category("Position View 3"), Description("The Z View 3 position of the camera.")]
+        public float ZView3
+        {
+            get { return zView3; }
+            set { zView3 = value; }
+        }
+        [DisplayName("Rotation"), Category("Settings"), Description("The rotation of the camera.")]
+        public double Rotation
+        {
+            get { return rotation; }
+            set { rotation = value; }
+        }
+        [DisplayName("Unknown 1"), Category("Settings"), Description("Unknown.")]
+        public byte Unknown1
+        {
+            get { return unk1; }
+            set { unk1 = value; }
+        }
+        [DisplayName("Type"), Category("Settings"), Description("The type of camera.")]
+        public byte Type
+        {
+            get { return type; }
+            set { type = value; }
+        }
+        [DisplayName("Starting Zoom"), Category("Settings"), Description("The zoom that the camera starts at.")]
+        public ushort StartZoom
+        {
+            get { return startZoom; }
+            set { startZoom = value; }
+        }
+        [DisplayName("Duration"), Category("Settings"), Description("How long the camera lasts.")]
+        public ushort Duration
+        {
+            get { return duration; }
+            set { duration = value; }
+        }
+        [DisplayName("Unknown 2"), Category("Settings"), Description("Unknown.")]
+        public ushort Unknown2
+        {
+            get { return unk2; }
+            set { unk2 = value; }
+        }
+        [DisplayName("Unknown 3"), Category("Settings"), Description("Unknown.")]
+        public ushort Unknown3
+        {
+            get { return unk3; }
+            set { unk3 = value; }
+        }
+        [DisplayName("Unknown 4"), Category("Settings"), Description("Unknown.")]
+        public ushort Unknown4
+        {
+            get { return unk4; }
+            set { unk4 = value; }
+        }
+        [DisplayName("Route ID"), Category("Settings"), Description("The Route ID.")]
+        public short RouteID
+        {
+            get { return routeID; }
+            set { routeID = value; }
+        }
+        [DisplayName("Route Speed"), Category("Settings"), Description("The speed of the route.")]
+        public ushort RouteSpeed
+        {
+            get { return routeSpeed; }
+            set { routeSpeed = value; }
+        }
+        [DisplayName("End Zoom"), Category("Settings"), Description("The zoom level when the camera ends.")]
+        public ushort EndZoom
+        {
+            get { return endZoom; }
+            set { endZoom = value; }
+        }
+        [DisplayName("Next Camera ID"), Category("Settings"), Description("The next camera's ID.")]
+        public short NextCamera
+        {
+            get { return nextCamera; }
+            set { nextCamera = value; }
+        }
+        [DisplayName("Camera Name"), Category("Settings"), Description("The camera name.")]
+        public string CameraName
+        {
+            get { return name; }
+            set { name = value; }
+        }
     }
 
     public class RespawnObject
@@ -1191,5 +1663,56 @@ namespace DouBOLDash
         public int xRot, yRot, zRot;
         public ushort unk1, unk2, unk3, respawnID;
         public double rotation;
+
+        [DisplayName("X Position"), Category("Position"), Description("The X position of the object.")]
+        public float XPosition
+        {
+            get { return xPos; }
+            set { xPos = value; }
+        }
+
+        [DisplayName("Y Position"), Category("Position"), Description("The Y position of the object.")]
+        public float YPosition
+        {
+            get { return yPos; }
+            set { yPos = value; }
+        }
+
+        [DisplayName("Z Position"), Category("Position"), Description("The Z position of the object.")]
+        public float ZPosition
+        {
+            get { return zPos; }
+            set { zPos = value; }
+        }
+        [DisplayName("Rotation"), Category("Position"), Description("The rotation of the object.")]
+        public double Rotation
+        {
+            get { return rotation; }
+            set { rotation = value; }
+        }
+        [DisplayName("Unknown 1"), Category("Settings"), Description("Unknown.")]
+        public ushort Unknown1
+        {
+            get { return unk1; }
+            set { unk1 = value; }
+        }
+        [DisplayName("Unknown 2"), Category("Settings"), Description("Unknown.")]
+        public ushort Unknown2
+        {
+            get { return unk2; }
+            set { unk2 = value; }
+        }
+        [DisplayName("Unknown 3"), Category("Settings"), Description("Unknown.")]
+        public ushort Unknown3
+        {
+            get { return unk3; }
+            set { unk3 = value; }
+        }
+        [DisplayName("Respawn ID"), Category("Settings"), Description("The respawn id. This respawn id links to the id in a checkpoint(?) that when the player has to be picked up by lakitu, they spawn here.")]
+        public ushort RespawnID
+        {
+            get { return respawnID; }
+            set { respawnID = value; }
+        }
     }
 }

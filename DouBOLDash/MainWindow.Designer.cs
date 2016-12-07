@@ -34,6 +34,7 @@
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.BMDViewerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -56,6 +57,8 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.musicInput = new System.Windows.Forms.NumericUpDown();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.unknown5 = new System.Windows.Forms.NumericUpDown();
@@ -74,22 +77,35 @@
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.chckGroup = new System.Windows.Forms.ListBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.propertyGrid1 = new System.Windows.Forms.PropertyGrid();
             this.routeList = new System.Windows.Forms.ListBox();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.routeGroupList = new System.Windows.Forms.ListBox();
             this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.propertyGrid3 = new System.Windows.Forms.PropertyGrid();
             this.objList = new System.Windows.Forms.ListBox();
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.kartPointList = new System.Windows.Forms.ListBox();
             this.tabPage6 = new System.Windows.Forms.TabPage();
             this.areaList = new System.Windows.Forms.ListBox();
             this.tabPage7 = new System.Windows.Forms.TabPage();
+            this.propertyGrid2 = new System.Windows.Forms.PropertyGrid();
             this.cameraList = new System.Windows.Forms.ListBox();
             this.tabPage8 = new System.Windows.Forms.TabPage();
+            this.propertyGrid4 = new System.Windows.Forms.PropertyGrid();
             this.respList = new System.Windows.Forms.ListBox();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
-            this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.groupBox6 = new System.Windows.Forms.GroupBox();
-            this.routeGroupList = new System.Windows.Forms.ListBox();
-            this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.itemEdit_context = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.contextItemAdd = new System.Windows.Forms.ToolStripMenuItem();
+            this.contextItemEdit = new System.Windows.Forms.ToolStripMenuItem();
+            this.contextItemDuplicate = new System.Windows.Forms.ToolStripMenuItem();
+            this.contextItemDelete = new System.Windows.Forms.ToolStripMenuItem();
+            this.propertyGrid5 = new System.Windows.Forms.PropertyGrid();
+            this.propertyGrid6 = new System.Windows.Forms.PropertyGrid();
+            this.propertyGrid7 = new System.Windows.Forms.PropertyGrid();
+            this.propertyGrid8 = new System.Windows.Forms.PropertyGrid();
+            this.bTIViewerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -100,6 +116,7 @@
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.musicInput)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.unknown5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.unknown4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.unknown3)).BeginInit();
@@ -109,13 +126,14 @@
             this.groupBox4.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.tabPage3.SuspendLayout();
+            this.groupBox6.SuspendLayout();
+            this.groupBox5.SuspendLayout();
             this.tabPage4.SuspendLayout();
             this.tabPage5.SuspendLayout();
             this.tabPage6.SuspendLayout();
             this.tabPage7.SuspendLayout();
             this.tabPage8.SuspendLayout();
-            this.groupBox5.SuspendLayout();
-            this.groupBox6.SuspendLayout();
+            this.itemEdit_context.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -128,7 +146,7 @@
             this.deleteToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1057, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1123, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -145,7 +163,7 @@
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
             this.openToolStripMenuItem.Text = "Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
@@ -153,14 +171,23 @@
             // 
             this.saveToolStripMenuItem.Enabled = false;
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
             this.saveToolStripMenuItem.Text = "Save";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
+            // 
+            // saveAsToolStripMenuItem
+            // 
+            this.saveAsToolStripMenuItem.Enabled = false;
+            this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
+            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
+            this.saveAsToolStripMenuItem.Text = "Save As";
+            this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.saveAsToolStripMenuItem_Click);
             // 
             // toolsToolStripMenuItem
             // 
             this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.BMDViewerToolStripMenuItem});
+            this.BMDViewerToolStripMenuItem,
+            this.bTIViewerToolStripMenuItem});
             this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
             this.toolsToolStripMenuItem.Size = new System.Drawing.Size(47, 20);
             this.toolsToolStripMenuItem.Text = "Tools";
@@ -234,9 +261,9 @@
             this.loadingLabel,
             this.toolStripSeparator1,
             this.selectionInfo});
-            this.toolStrip1.Location = new System.Drawing.Point(0, 513);
+            this.toolStrip1.Location = new System.Drawing.Point(0, 635);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(1057, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(1123, 25);
             this.toolStrip1.TabIndex = 2;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -263,9 +290,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.glControl1.BackColor = System.Drawing.Color.Black;
-            this.glControl1.Location = new System.Drawing.Point(0, 16);
+            this.glControl1.Location = new System.Drawing.Point(0, 0);
             this.glControl1.Name = "glControl1";
-            this.glControl1.Size = new System.Drawing.Size(677, 469);
+            this.glControl1.Size = new System.Drawing.Size(743, 602);
             this.glControl1.TabIndex = 0;
             this.glControl1.VSync = false;
             this.glControl1.Load += new System.EventHandler(this.glControl1_Load);
@@ -285,7 +312,7 @@
             this.panel1.Controls.Add(this.glControl1);
             this.panel1.Location = new System.Drawing.Point(368, 27);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(689, 489);
+            this.panel1.Size = new System.Drawing.Size(755, 611);
             this.panel1.TabIndex = 6;
             // 
             // panel2
@@ -295,7 +322,7 @@
             this.panel2.Controls.Add(this.tabControl1);
             this.panel2.Location = new System.Drawing.Point(0, 27);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(370, 483);
+            this.panel2.Size = new System.Drawing.Size(370, 605);
             this.panel2.TabIndex = 7;
             // 
             // tabControl1
@@ -316,7 +343,7 @@
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(370, 483);
+            this.tabControl1.Size = new System.Drawing.Size(370, 605);
             this.tabControl1.TabIndex = 0;
             // 
             // tabPage9
@@ -326,7 +353,7 @@
             this.tabPage9.Location = new System.Drawing.Point(4, 23);
             this.tabPage9.Name = "tabPage9";
             this.tabPage9.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage9.Size = new System.Drawing.Size(362, 456);
+            this.tabPage9.Size = new System.Drawing.Size(362, 578);
             this.tabPage9.TabIndex = 8;
             this.tabPage9.ToolTipText = "Track Information";
             this.tabPage9.UseVisualStyleBackColor = true;
@@ -338,7 +365,7 @@
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel3.Location = new System.Drawing.Point(3, 3);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(356, 450);
+            this.panel3.Size = new System.Drawing.Size(356, 572);
             this.panel3.TabIndex = 0;
             // 
             // groupBox2
@@ -346,9 +373,9 @@
             this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.groupBox2.Controls.Add(this.pictureBox1);
-            this.groupBox2.Location = new System.Drawing.Point(5, 215);
+            this.groupBox2.Location = new System.Drawing.Point(5, 200);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(348, 232);
+            this.groupBox2.Size = new System.Drawing.Size(348, 369);
             this.groupBox2.TabIndex = 2;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Track Minimap";
@@ -358,13 +385,15 @@
             this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pictureBox1.Location = new System.Drawing.Point(3, 16);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(342, 213);
+            this.pictureBox1.Size = new System.Drawing.Size(342, 350);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.label6);
+            this.groupBox1.Controls.Add(this.musicInput);
             this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.unknown5);
@@ -377,15 +406,48 @@
             this.groupBox1.Controls.Add(this.lapCounter);
             this.groupBox1.Location = new System.Drawing.Point(5, 3);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(348, 206);
+            this.groupBox1.Size = new System.Drawing.Size(348, 191);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Track Information";
             // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(7, 83);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(35, 13);
+            this.label6.TabIndex = 12;
+            this.label6.Text = "Music";
+            // 
+            // musicInput
+            // 
+            this.musicInput.Enabled = false;
+            this.musicInput.Location = new System.Drawing.Point(100, 57);
+            this.musicInput.Maximum = new decimal(new int[] {
+            59,
+            0,
+            0,
+            0});
+            this.musicInput.Minimum = new decimal(new int[] {
+            33,
+            0,
+            0,
+            0});
+            this.musicInput.Name = "musicInput";
+            this.musicInput.Size = new System.Drawing.Size(120, 20);
+            this.musicInput.TabIndex = 11;
+            this.musicInput.Value = new decimal(new int[] {
+            59,
+            0,
+            0,
+            0});
+            this.musicInput.ValueChanged += new System.EventHandler(this.musicInput_ValueChanged);
+            // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(6, 152);
+            this.label5.Location = new System.Drawing.Point(6, 162);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(88, 13);
             this.label5.TabIndex = 10;
@@ -394,7 +456,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(7, 126);
+            this.label4.Location = new System.Drawing.Point(7, 136);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(88, 13);
             this.label4.TabIndex = 9;
@@ -403,7 +465,8 @@
             // unknown5
             // 
             this.unknown5.DecimalPlaces = 2;
-            this.unknown5.Location = new System.Drawing.Point(101, 152);
+            this.unknown5.Enabled = false;
+            this.unknown5.Location = new System.Drawing.Point(101, 162);
             this.unknown5.Maximum = new decimal(new int[] {
             2147483647,
             0,
@@ -422,7 +485,8 @@
             // unknown4
             // 
             this.unknown4.DecimalPlaces = 2;
-            this.unknown4.Location = new System.Drawing.Point(101, 126);
+            this.unknown4.Enabled = false;
+            this.unknown4.Location = new System.Drawing.Point(101, 136);
             this.unknown4.Maximum = new decimal(new int[] {
             2147483647,
             0,
@@ -441,7 +505,8 @@
             // unknown3
             // 
             this.unknown3.DecimalPlaces = 2;
-            this.unknown3.Location = new System.Drawing.Point(100, 100);
+            this.unknown3.Enabled = false;
+            this.unknown3.Location = new System.Drawing.Point(100, 110);
             this.unknown3.Maximum = new decimal(new int[] {
             2147483647,
             0,
@@ -460,11 +525,12 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(6, 65);
+            this.label3.Location = new System.Drawing.Point(6, 59);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(49, 13);
             this.label3.TabIndex = 5;
             this.label3.Text = "Music ID";
+            this.label3.Click += new System.EventHandler(this.label3_Click);
             // 
             // label2
             // 
@@ -478,7 +544,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 100);
+            this.label1.Location = new System.Drawing.Point(6, 110);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(88, 13);
             this.label1.TabIndex = 3;
@@ -486,8 +552,9 @@
             // 
             // musicSelect
             // 
+            this.musicSelect.Enabled = false;
             this.musicSelect.FormattingEnabled = true;
-            this.musicSelect.Location = new System.Drawing.Point(100, 65);
+            this.musicSelect.Location = new System.Drawing.Point(100, 83);
             this.musicSelect.Name = "musicSelect";
             this.musicSelect.Size = new System.Drawing.Size(121, 21);
             this.musicSelect.TabIndex = 2;
@@ -495,6 +562,7 @@
             // 
             // lapCounter
             // 
+            this.lapCounter.Enabled = false;
             this.lapCounter.Location = new System.Drawing.Point(101, 27);
             this.lapCounter.Maximum = new decimal(new int[] {
             9,
@@ -508,23 +576,23 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.propertyGrid6);
             this.tabPage1.Controls.Add(this.enemyRouteList);
             this.tabPage1.ImageKey = "enemyitemp.png";
             this.tabPage1.Location = new System.Drawing.Point(4, 23);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(362, 456);
+            this.tabPage1.Size = new System.Drawing.Size(362, 578);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.ToolTipText = "Enemy / Item Routes";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
             // enemyRouteList
             // 
-            this.enemyRouteList.Dock = System.Windows.Forms.DockStyle.Fill;
             this.enemyRouteList.FormattingEnabled = true;
             this.enemyRouteList.Location = new System.Drawing.Point(3, 3);
             this.enemyRouteList.Name = "enemyRouteList";
-            this.enemyRouteList.Size = new System.Drawing.Size(356, 450);
+            this.enemyRouteList.Size = new System.Drawing.Size(356, 225);
             this.enemyRouteList.TabIndex = 0;
             this.enemyRouteList.SelectedIndexChanged += new System.EventHandler(this.enemyRouteList_SelectedIndexChanged);
             // 
@@ -536,7 +604,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 23);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(362, 456);
+            this.tabPage2.Size = new System.Drawing.Size(362, 578);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.ToolTipText = "Checkpoints";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -545,21 +613,21 @@
             // 
             this.groupBox4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
+            this.groupBox4.Controls.Add(this.propertyGrid5);
             this.groupBox4.Controls.Add(this.chckList);
-            this.groupBox4.Location = new System.Drawing.Point(8, 167);
+            this.groupBox4.Location = new System.Drawing.Point(6, 150);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(354, 286);
+            this.groupBox4.Size = new System.Drawing.Size(354, 422);
             this.groupBox4.TabIndex = 2;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Checkpoints";
             // 
             // chckList
             // 
-            this.chckList.Dock = System.Windows.Forms.DockStyle.Fill;
             this.chckList.FormattingEnabled = true;
             this.chckList.Location = new System.Drawing.Point(3, 16);
             this.chckList.Name = "chckList";
-            this.chckList.Size = new System.Drawing.Size(348, 267);
+            this.chckList.Size = new System.Drawing.Size(348, 160);
             this.chckList.TabIndex = 0;
             this.chckList.SelectedIndexChanged += new System.EventHandler(this.chckList_SelectedIndexChanged);
             // 
@@ -568,7 +636,7 @@
             this.groupBox3.Controls.Add(this.chckGroup);
             this.groupBox3.Location = new System.Drawing.Point(6, 6);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(356, 161);
+            this.groupBox3.Size = new System.Drawing.Size(356, 138);
             this.groupBox3.TabIndex = 1;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Checkpoint Groups";
@@ -579,7 +647,7 @@
             this.chckGroup.FormattingEnabled = true;
             this.chckGroup.Location = new System.Drawing.Point(3, 16);
             this.chckGroup.Name = "chckGroup";
-            this.chckGroup.Size = new System.Drawing.Size(350, 142);
+            this.chckGroup.Size = new System.Drawing.Size(350, 119);
             this.chckGroup.TabIndex = 0;
             // 
             // tabPage3
@@ -590,128 +658,207 @@
             this.tabPage3.Location = new System.Drawing.Point(4, 23);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(362, 456);
+            this.tabPage3.Size = new System.Drawing.Size(362, 578);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.ToolTipText = "Routes";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
+            // groupBox6
+            // 
+            this.groupBox6.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.groupBox6.Controls.Add(this.propertyGrid1);
+            this.groupBox6.Controls.Add(this.routeList);
+            this.groupBox6.Location = new System.Drawing.Point(0, 173);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(362, 406);
+            this.groupBox6.TabIndex = 2;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "Routes";
+            // 
+            // propertyGrid1
+            // 
+            this.propertyGrid1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.propertyGrid1.Location = new System.Drawing.Point(3, 143);
+            this.propertyGrid1.Name = "propertyGrid1";
+            this.propertyGrid1.Size = new System.Drawing.Size(359, 259);
+            this.propertyGrid1.TabIndex = 1;
+            this.propertyGrid1.ToolbarVisible = false;
+            this.propertyGrid1.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.propertyGrid1_PropertyValueChanged);
+            this.propertyGrid1.Click += new System.EventHandler(this.propertyGrid1_Click);
+            // 
             // routeList
             // 
-            this.routeList.Dock = System.Windows.Forms.DockStyle.Fill;
             this.routeList.FormattingEnabled = true;
             this.routeList.Location = new System.Drawing.Point(3, 16);
             this.routeList.Name = "routeList";
-            this.routeList.Size = new System.Drawing.Size(356, 264);
+            this.routeList.Size = new System.Drawing.Size(356, 121);
             this.routeList.TabIndex = 0;
             this.routeList.SelectedIndexChanged += new System.EventHandler(this.routeList_SelectedIndexChanged);
             // 
+            // groupBox5
+            // 
+            this.groupBox5.Controls.Add(this.routeGroupList);
+            this.groupBox5.Location = new System.Drawing.Point(0, 6);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(356, 164);
+            this.groupBox5.TabIndex = 1;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "Route Groups";
+            // 
+            // routeGroupList
+            // 
+            this.routeGroupList.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.routeGroupList.FormattingEnabled = true;
+            this.routeGroupList.Location = new System.Drawing.Point(3, 16);
+            this.routeGroupList.Name = "routeGroupList";
+            this.routeGroupList.Size = new System.Drawing.Size(350, 145);
+            this.routeGroupList.TabIndex = 0;
+            // 
             // tabPage4
             // 
+            this.tabPage4.Controls.Add(this.propertyGrid3);
             this.tabPage4.Controls.Add(this.objList);
             this.tabPage4.ImageKey = "objects.png";
             this.tabPage4.Location = new System.Drawing.Point(4, 23);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(362, 456);
+            this.tabPage4.Size = new System.Drawing.Size(362, 578);
             this.tabPage4.TabIndex = 3;
             this.tabPage4.ToolTipText = "Objects";
             this.tabPage4.UseVisualStyleBackColor = true;
             // 
+            // propertyGrid3
+            // 
+            this.propertyGrid3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.propertyGrid3.Location = new System.Drawing.Point(3, 338);
+            this.propertyGrid3.Name = "propertyGrid3";
+            this.propertyGrid3.PropertySort = System.Windows.Forms.PropertySort.Categorized;
+            this.propertyGrid3.Size = new System.Drawing.Size(355, 234);
+            this.propertyGrid3.TabIndex = 1;
+            this.propertyGrid3.ToolbarVisible = false;
+            this.propertyGrid3.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.propertyGrid3_PropertyValueChanged);
+            // 
             // objList
             // 
-            this.objList.Dock = System.Windows.Forms.DockStyle.Fill;
             this.objList.FormattingEnabled = true;
             this.objList.Location = new System.Drawing.Point(3, 3);
             this.objList.Name = "objList";
-            this.objList.Size = new System.Drawing.Size(356, 450);
+            this.objList.Size = new System.Drawing.Size(356, 329);
             this.objList.TabIndex = 0;
             this.objList.SelectedIndexChanged += new System.EventHandler(this.objList_SelectedIndexChanged);
+            this.objList.MouseDown += new System.Windows.Forms.MouseEventHandler(this.objList_MouseDown);
             // 
             // tabPage5
             // 
+            this.tabPage5.Controls.Add(this.propertyGrid8);
             this.tabPage5.Controls.Add(this.kartPointList);
             this.tabPage5.ImageKey = "startungpos.png";
             this.tabPage5.Location = new System.Drawing.Point(4, 23);
             this.tabPage5.Name = "tabPage5";
             this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage5.Size = new System.Drawing.Size(362, 456);
+            this.tabPage5.Size = new System.Drawing.Size(362, 578);
             this.tabPage5.TabIndex = 4;
             this.tabPage5.ToolTipText = "Starting Points";
             this.tabPage5.UseVisualStyleBackColor = true;
             // 
             // kartPointList
             // 
-            this.kartPointList.Dock = System.Windows.Forms.DockStyle.Fill;
             this.kartPointList.FormattingEnabled = true;
             this.kartPointList.Location = new System.Drawing.Point(3, 3);
             this.kartPointList.Name = "kartPointList";
-            this.kartPointList.Size = new System.Drawing.Size(356, 450);
+            this.kartPointList.Size = new System.Drawing.Size(356, 147);
             this.kartPointList.TabIndex = 0;
             this.kartPointList.SelectedIndexChanged += new System.EventHandler(this.kartPointList_SelectedIndexChanged);
             // 
             // tabPage6
             // 
+            this.tabPage6.Controls.Add(this.propertyGrid7);
             this.tabPage6.Controls.Add(this.areaList);
             this.tabPage6.ImageKey = "arearererrere.png";
             this.tabPage6.Location = new System.Drawing.Point(4, 23);
             this.tabPage6.Name = "tabPage6";
             this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage6.Size = new System.Drawing.Size(362, 456);
+            this.tabPage6.Size = new System.Drawing.Size(362, 578);
             this.tabPage6.TabIndex = 5;
             this.tabPage6.ToolTipText = "Areas";
             this.tabPage6.UseVisualStyleBackColor = true;
             // 
             // areaList
             // 
-            this.areaList.Dock = System.Windows.Forms.DockStyle.Fill;
             this.areaList.FormattingEnabled = true;
             this.areaList.Location = new System.Drawing.Point(3, 3);
             this.areaList.Name = "areaList";
-            this.areaList.Size = new System.Drawing.Size(356, 450);
+            this.areaList.Size = new System.Drawing.Size(356, 212);
             this.areaList.TabIndex = 0;
             this.areaList.SelectedIndexChanged += new System.EventHandler(this.areaList_SelectedIndexChanged);
             // 
             // tabPage7
             // 
+            this.tabPage7.Controls.Add(this.propertyGrid2);
             this.tabPage7.Controls.Add(this.cameraList);
             this.tabPage7.ImageKey = "cam.png";
             this.tabPage7.Location = new System.Drawing.Point(4, 23);
             this.tabPage7.Name = "tabPage7";
             this.tabPage7.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage7.Size = new System.Drawing.Size(362, 456);
+            this.tabPage7.Size = new System.Drawing.Size(362, 578);
             this.tabPage7.TabIndex = 6;
             this.tabPage7.ToolTipText = "Cameras";
             this.tabPage7.UseVisualStyleBackColor = true;
             // 
+            // propertyGrid2
+            // 
+            this.propertyGrid2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.propertyGrid2.Location = new System.Drawing.Point(3, 260);
+            this.propertyGrid2.Name = "propertyGrid2";
+            this.propertyGrid2.PropertySort = System.Windows.Forms.PropertySort.Categorized;
+            this.propertyGrid2.Size = new System.Drawing.Size(356, 319);
+            this.propertyGrid2.TabIndex = 1;
+            this.propertyGrid2.ToolbarVisible = false;
+            this.propertyGrid2.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.propertyGrid2_PropertyValueChanged);
+            // 
             // cameraList
             // 
-            this.cameraList.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cameraList.FormattingEnabled = true;
             this.cameraList.Location = new System.Drawing.Point(3, 3);
             this.cameraList.Name = "cameraList";
-            this.cameraList.Size = new System.Drawing.Size(356, 450);
+            this.cameraList.Size = new System.Drawing.Size(356, 251);
             this.cameraList.TabIndex = 0;
             this.cameraList.SelectedIndexChanged += new System.EventHandler(this.cameraList_SelectedIndexChanged);
             // 
             // tabPage8
             // 
+            this.tabPage8.Controls.Add(this.propertyGrid4);
             this.tabPage8.Controls.Add(this.respList);
             this.tabPage8.ImageKey = "respawn2.png";
             this.tabPage8.Location = new System.Drawing.Point(4, 23);
             this.tabPage8.Name = "tabPage8";
             this.tabPage8.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage8.Size = new System.Drawing.Size(362, 456);
+            this.tabPage8.Size = new System.Drawing.Size(362, 578);
             this.tabPage8.TabIndex = 7;
             this.tabPage8.ToolTipText = "Respawns";
             this.tabPage8.UseVisualStyleBackColor = true;
             // 
+            // propertyGrid4
+            // 
+            this.propertyGrid4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.propertyGrid4.Location = new System.Drawing.Point(3, 169);
+            this.propertyGrid4.Name = "propertyGrid4";
+            this.propertyGrid4.PropertySort = System.Windows.Forms.PropertySort.Categorized;
+            this.propertyGrid4.Size = new System.Drawing.Size(356, 406);
+            this.propertyGrid4.TabIndex = 1;
+            this.propertyGrid4.ToolbarVisible = false;
+            // 
             // respList
             // 
-            this.respList.Dock = System.Windows.Forms.DockStyle.Fill;
             this.respList.FormattingEnabled = true;
             this.respList.Location = new System.Drawing.Point(3, 3);
             this.respList.Name = "respList";
-            this.respList.Size = new System.Drawing.Size(356, 450);
+            this.respList.Size = new System.Drawing.Size(356, 160);
             this.respList.TabIndex = 0;
             this.respList.SelectedIndexChanged += new System.EventHandler(this.respList_SelectedIndexChanged);
             this.respList.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.respList_MouseDoubleClick);
@@ -731,50 +878,94 @@
             this.imageList1.Images.SetKeyName(7, "startungpos.png");
             this.imageList1.Images.SetKeyName(8, "info.png");
             // 
-            // groupBox5
+            // itemEdit_context
             // 
-            this.groupBox5.Controls.Add(this.routeGroupList);
-            this.groupBox5.Location = new System.Drawing.Point(3, 6);
-            this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(353, 164);
-            this.groupBox5.TabIndex = 1;
-            this.groupBox5.TabStop = false;
-            this.groupBox5.Text = "Route Groups";
+            this.itemEdit_context.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.contextItemAdd,
+            this.contextItemEdit,
+            this.contextItemDuplicate,
+            this.contextItemDelete});
+            this.itemEdit_context.Name = "contextMenuStrip1";
+            this.itemEdit_context.Size = new System.Drawing.Size(152, 92);
             // 
-            // groupBox6
+            // contextItemAdd
             // 
-            this.groupBox6.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.contextItemAdd.Name = "contextItemAdd";
+            this.contextItemAdd.Size = new System.Drawing.Size(151, 22);
+            this.contextItemAdd.Text = "Add Item";
+            // 
+            // contextItemEdit
+            // 
+            this.contextItemEdit.Name = "contextItemEdit";
+            this.contextItemEdit.Size = new System.Drawing.Size(151, 22);
+            this.contextItemEdit.Text = "Edit Item";
+            this.contextItemEdit.Click += new System.EventHandler(this.contextItemEdit_Click);
+            // 
+            // contextItemDuplicate
+            // 
+            this.contextItemDuplicate.Name = "contextItemDuplicate";
+            this.contextItemDuplicate.Size = new System.Drawing.Size(151, 22);
+            this.contextItemDuplicate.Text = "Duplicate Item";
+            // 
+            // contextItemDelete
+            // 
+            this.contextItemDelete.Name = "contextItemDelete";
+            this.contextItemDelete.Size = new System.Drawing.Size(151, 22);
+            this.contextItemDelete.Text = "Delete Item";
+            // 
+            // propertyGrid5
+            // 
+            this.propertyGrid5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
-            this.groupBox6.Controls.Add(this.routeList);
-            this.groupBox6.Location = new System.Drawing.Point(0, 173);
-            this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(362, 283);
-            this.groupBox6.TabIndex = 2;
-            this.groupBox6.TabStop = false;
-            this.groupBox6.Text = "Routes";
+            this.propertyGrid5.Location = new System.Drawing.Point(3, 182);
+            this.propertyGrid5.Name = "propertyGrid5";
+            this.propertyGrid5.Size = new System.Drawing.Size(348, 234);
+            this.propertyGrid5.TabIndex = 1;
+            this.propertyGrid5.ToolbarVisible = false;
             // 
-            // routeGroupList
+            // propertyGrid6
             // 
-            this.routeGroupList.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.routeGroupList.FormattingEnabled = true;
-            this.routeGroupList.Location = new System.Drawing.Point(3, 16);
-            this.routeGroupList.Name = "routeGroupList";
-            this.routeGroupList.Size = new System.Drawing.Size(347, 145);
-            this.routeGroupList.TabIndex = 0;
+            this.propertyGrid6.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.propertyGrid6.Location = new System.Drawing.Point(3, 234);
+            this.propertyGrid6.Name = "propertyGrid6";
+            this.propertyGrid6.PropertySort = System.Windows.Forms.PropertySort.Categorized;
+            this.propertyGrid6.Size = new System.Drawing.Size(356, 341);
+            this.propertyGrid6.TabIndex = 1;
+            this.propertyGrid6.ToolbarVisible = false;
             // 
-            // saveAsToolStripMenuItem
+            // propertyGrid7
             // 
-            this.saveAsToolStripMenuItem.Enabled = false;
-            this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
-            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.saveAsToolStripMenuItem.Text = "Save As";
-            this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.saveAsToolStripMenuItem_Click);
+            this.propertyGrid7.Location = new System.Drawing.Point(3, 221);
+            this.propertyGrid7.Name = "propertyGrid7";
+            this.propertyGrid7.PropertySort = System.Windows.Forms.PropertySort.Categorized;
+            this.propertyGrid7.Size = new System.Drawing.Size(356, 354);
+            this.propertyGrid7.TabIndex = 1;
+            this.propertyGrid7.ToolbarVisible = false;
+            // 
+            // propertyGrid8
+            // 
+            this.propertyGrid8.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.propertyGrid8.Location = new System.Drawing.Point(3, 156);
+            this.propertyGrid8.Name = "propertyGrid8";
+            this.propertyGrid8.PropertySort = System.Windows.Forms.PropertySort.Categorized;
+            this.propertyGrid8.Size = new System.Drawing.Size(356, 416);
+            this.propertyGrid8.TabIndex = 1;
+            this.propertyGrid8.ToolbarVisible = false;
+            // 
+            // bTIViewerToolStripMenuItem
+            // 
+            this.bTIViewerToolStripMenuItem.Name = "bTIViewerToolStripMenuItem";
+            this.bTIViewerToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.bTIViewerToolStripMenuItem.Text = "BTI Viewer";
+            this.bTIViewerToolStripMenuItem.Click += new System.EventHandler(this.bTIViewerToolStripMenuItem_Click);
             // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1057, 538);
+            this.ClientSize = new System.Drawing.Size(1123, 660);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.toolStrip1);
@@ -799,6 +990,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.musicInput)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.unknown5)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.unknown4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.unknown3)).EndInit();
@@ -808,13 +1000,14 @@
             this.groupBox4.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
             this.tabPage3.ResumeLayout(false);
+            this.groupBox6.ResumeLayout(false);
+            this.groupBox5.ResumeLayout(false);
             this.tabPage4.ResumeLayout(false);
             this.tabPage5.ResumeLayout(false);
             this.tabPage6.ResumeLayout(false);
             this.tabPage7.ResumeLayout(false);
             this.tabPage8.ResumeLayout(false);
-            this.groupBox5.ResumeLayout(false);
-            this.groupBox6.ResumeLayout(false);
+            this.itemEdit_context.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -882,6 +1075,22 @@
         private System.Windows.Forms.GroupBox groupBox5;
         private System.Windows.Forms.ListBox routeGroupList;
         private System.Windows.Forms.ToolStripMenuItem saveAsToolStripMenuItem;
+        private System.Windows.Forms.ContextMenuStrip itemEdit_context;
+        private System.Windows.Forms.ToolStripMenuItem contextItemEdit;
+        private System.Windows.Forms.ToolStripMenuItem contextItemAdd;
+        private System.Windows.Forms.ToolStripMenuItem contextItemDuplicate;
+        private System.Windows.Forms.ToolStripMenuItem contextItemDelete;
+        private System.Windows.Forms.NumericUpDown musicInput;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.PropertyGrid propertyGrid1;
+        private System.Windows.Forms.PropertyGrid propertyGrid2;
+        private System.Windows.Forms.PropertyGrid propertyGrid3;
+        private System.Windows.Forms.PropertyGrid propertyGrid4;
+        private System.Windows.Forms.PropertyGrid propertyGrid5;
+        private System.Windows.Forms.PropertyGrid propertyGrid6;
+        private System.Windows.Forms.PropertyGrid propertyGrid7;
+        private System.Windows.Forms.PropertyGrid propertyGrid8;
+        private System.Windows.Forms.ToolStripMenuItem bTIViewerToolStripMenuItem;
     }
 }
 

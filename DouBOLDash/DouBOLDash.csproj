@@ -34,14 +34,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="OpenTK">
-      <HintPath>..\..\OpenTK\OpenTK.dll</HintPath>
+    <Reference Include="OpenTK, Version=1.0.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\OpenTK.dll</HintPath>
     </Reference>
-    <Reference Include="OpenTK.Compatibility">
-      <HintPath>..\..\OpenTK\OpenTK.Compatibility.dll</HintPath>
+    <Reference Include="OpenTK.Compatibility, Version=1.0.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\OpenTK.Compatibility.dll</HintPath>
     </Reference>
-    <Reference Include="OpenTK.GLControl">
-      <HintPath>..\..\OpenTK\OpenTK.GLControl.dll</HintPath>
+    <Reference Include="OpenTK.GLControl, Version=1.0.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\OpenTK.GLControl.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -67,6 +70,12 @@
     </Compile>
     <Compile Include="BOL.cs" />
     <Compile Include="BTI.cs" />
+    <Compile Include="BTIReader.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BTIReader.Designer.cs">
+      <DependentUpon>BTIReader.cs</DependentUpon>
+    </Compile>
     <Compile Include="ColorCubeRenderer.cs" />
     <Compile Include="Filesystembase.cs" />
     <Compile Include="Helper.cs" />
@@ -86,12 +95,6 @@
     <Compile Include="RespawnAdd.Designer.cs">
       <DependentUpon>RespawnAdd.cs</DependentUpon>
     </Compile>
-    <Compile Include="RespawnEditor.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="RespawnEditor.Designer.cs">
-      <DependentUpon>RespawnEditor.cs</DependentUpon>
-    </Compile>
     <Compile Include="SettingsWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -102,6 +105,9 @@
     <Compile Include="System\IO\EndianBinaryWriter.cs" />
     <EmbeddedResource Include="BMDViewer.resx">
       <DependentUpon>BMDViewer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BTIReader.resx">
+      <DependentUpon>BTIReader.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>
@@ -117,9 +123,6 @@
     </Compile>
     <EmbeddedResource Include="RespawnAdd.resx">
       <DependentUpon>RespawnAdd.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="RespawnEditor.resx">
-      <DependentUpon>RespawnEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SettingsWindow.resx">
       <DependentUpon>SettingsWindow.cs</DependentUpon>

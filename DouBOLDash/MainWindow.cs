@@ -83,7 +83,15 @@ namespace DouBOLDash
             {0x30, "Unknown"},
             {0x31, "Rainbow Road"},
             {0x32, "Dry Dry Desert"},
-            {0x33, "Sherbet Land"}
+            {0x33, "Sherbet Land"},
+            {0x34, "Luigi's Mansion"},
+            {0x35, "Nintendo Gamecube"},
+            {0x36, "Block City"},
+            {0x37, "Unused"},
+            {0x38, "Tilt-A-Kart"},
+            {0x39, "Unused"},
+            {0x3A, "Cookie Land"},
+            {0x3B, "Pipe Plaza"}
         };
 
         Dictionary<string, Bmd> objModelList = new Dictionary<string, Bmd>();
@@ -168,6 +176,13 @@ namespace DouBOLDash
                 saveAsToolStripMenuItem.Enabled = true;
                 addToolStripMenuItem.Enabled = true;
                 deleteToolStripMenuItem.Enabled = true;
+
+                lapCounter.Enabled = true;
+                musicInput.Enabled = true;
+                musicSelect.Enabled = true;
+                unknown3.Enabled = true;
+                unknown4.Enabled = true;
+                unknown5.Enabled = true;
 
                 // clear all listboxes
                 enemyRouteList.Items.Clear();
@@ -343,74 +358,8 @@ namespace DouBOLDash
 
                 setMusic(musicID);
                 lapCounter.Value = lapCount;
+                musicInput.Value = musicID;
             }
-
-            uint count = 0;
-            float posX1, posY1, posZ1;
-            float posX2 = 0, posY2 = 0, posZ2 = 0;
-            enemyPointList = GL.GenLists(1);
-            GL.NewList(enemyPointList, ListMode.Compile);
-            foreach (EnemyRoute objEntry in enmRoute)
-            {
-                enemyRouteList.Items.Add(objEntry);
-                posX1 = objEntry.xPos;
-                posY1 = objEntry.yPos;
-                posZ1 = objEntry.zPos;
-
-                if (objEntry.link != -1 && count % 2 == 0)
-                {
-                    GL.PushMatrix();
-                    GL.Translate(posX1, posY1, posZ1);
-                    GL.Scale(1f, 1f, 1f);
-                    DrawCube(1f, 0f, 1f, true, true, false);
-                    GL.PopMatrix();
-
-                    posX2 = objEntry.xPos;
-                    posY2 = objEntry.yPos;
-                    posZ2 = objEntry.zPos;
-
-                    count += 1;
-                }
-                else if (objEntry.link != -1)
-                {
-                    GL.PushMatrix();
-                    GL.Translate(posX1, posY1, posZ1);
-                    GL.Scale(1f, 1f, 1f);
-                    DrawCube(1f, 0f, 1f, true, true, false);
-                    GL.PopMatrix();
-
-                    GL.PushMatrix();
-                    GL.Begin(BeginMode.Lines);
-                    GL.Color4(1f, 0f, 1f, 1f);
-                    GL.Vertex3(posX1, posY1, posZ1);
-                    GL.Vertex3(posX2, posY2, posZ2);
-                    GL.End();
-                    GL.PopMatrix();
-
-                    count += 1;
-                }
-                else
-                {
-                    GL.PushMatrix();
-                    GL.Translate(posX1, posY1, posZ1);
-                    GL.Scale(1f, 1f, 1f);
-                    DrawCube(1f, 0f, 1f, true, true, false);
-                    GL.PopMatrix();
-
-                    GL.PushMatrix();
-                    GL.Begin(BeginMode.Lines);
-                    GL.Color4(1f, 0f, 1f, 1f);
-                    GL.Vertex3(posX1, posY1, posZ1);
-                    GL.Vertex3(posX2, posY2, posZ2);
-                    GL.End();
-                    GL.PopMatrix();
-
-                    posX2 = objEntry.xPos;
-                    posY2 = objEntry.yPos;
-                    posZ2 = objEntry.zPos;
-                }
-            }
-            GL.EndList();
 
             foreach(CheckpointGroupObject objEntry in chkGRP)
             {
@@ -422,236 +371,14 @@ namespace DouBOLDash
                 routeGroupList.Items.Add(routeSetup);
             }
 
-            uint groupID;
-            uint currentID = 0;
-            float curX, curY, curZ;
-            float prevX = 0, prevY = 0, prevZ = 0;
-            bool firstEntry = true;
-            int seccount = 0;
-            routePointList = GL.GenLists(1);
-            GL.NewList(routePointList, ListMode.Compile);
-            foreach (RoutePointObject objEntry in rpobj)
-            {
-                routeList.Items.Add(objEntry);
-                loadingLabel.Text = "Loading route point...";
-
-                /* 
-                 * if the group id is the same as the current id, we join it together with a line
-                 * if it isn't we just place a new block and start over
-                 */
-                groupID = objEntry.groupID;
-                curX = objEntry.xPos;
-                curY = objEntry.yPos;
-                curZ = objEntry.zPos;
-
-                if (groupID == currentID)
-                {
-                    // if it's the first entry, we set this to false so it doesn't run through again
-                    if (firstEntry)
-                    {
-                        seccount += 1;
-                        GL.PushMatrix();
-                        GL.Translate(curX, curY, curZ);
-                        GL.Scale(1f, 1f, 1f);
-                        DrawCube(0f, 0f, 1f, true, true, false);
-                        GL.PopMatrix();
-
-                        prevX = objEntry.xPos;
-                        prevY = objEntry.yPos;
-                        prevZ = objEntry.zPos;
-
-                        firstEntry = false;
-                    }
-                    // if it isn't, we draw a line to the next entry
-                    else
-                    {
-                        GL.PushMatrix();
-                        GL.Translate(curX, curY, curZ);
-                        GL.Scale(1f, 1f, 1f);
-                        DrawCube(0f, 0f, 1f, true, true, false);
-                        GL.PopMatrix();
-
-                        GL.PushMatrix();
-                        GL.Begin(BeginMode.Lines);
-                        GL.Color4(0f, 0f, 1f, 1f);
-                        GL.Vertex3(curX, curY, curZ);
-                        GL.Vertex3(prevX, prevY, prevZ);
-                        GL.End();
-                        GL.PopMatrix();
-
-                        prevX = objEntry.xPos;
-                        prevY = objEntry.yPos;
-                        prevZ = objEntry.zPos;
-
-                        firstEntry = false;
-                    }
-                }
-                else
-                {
-                    currentID += 1;
-                    firstEntry = true;
-                }
-            }
-            GL.EndList();
-
-            float xprev1 = 0, yprev1 = 0, zprev1 = 0;
-            float xprev2 = 0, yprev2 = 0, zprev2 = 0;
-            bool isFirst = true;
-            checkpointList = GL.GenLists(1);
-            GL.NewList(checkpointList, ListMode.Compile);
-            foreach (CheckpointObject objEntry in chkobj)
-            {
-                chckList.Items.Add(objEntry);
-                loadingLabel.Text = "Loading checkpoint...";
-                GL.PushMatrix();
-                GL.Translate(objEntry.xPosStart, objEntry.yPosStart, objEntry.zPosStart);
-                GL.Scale(1f, 1f, 1f);
-                DrawCube(0.5f, 0.25f, 0f, true, true, false);
-                GL.PopMatrix();
-
-                GL.PushMatrix();
-                GL.Translate(objEntry.xPosEnd, objEntry.yPosEnd, objEntry.zPosEnd);
-                GL.Scale(1f, 1f, 1f);
-                DrawCube(0.5f, 0.25f, 0f, true, true, false);
-                GL.PopMatrix();
-
-                GL.PushMatrix();
-                GL.Begin(BeginMode.Lines);
-                GL.Color4(0.5f, 0.25f, 0f, 1f);
-                GL.Vertex3(objEntry.xPosStart, objEntry.yPosStart, objEntry.zPosStart);
-                GL.Vertex3(objEntry.xPosEnd, objEntry.yPosEnd, objEntry.zPosEnd);
-                GL.End();
-                GL.PopMatrix();
-
-                if (!isFirst)
-                {
-                    GL.PushMatrix();
-                    GL.Begin(BeginMode.Lines);
-                    GL.Color4(0.5f, 0.25f, 0f, 1f);
-                    GL.Vertex3(objEntry.xPosStart, objEntry.yPosStart, objEntry.zPosStart);
-                    GL.Vertex3(xprev1, yprev1, zprev1);
-                    GL.Vertex3(objEntry.xPosEnd, objEntry.yPosEnd, objEntry.zPosEnd);
-                    GL.Vertex3(xprev2, yprev2, zprev2);
-                    GL.End();
-                    GL.PopMatrix();
-                }
-
-                xprev1 = objEntry.xPosStart;
-                yprev1 = objEntry.yPosStart;
-                zprev1 = objEntry.zPosStart;
-
-                xprev2 = objEntry.xPosEnd;
-                yprev2 = objEntry.yPosEnd;
-                zprev2 = objEntry.zPosEnd;
-
-                isFirst = false;
-
-            }
-            GL.EndList();
-
-            Bmd objModel;
-            objectList = GL.GenLists(1);
-            GL.NewList(objectList, ListMode.Compile);
-            int rotation;
-            foreach (LevelObject objEntry in lvlobj)
-            {
-                objList.Items.Add(objEntry);
-                loadingLabel.Text = "Loading object " + objEntry.objID;
-
-                GL.PushMatrix();
-                GL.Translate(objEntry.xPos, objEntry.yPos, objEntry.zPos);
-                GL.Rotate(objEntry.rotation, 0f, 1f, 0f);
-                if (objEntry.modelName != "null")
-                {
-                    if (objModelList.ContainsKey(objEntry.modelName))
-                    {
-                        objModelList.TryGetValue(objEntry.modelName, out objModel);
-                        GL.Scale(objEntry.xScale, objEntry.yScale, objEntry.zScale);
-                        DrawBMD(objModel);
-                    }
-                    else
-                    {
-                        FileBase objFB = new FileBase();
-                        objFB.Stream = new FileStream(Properties.Settings.Default.curDir + "\\objects\\" + objEntry.modelName + ".bmd", FileMode.Open);
-                        Bmd obj = new Bmd(objFB);
-                        GL.Scale(objEntry.xScale, objEntry.yScale, objEntry.zScale);
-                        DrawBMD(obj);
-                        objModelList.Add(objEntry.modelName, obj);
-                        objFB.Close();
-                    }
-                }
-                else
-                {
-                    GL.Scale(1f, 1f, 1f);
-                    DrawCube(0f, 1f, 0f, true, true, false);
-                }
-                GL.PopMatrix();
-            }
-            GL.EndList();
-
-            kartList = GL.GenLists(1);
-            GL.NewList(kartList, ListMode.Compile);
-            foreach (KartPointObject objEntry in kartobj)
-            {
-                kartPointList.Items.Add(objEntry);
-                loadingLabel.Text = "Loading kart...";
-                GL.PushMatrix();
-                GL.Translate(objEntry.xPos, objEntry.yPos, objEntry.zPos);
-                rotation = Convert.ToInt16(objEntry.rotation);
-                GL.Rotate(rotation, 0f, 1f, 0f);
-                GL.Scale(1f, 1f, 1f);
-                DrawCube(1f, 0f, 0f, true, true, false);
-                GL.PopMatrix();
-            }
-            GL.EndList();
-
-            areaObjList = GL.GenLists(1);
-            GL.NewList(areaObjList, ListMode.Compile);
-            foreach (AreaObject objEntry in areaobj)
-            {
-                areaList.Items.Add(objEntry);
-                loadingLabel.Text = "Loading area...";
-                GL.PushMatrix();
-                GL.Translate(objEntry.xPos, objEntry.yPos, objEntry.zPos);
-                rotation = Convert.ToInt16(objEntry.rotation);
-                GL.Rotate(rotation, 0f, 1f, 0f);
-                GL.Scale(objEntry.xScale, objEntry.yScale, objEntry.zScale);
-                DrawCube(0.867f, 0.867f, 0.867f, false, false, true);
-                GL.PopMatrix();
-            }
-            GL.EndList();
-
-            camList = GL.GenLists(1);
-            GL.NewList(camList, ListMode.Compile);
-            foreach (CameraObject objEntry in camobj)
-            {
-                cameraList.Items.Add(objEntry);
-                loadingLabel.Text = "Loading camera...";
-                GL.PushMatrix();
-                GL.Translate(objEntry.xView1, objEntry.yView1, objEntry.zView1);
-                rotation = Convert.ToInt16(objEntry.rotation);
-                GL.Rotate(rotation, 0f, 1f, 0f);
-                GL.Scale(1f, 1f, 1f);
-                DrawCube(0.498f, 0.859f, 1f, true, true, false);
-                GL.PopMatrix();
-            }
-            GL.EndList();
-
-            respawnList = GL.GenLists(1);
-            GL.NewList(respawnList, ListMode.Compile);
-            foreach (RespawnObject objEntry in resObj)
-            {
-                loadingLabel.Text = "Loading respawn...";
-                GL.PushMatrix();
-                GL.Translate(objEntry.xPos, objEntry.yPos, objEntry.zPos);
-                rotation = Convert.ToInt16(objEntry.rotation);
-                GL.Rotate(rotation, 0f, 1f, 0f);
-                GL.Scale(1f, 1f, 1f);
-                DrawCube(1f, 0.863f, 0f, true, true, false);
-                GL.PopMatrix();
-                respList.Items.Add(objEntry);
-            }
-            GL.EndList();
+            UpdateEnemyPoints();
+            UpdateRoutePoints(false);
+            UpdateCheckpoints();
+            UpdateObjects(false);
+            UpdateKartPoints();
+            UpdateAreas();
+            UpdateCameras(false);
+            UpdateRespawns();
 
             loadingLabel.Text = "Ready!";
         }
@@ -914,15 +641,20 @@ namespace DouBOLDash
 
         private void UpdateViewport()
         {
-            GL.Viewport(glControl1.ClientRectangle);
+            if (glControl1.Height == 0 || glControl1.Width == 0)
+                Console.WriteLine("we no update view");
+            else
+            {
+                GL.Viewport(glControl1.ClientRectangle);
 
-            m_AspectRatio = (float)glControl1.Width / (float)glControl1.Height;
-            GL.MatrixMode(MatrixMode.Projection);
-            Matrix4 projmtx = Matrix4.CreatePerspectiveFieldOfView(k_FOV, m_AspectRatio, k_zNear, k_zFar);
-            GL.LoadMatrix(ref projmtx);
+                m_AspectRatio = (float)glControl1.Width / (float)glControl1.Height;
+                GL.MatrixMode(MatrixMode.Projection);
+                Matrix4 projmtx = Matrix4.CreatePerspectiveFieldOfView(k_FOV, m_AspectRatio, k_zNear, k_zFar);
+                GL.LoadMatrix(ref projmtx);
 
-            m_PixelFactorX = ((2f * (float)Math.Tan(k_FOV / 2f) * m_AspectRatio) / (float)(glControl1.Width));
-            m_PixelFactorY = ((2f * (float)Math.Tan(k_FOV / 2f)) / (float)(glControl1.Height));
+                m_PixelFactorX = ((2f * (float)Math.Tan(k_FOV / 2f) * m_AspectRatio) / (float)(glControl1.Width));
+                m_PixelFactorY = ((2f * (float)Math.Tan(k_FOV / 2f)) / (float)(glControl1.Height));
+            }
         }
 
         private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -952,6 +684,8 @@ namespace DouBOLDash
             LevelObject level = new LevelObject();
             level = (LevelObject)objList.SelectedItem;
 
+            propertyGrid3.SelectedObject = objList.SelectedItem;
+
             selectedList = GL.GenLists(1);
             GL.NewList(selectedList, ListMode.Compile);
             GL.PushMatrix();
@@ -975,6 +709,18 @@ namespace DouBOLDash
 
             DrawCube(1f, 1f, 1f, false, false, false);
             GL.PopMatrix();
+
+            foreach (RoutePointObject objEntry in rpobj)
+            {
+                if (objEntry.groupID == level.routeID && level.routeID != -1)
+                {
+                    GL.PushMatrix();
+                    GL.Translate(objEntry.xPos, objEntry.yPos, objEntry.zPos);
+                    GL.Scale(2f, 2f, 2f);
+                    DrawCube(0.941f, 0.071f, 0.745f, false, false, false);
+                    GL.PopMatrix();
+                }
+            }
             GL.EndList();
 
             selectionInfo.Text = "Currently selected: Track object at (" + level.xPos + ", " + level.yPos + ", " + level.zPos + ") with ID " + level.objID.ToString("X") + ".";
@@ -1025,6 +771,8 @@ namespace DouBOLDash
             if (selectedList != 0)
                 GL.DeleteLists(selectedList, 1);
 
+            propertyGrid4.SelectedObject = respList.SelectedItem;
+
             if (respList.SelectedIndex != -1)
             {
                 string curItem = respList.SelectedItem.ToString();
@@ -1051,10 +799,7 @@ namespace DouBOLDash
         {
             if (respList.SelectedIndex != -1)
             {
-                RespawnEditor res = new RespawnEditor();
-                res.getLists(respList, glControl1, respawnList);
-                res.loadData((RespawnObject)respList.SelectedItem);
-                res.Show();
+
             }
         }
 
@@ -1076,6 +821,8 @@ namespace DouBOLDash
         {
             if (selectedList != 0)
                 GL.DeleteLists(selectedList, 1);
+
+            propertyGrid5.SelectedObject = chckList.SelectedItem;
 
             if (chckList.SelectedIndex != -1)
             {
@@ -1109,6 +856,8 @@ namespace DouBOLDash
             if (selectedList != 0)
                 GL.DeleteLists(selectedList, 1);
 
+            propertyGrid1.SelectedObject = routeList.SelectedItem;
+
             if (routeList.SelectedIndex != -1)
             {
                 string curItem = routeList.SelectedItem.ToString();
@@ -1134,6 +883,8 @@ namespace DouBOLDash
         {
             if (selectedList != 0)
                 GL.DeleteLists(selectedList, 1);
+
+            propertyGrid8.SelectedObject = kartPointList.SelectedItem;
 
             if (kartPointList.SelectedIndex != -1)
             {
@@ -1161,6 +912,8 @@ namespace DouBOLDash
         {
             if (selectedList != 0)
                 GL.DeleteLists(selectedList, 1);
+
+            propertyGrid2.SelectedObject = cameraList.SelectedItem;
 
             if (cameraList.SelectedIndex != -1)
             {
@@ -1391,6 +1144,7 @@ namespace DouBOLDash
             {
                 int id = musicSelect.SelectedIndex + 0x21;
                 bol.musicID = (byte)id;
+                musicInput.Value = id;
             }
         }
 
@@ -1405,10 +1159,50 @@ namespace DouBOLDash
             }
         }
 
+        private void objList_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right && objList.SelectedIndex != -1)
+            {
+                itemEdit_context.Show(objList, e.Location);
+            }
+        }
+
+        private void contextItemEdit_Click(object sender, EventArgs e)
+        {
+            if (objList.SelectedIndex != -1)
+                MessageBox.Show("Select an item.");
+        }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void musicInput_ValueChanged(object sender, EventArgs e)
+        {
+            foreach(BOLInformation bolInfo in bolInf)
+            {
+                bolInfo.musicID = (byte)musicInput.Value;
+                musicSelect.SelectedIndex = (int)musicInput.Value - 0x21;
+            }
+        }
+
+        private void propertyGrid1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void propertyGrid1_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
+        {
+            UpdateRoutePoints(true);
+        }
+
         private void areaList_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (selectedList != 0)
                 GL.DeleteLists(selectedList, 1);
+
+            propertyGrid7.SelectedObject = areaList.SelectedItem;
 
             if (areaList.SelectedIndex != -1)
             {
@@ -1461,10 +1255,17 @@ namespace DouBOLDash
             glControl1.Refresh();
         }
 
+        private void propertyGrid2_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
+        {
+            UpdateCameras(true);
+        }
+
         private void enemyRouteList_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (selectedList != 0)
                 GL.DeleteLists(selectedList, 1);
+
+            propertyGrid6.SelectedObject = enemyRouteList.SelectedItem;
 
             if (enemyRouteList.SelectedIndex != -1)
             {
@@ -1556,6 +1357,391 @@ namespace DouBOLDash
                     }
                 }
             }
+        }
+
+        private void propertyGrid3_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
+        {
+            UpdateObjects(true);
+        }
+
+        public void UpdateEnemyPoints()
+        {
+            uint count = 0;
+            float posX1, posY1, posZ1;
+            float posX2 = 0, posY2 = 0, posZ2 = 0;
+            enemyPointList = GL.GenLists(1);
+
+            GL.NewList(enemyPointList, ListMode.Compile);
+            foreach (EnemyRoute objEntry in enmRoute)
+            {
+                enemyRouteList.Items.Add(objEntry);
+                posX1 = objEntry.xPos;
+                posY1 = objEntry.yPos;
+                posZ1 = objEntry.zPos;
+
+                if (objEntry.link != -1 && count % 2 == 0)
+                {
+                    GL.PushMatrix();
+                    GL.Translate(posX1, posY1, posZ1);
+                    GL.Scale(1f, 1f, 1f);
+                    DrawCube(1f, 0f, 1f, true, true, false);
+                    GL.PopMatrix();
+
+                    posX2 = objEntry.xPos;
+                    posY2 = objEntry.yPos;
+                    posZ2 = objEntry.zPos;
+
+                    count += 1;
+                }
+                else if (objEntry.link != -1)
+                {
+                    GL.PushMatrix();
+                    GL.Translate(posX1, posY1, posZ1);
+                    GL.Scale(1f, 1f, 1f);
+                    DrawCube(1f, 0f, 1f, true, true, false);
+                    GL.PopMatrix();
+
+                    GL.PushMatrix();
+                    GL.Begin(BeginMode.Lines);
+                    GL.Color4(1f, 0f, 1f, 1f);
+                    GL.Vertex3(posX1, posY1, posZ1);
+                    GL.Vertex3(posX2, posY2, posZ2);
+                    GL.End();
+                    GL.PopMatrix();
+
+                    count += 1;
+                }
+                else
+                {
+                    GL.PushMatrix();
+                    GL.Translate(posX1, posY1, posZ1);
+                    GL.Scale(1f, 1f, 1f);
+                    DrawCube(1f, 0f, 1f, true, true, false);
+                    GL.PopMatrix();
+
+                    GL.PushMatrix();
+                    GL.Begin(BeginMode.Lines);
+                    GL.Color4(1f, 0f, 1f, 1f);
+                    GL.Vertex3(posX1, posY1, posZ1);
+                    GL.Vertex3(posX2, posY2, posZ2);
+                    GL.End();
+                    GL.PopMatrix();
+
+                    posX2 = objEntry.xPos;
+                    posY2 = objEntry.yPos;
+                    posZ2 = objEntry.zPos;
+                }
+            }
+            GL.EndList();
+        }
+
+        public void UpdateRoutePoints(bool isUpdate)
+        {
+            GL.DeleteLists(routePointList, 1);
+
+            if (isUpdate)
+            {
+                rpobj.Clear();
+                routeList.Refresh();
+
+                foreach (RoutePointObject routeObj in routeList.Items)
+                {
+                    rpobj.Add(routeObj);
+                }
+            }
+
+            uint groupID;
+            uint currentID = 0;
+            float curX, curY, curZ;
+            float prevX = 0, prevY = 0, prevZ = 0;
+            bool firstEntry = true;
+            int seccount = 0;
+            routePointList = GL.GenLists(1);
+            GL.NewList(routePointList, ListMode.Compile);
+            foreach (RoutePointObject objEntry in rpobj)
+            {
+                routeList.Items.Add(objEntry);
+                loadingLabel.Text = "Loading route point...";
+
+                /* 
+                 * if the group id is the same as the current id, we join it together with a line
+                 * if it isn't we just place a new block and start over
+                 */
+                groupID = objEntry.groupID;
+                curX = objEntry.xPos;
+                curY = objEntry.yPos;
+                curZ = objEntry.zPos;
+
+                if (groupID == currentID)
+                {
+                    // if it's the first entry, we set this to false so it doesn't run through again
+                    if (firstEntry)
+                    {
+                        seccount += 1;
+                        GL.PushMatrix();
+                        GL.Translate(curX, curY, curZ);
+                        GL.Scale(1f, 1f, 1f);
+                        DrawCube(0f, 0f, 1f, true, true, false);
+                        GL.PopMatrix();
+
+                        prevX = objEntry.xPos;
+                        prevY = objEntry.yPos;
+                        prevZ = objEntry.zPos;
+
+                        firstEntry = false;
+                    }
+                    // if it isn't, we draw a line to the next entry
+                    else
+                    {
+                        GL.PushMatrix();
+                        GL.Translate(curX, curY, curZ);
+                        GL.Scale(1f, 1f, 1f);
+                        DrawCube(0f, 0f, 1f, true, true, false);
+                        GL.PopMatrix();
+
+                        GL.PushMatrix();
+                        GL.Begin(BeginMode.Lines);
+                        GL.Color4(0f, 0f, 1f, 1f);
+                        GL.Vertex3(curX, curY, curZ);
+                        GL.Vertex3(prevX, prevY, prevZ);
+                        GL.End();
+                        GL.PopMatrix();
+
+                        prevX = objEntry.xPos;
+                        prevY = objEntry.yPos;
+                        prevZ = objEntry.zPos;
+
+                        firstEntry = false;
+                    }
+                }
+                else
+                {
+                    GL.PushMatrix();
+                    GL.Translate(curX, curY, curZ);
+                    GL.Scale(1f, 1f, 1f);
+                    DrawCube(0f, 0f, 1f, true, true, false);
+                    GL.PopMatrix();
+
+                    currentID += 1;
+                    firstEntry = true;
+                }
+            }
+            GL.EndList();
+
+            glControl1.Invalidate();
+        }
+
+        private void bTIViewerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            BTIReader btireader = new BTIReader();
+            btireader.Show();
+        }
+
+        public void UpdateCheckpoints()
+        {
+            float xprev1 = 0, yprev1 = 0, zprev1 = 0;
+            float xprev2 = 0, yprev2 = 0, zprev2 = 0;
+            bool isFirst = true;
+            checkpointList = GL.GenLists(1);
+            GL.NewList(checkpointList, ListMode.Compile);
+            foreach (CheckpointObject objEntry in chkobj)
+            {
+                chckList.Items.Add(objEntry);
+                loadingLabel.Text = "Loading checkpoint...";
+                GL.PushMatrix();
+                GL.Translate(objEntry.xPosStart, objEntry.yPosStart, objEntry.zPosStart);
+                GL.Scale(1f, 1f, 1f);
+                DrawCube(0.5f, 0.25f, 0f, true, true, false);
+                GL.PopMatrix();
+
+                GL.PushMatrix();
+                GL.Translate(objEntry.xPosEnd, objEntry.yPosEnd, objEntry.zPosEnd);
+                GL.Scale(1f, 1f, 1f);
+                DrawCube(0.5f, 0.25f, 0f, true, true, false);
+                GL.PopMatrix();
+
+                GL.PushMatrix();
+                GL.Begin(BeginMode.Lines);
+                GL.Color4(0.5f, 0.25f, 0f, 1f);
+                GL.Vertex3(objEntry.xPosStart, objEntry.yPosStart, objEntry.zPosStart);
+                GL.Vertex3(objEntry.xPosEnd, objEntry.yPosEnd, objEntry.zPosEnd);
+                GL.End();
+                GL.PopMatrix();
+
+                if (!isFirst)
+                {
+                    GL.PushMatrix();
+                    GL.Begin(BeginMode.Lines);
+                    GL.Color4(0.5f, 0.25f, 0f, 1f);
+                    GL.Vertex3(objEntry.xPosStart, objEntry.yPosStart, objEntry.zPosStart);
+                    GL.Vertex3(xprev1, yprev1, zprev1);
+                    GL.Vertex3(objEntry.xPosEnd, objEntry.yPosEnd, objEntry.zPosEnd);
+                    GL.Vertex3(xprev2, yprev2, zprev2);
+                    GL.End();
+                    GL.PopMatrix();
+                }
+
+                xprev1 = objEntry.xPosStart;
+                yprev1 = objEntry.yPosStart;
+                zprev1 = objEntry.zPosStart;
+
+                xprev2 = objEntry.xPosEnd;
+                yprev2 = objEntry.yPosEnd;
+                zprev2 = objEntry.zPosEnd;
+
+                isFirst = false;
+
+            }
+            GL.EndList();
+        }
+
+        public void UpdateObjects(bool isUpdate)
+        {
+            GL.DeleteLists(objectList, 1);
+
+            if (isUpdate)
+            {
+                lvlobj.Clear();
+                objList.Refresh();
+
+                foreach (LevelObject levelObj in objList.Items)
+                {
+                    lvlobj.Add(levelObj);
+                }
+            }
+
+            Bmd objModel;
+            objectList = GL.GenLists(1);
+            GL.NewList(objectList, ListMode.Compile);
+            int rotation;
+            foreach (LevelObject objEntry in lvlobj)
+            {
+                objList.Items.Add(objEntry);
+                loadingLabel.Text = "Loading object " + objEntry.objID;
+
+                GL.PushMatrix();
+                GL.Translate(objEntry.xPos, objEntry.yPos, objEntry.zPos);
+                GL.Rotate(objEntry.rotation, 0f, 1f, 0f);
+                if (objEntry.modelName != "null")
+                {
+                    if (objModelList.ContainsKey(objEntry.modelName))
+                    {
+                        objModelList.TryGetValue(objEntry.modelName, out objModel);
+                        GL.Scale(objEntry.xScale, objEntry.yScale, objEntry.zScale);
+                        DrawBMD(objModel);
+                    }
+                    else
+                    {
+                        FileBase objFB = new FileBase();
+                        objFB.Stream = new FileStream(Properties.Settings.Default.curDir + "\\objects\\" + objEntry.modelName + ".bmd", FileMode.Open);
+                        Bmd obj = new Bmd(objFB);
+                        GL.Scale(objEntry.xScale, objEntry.yScale, objEntry.zScale);
+                        DrawBMD(obj);
+                        objModelList.Add(objEntry.modelName, obj);
+                        objFB.Close();
+                    }
+                }
+                else
+                {
+                    GL.Scale(1f, 1f, 1f);
+                    DrawCube(0f, 1f, 0f, true, true, false);
+                }
+                GL.PopMatrix();
+            }
+            GL.EndList();
+        }
+
+        public void UpdateKartPoints()
+        {
+            int rotation;
+            kartList = GL.GenLists(1);
+            GL.NewList(kartList, ListMode.Compile);
+            foreach (KartPointObject objEntry in kartobj)
+            {
+                kartPointList.Items.Add(objEntry);
+                loadingLabel.Text = "Loading kart...";
+                GL.PushMatrix();
+                GL.Translate(objEntry.xPos, objEntry.yPos, objEntry.zPos);
+                rotation = Convert.ToInt16(objEntry.rotation);
+                GL.Rotate(rotation, 0f, 1f, 0f);
+                GL.Scale(1f, 1f, 1f);
+                DrawCube(1f, 0f, 0f, true, true, false);
+                GL.PopMatrix();
+            }
+            GL.EndList();
+        }
+
+        public void UpdateAreas()
+        {
+            int rotation;
+            areaObjList = GL.GenLists(1);
+            GL.NewList(areaObjList, ListMode.Compile);
+            foreach (AreaObject objEntry in areaobj)
+            {
+                areaList.Items.Add(objEntry);
+                loadingLabel.Text = "Loading area...";
+                GL.PushMatrix();
+                GL.Translate(objEntry.xPos, objEntry.yPos, objEntry.zPos);
+                rotation = Convert.ToInt16(objEntry.rotation);
+                GL.Rotate(rotation, 0f, 1f, 0f);
+                GL.Scale(objEntry.xScale, objEntry.yScale, objEntry.zScale);
+                DrawCube(0.867f, 0.867f, 0.867f, false, false, true);
+                GL.PopMatrix();
+            }
+            GL.EndList();
+        }
+
+        public void UpdateCameras(bool isUpdate)
+        {
+            GL.DeleteLists(camList, 1);
+
+            if (isUpdate)
+            {
+                camobj.Clear();
+                cameraList.Refresh();
+
+                foreach (CameraObject cameraObj in cameraList.Items)
+                {
+                    camobj.Add(cameraObj);
+                }
+            }
+
+            int rotation;
+            camList = GL.GenLists(1);
+            GL.NewList(camList, ListMode.Compile);
+            foreach (CameraObject objEntry in camobj)
+            {
+                cameraList.Items.Add(objEntry);
+                loadingLabel.Text = "Loading camera...";
+                GL.PushMatrix();
+                GL.Translate(objEntry.xView1, objEntry.yView1, objEntry.zView1);
+                rotation = Convert.ToInt16(objEntry.rotation);
+                GL.Rotate(rotation, 0f, 1f, 0f);
+                GL.Scale(1f, 1f, 1f);
+                DrawCube(0.498f, 0.859f, 1f, true, true, false);
+                GL.PopMatrix();
+            }
+            GL.EndList();
+        }
+
+        public void UpdateRespawns()
+        {
+            int rotation;
+            respawnList = GL.GenLists(1);
+            GL.NewList(respawnList, ListMode.Compile);
+            foreach (RespawnObject objEntry in resObj)
+            {
+                loadingLabel.Text = "Loading respawn...";
+                GL.PushMatrix();
+                GL.Translate(objEntry.xPos, objEntry.yPos, objEntry.zPos);
+                rotation = Convert.ToInt16(objEntry.rotation);
+                GL.Rotate(rotation, 0f, 1f, 0f);
+                GL.Scale(1f, 1f, 1f);
+                DrawCube(1f, 0.863f, 0f, true, true, false);
+                GL.PopMatrix();
+                respList.Items.Add(objEntry);
+            }
+            GL.EndList();
         }
     }
 }
