@@ -109,7 +109,7 @@ namespace DouBOLDash
         int kartList = 0;
         int areaObjList = 0;
         int camList = 0;
-        public int respawnList = 0;
+        int respawnList = 0;
 
         Image minimap;
 
@@ -165,6 +165,8 @@ namespace DouBOLDash
                 MessageBox.Show("Folder path not changed.", "Invalid Folder");
         }
 
+        BackgroundWorker worker = new BackgroundWorker();
+
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog1 = new OpenFileDialog();
@@ -174,8 +176,6 @@ namespace DouBOLDash
             {
                 saveToolStripMenuItem.Enabled = true;
                 saveAsToolStripMenuItem.Enabled = true;
-                addToolStripMenuItem.Enabled = true;
-                deleteToolStripMenuItem.Enabled = true;
 
                 lapCounter.Enabled = true;
                 musicInput.Enabled = true;
@@ -305,15 +305,17 @@ namespace DouBOLDash
                     // if you think we're loading the course model every build you're wrong
                     // BuildScene will also handle changed objects in the scene, so we don't
                     // want to load the same course model again. waste of time.
-
                     string bti_path = Properties.Settings.Default.curFile.Replace("course", "map");
-                    int mapWidth, mapHeight;
 
-                    FileBase fileb = new FileBase();
-                    fileb.Stream = new FileStream(Properties.Settings.Default.curDir  + "\\" + bti_path + ".bti", FileMode.Open);
-                    minimap = BTIFile.ReadBTIToBitmap(fileb);
-                    pictureBox1.Image = minimap;
-                    fileb.Close();
+                    if (File.Exists(Properties.Settings.Default.curDir + "\\" + bti_path + ".bti"))
+                    { 
+                        FileBase fileb = new FileBase();
+                        fileb.Stream = new FileStream(Properties.Settings.Default.curDir + "\\" + bti_path + ".bti", FileMode.Open);
+                        minimap = BTIFile.ReadBTIToBitmap(fileb);
+                        pictureBox1.Image = minimap;
+                        fileb.Close();
+                    }
+
 
                     courseList = GL.GenLists(1);
 
@@ -686,45 +688,48 @@ namespace DouBOLDash
 
             propertyGrid3.SelectedObject = objList.SelectedItem;
 
-            selectedList = GL.GenLists(1);
-            GL.NewList(selectedList, ListMode.Compile);
-            GL.PushMatrix();
-            GL.Translate(level.xPos, level.yPos, level.zPos);
-            GL.Rotate(level.rotation, 0f, 1f, 0f);
-
-            if (level.modelName != "null")
+            if (objList.SelectedIndex != -1)
             {
-                if (objModelList.ContainsKey(level.modelName))
+                selectedList = GL.GenLists(1);
+                GL.NewList(selectedList, ListMode.Compile);
+                GL.PushMatrix();
+                GL.Translate(level.xPos, level.yPos, level.zPos);
+                GL.Rotate(level.rotation, 0f, 1f, 0f);
+
+                if (level.modelName != "null")
                 {
-                    objModelList.TryGetValue(level.modelName, out obj);
-                    GetRealBounds(out min, out max, obj);
-                    width = max.X - min.X;
-                    height = max.Y - min.Y;
-                    length = max.Z - min.Z;
-                    GL.Scale(width / (100 * level.xScale), height / (100 * level.yScale), length / (100 * level.zScale));
+                    if (objModelList.ContainsKey(level.modelName))
+                    {
+                        objModelList.TryGetValue(level.modelName, out obj);
+                        GetRealBounds(out min, out max, obj);
+                        width = max.X - min.X;
+                        height = max.Y - min.Y;
+                        length = max.Z - min.Z;
+                        GL.Scale(width / (100 * level.xScale), height / (100 * level.yScale), length / (100 * level.zScale));
+                    }
                 }
-            }
-            else
-                GL.Scale(2f, 2f, 2f);
-
-            DrawCube(1f, 1f, 1f, false, false, false);
-            GL.PopMatrix();
-
-            foreach (RoutePointObject objEntry in rpobj)
-            {
-                if (objEntry.groupID == level.routeID && level.routeID != -1)
-                {
-                    GL.PushMatrix();
-                    GL.Translate(objEntry.xPos, objEntry.yPos, objEntry.zPos);
+                else
                     GL.Scale(2f, 2f, 2f);
-                    DrawCube(0.941f, 0.071f, 0.745f, false, false, false);
-                    GL.PopMatrix();
-                }
-            }
-            GL.EndList();
 
-            selectionInfo.Text = "Currently selected: Track object at (" + level.xPos + ", " + level.yPos + ", " + level.zPos + ") with ID " + level.objID.ToString("X") + ".";
-            glControl1.Refresh();
+                DrawCube(1f, 1f, 1f, false, false, false);
+                GL.PopMatrix();
+
+                foreach (RoutePointObject objEntry in rpobj)
+                {
+                    if (objEntry.groupID == level.routeID && level.routeID != -1)
+                    {
+                        GL.PushMatrix();
+                        GL.Translate(objEntry.xPos, objEntry.yPos, objEntry.zPos);
+                        GL.Scale(2f, 2f, 2f);
+                        DrawCube(0.941f, 0.071f, 0.745f, false, false, false);
+                        GL.PopMatrix();
+                    }
+                }
+                GL.EndList();
+
+                selectionInfo.Text = "Currently selected: Track object at (" + level.xPos + ", " + level.yPos + ", " + level.zPos + ") with ID " + level.objID.ToString("X") + ".";
+                glControl1.Refresh();
+            }
         }
 
         private void UpdateCamera()
@@ -757,13 +762,6 @@ namespace DouBOLDash
             m_SkyboxMatrix = Matrix4.LookAt(Vector3.Zero, skybox_target, up);
 
             m_CamMatrix = Matrix4.Mult(Matrix4.Scale(0.0001f), m_CamMatrix);
-        }
-
-        private void respawnToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            RespawnAdd resAdd = new RespawnAdd();
-            resAdd.Show();
-            resAdd.getLists(respList, glControl1, respawnList);
         }
 
         private void respList_SelectedIndexChanged(object sender, EventArgs e)
@@ -972,18 +970,18 @@ namespace DouBOLDash
                 offset += (uint)bolInfo.sec1Count * 0x20;
 
                 if (enemyRouteList.Items.Count == 0)
-                    bolInfo.sec1Offs = 0x7C;
+                    bolInfo.sec2Offs = 0x7C;
                 else
-                    bolInfo.sec1Offs = offset;
+                    bolInfo.sec2Offs = offset;
 
                 uint sec2GroupSize = (uint)chckGroup.Items.Count * 0x14;
                 uint sec2EntrySize = (uint)chckList.Items.Count * 0x1C;
                 offset += sec2GroupSize + sec2EntrySize;
 
                 if (chckGroup.Items.Count == 0)
-                    bolInfo.sec2Offs = 0x7C;
+                    bolInfo.sec3Offs = 0x7C;
                 else
-                    bolInfo.sec2Offs = offset;
+                    bolInfo.sec3Offs = offset;
 
                 // after this is a breeze
 
@@ -1595,10 +1593,69 @@ namespace DouBOLDash
             GL.EndList();
         }
 
+        private void contextItemAdd_Click(object sender, EventArgs e)
+        {
+            LevelObject levelObject = new LevelObject();
+            levelObject.xScale = 1;
+            levelObject.yScale = 1;
+            levelObject.zScale = 1;
+            levelObject.routeID = -1;
+            levelObject.modelName = "null";
+            objList.Items.Add(levelObject);
+            objList.Refresh();
+
+            UpdateObjects(true);
+        }
+
+        private void contextItemDelete_Click(object sender, EventArgs e)
+        {
+            if (objList.SelectedIndex != -1)
+            {
+                objList.Items.Remove(objList.SelectedItem);
+                objList.Refresh();
+                UpdateObjects(true);
+            }
+        }
+
+        private void contextItemDuplicate_Click(object sender, EventArgs e)
+        {
+            LevelObject levelObject = (LevelObject)objList.SelectedItem;
+            objList.Items.Add(levelObject);
+            objList.Refresh();
+            UpdateObjects(true);
+        }
+
+        private void insertCourseModelToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DialogResult res = MessageBox.Show("Select a course model to render. Be careful, however. This will overwrite the current course rendered! If you choose not to import one, hit 'Cancel'.", "Important", MessageBoxButtons.OKCancel);
+            if (res == DialogResult.OK)
+            {
+                OpenFileDialog openBMD = new OpenFileDialog();
+                openBMD.Filter = "Model files (*.bmd)|*.bmd|All files (*.*)|*.*";
+
+                if (openBMD.ShowDialog() == DialogResult.OK)
+                {
+                    // delete the course already rendered
+                    GL.DeleteLists(courseList, 1);
+
+                    courseList = GL.GenLists(1);
+
+                    FileBase fb = new FileBase();
+                    fb.Stream = new FileStream(openBMD.FileName, FileMode.Open);
+                    course = new Bmd(fb);
+                    fb.Close();
+
+                    GL.NewList(courseList, ListMode.Compile);
+                    if (course != null)
+                        DrawBMD(course);
+                    GL.EndList();
+                }
+            }
+        }
+
+        Bmd objModel;
         public void UpdateObjects(bool isUpdate)
         {
-            GL.DeleteLists(objectList, 1);
-
             if (isUpdate)
             {
                 lvlobj.Clear();
@@ -1608,12 +1665,12 @@ namespace DouBOLDash
                 {
                     lvlobj.Add(levelObj);
                 }
+
+                objList.Items.Clear();
             }
 
-            Bmd objModel;
             objectList = GL.GenLists(1);
             GL.NewList(objectList, ListMode.Compile);
-            int rotation;
             foreach (LevelObject objEntry in lvlobj)
             {
                 objList.Items.Add(objEntry);

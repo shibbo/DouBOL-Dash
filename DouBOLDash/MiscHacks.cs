@@ -35,6 +35,7 @@ namespace DouBOLDash
         {
             {"D4A", "poihana1"},
             {"D4D", "peachtree1"},
+            //{"DAF", "pool"},
             {"E75", "mariotree1"},
             {"E77", "marioflower1"},
             {"E78", "wanwan1"},
@@ -42,6 +43,7 @@ namespace DouBOLDash
             {"E7F", "kuribo1"},
             {"E80", "pakkun"},
             {"E82", "mash_balloon"},
+            {"1195", "cannon1"},
             {"11A1", "nossie"},
             {"125D", "dossun1"},
             {"1389", "sanbo1"},

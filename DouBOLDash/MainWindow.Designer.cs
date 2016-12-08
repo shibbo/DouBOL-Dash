@@ -37,13 +37,10 @@
             this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.BMDViewerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.bTIViewerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.chooseFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.addToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.respawnToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.respawnToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.loadingLabel = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
@@ -70,9 +67,11 @@
             this.musicSelect = new System.Windows.Forms.ComboBox();
             this.lapCounter = new System.Windows.Forms.NumericUpDown();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.propertyGrid6 = new System.Windows.Forms.PropertyGrid();
             this.enemyRouteList = new System.Windows.Forms.ListBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.propertyGrid5 = new System.Windows.Forms.PropertyGrid();
             this.chckList = new System.Windows.Forms.ListBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.chckGroup = new System.Windows.Forms.ListBox();
@@ -86,8 +85,10 @@
             this.propertyGrid3 = new System.Windows.Forms.PropertyGrid();
             this.objList = new System.Windows.Forms.ListBox();
             this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.propertyGrid8 = new System.Windows.Forms.PropertyGrid();
             this.kartPointList = new System.Windows.Forms.ListBox();
             this.tabPage6 = new System.Windows.Forms.TabPage();
+            this.propertyGrid7 = new System.Windows.Forms.PropertyGrid();
             this.areaList = new System.Windows.Forms.ListBox();
             this.tabPage7 = new System.Windows.Forms.TabPage();
             this.propertyGrid2 = new System.Windows.Forms.PropertyGrid();
@@ -98,14 +99,9 @@
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.itemEdit_context = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.contextItemAdd = new System.Windows.Forms.ToolStripMenuItem();
-            this.contextItemEdit = new System.Windows.Forms.ToolStripMenuItem();
             this.contextItemDuplicate = new System.Windows.Forms.ToolStripMenuItem();
             this.contextItemDelete = new System.Windows.Forms.ToolStripMenuItem();
-            this.propertyGrid5 = new System.Windows.Forms.PropertyGrid();
-            this.propertyGrid6 = new System.Windows.Forms.PropertyGrid();
-            this.propertyGrid7 = new System.Windows.Forms.PropertyGrid();
-            this.propertyGrid8 = new System.Windows.Forms.PropertyGrid();
-            this.bTIViewerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.insertCourseModelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -141,9 +137,7 @@
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.toolsToolStripMenuItem,
-            this.optionsToolStripMenuItem,
-            this.addToolStripMenuItem,
-            this.deleteToolStripMenuItem});
+            this.optionsToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(1123, 24);
@@ -187,7 +181,8 @@
             // 
             this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.BMDViewerToolStripMenuItem,
-            this.bTIViewerToolStripMenuItem});
+            this.bTIViewerToolStripMenuItem,
+            this.insertCourseModelToolStripMenuItem});
             this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
             this.toolsToolStripMenuItem.Size = new System.Drawing.Size(47, 20);
             this.toolsToolStripMenuItem.Text = "Tools";
@@ -198,6 +193,13 @@
             this.BMDViewerToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
             this.BMDViewerToolStripMenuItem.Text = "BMD Viewer";
             this.BMDViewerToolStripMenuItem.Click += new System.EventHandler(this.BMDViewerToolStripMenuItem_Click);
+            // 
+            // bTIViewerToolStripMenuItem
+            // 
+            this.bTIViewerToolStripMenuItem.Name = "bTIViewerToolStripMenuItem";
+            this.bTIViewerToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
+            this.bTIViewerToolStripMenuItem.Text = "BTI Viewer";
+            this.bTIViewerToolStripMenuItem.Click += new System.EventHandler(this.bTIViewerToolStripMenuItem_Click);
             // 
             // optionsToolStripMenuItem
             // 
@@ -221,38 +223,6 @@
             this.chooseFolderToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.chooseFolderToolStripMenuItem.Text = "Choose folder";
             this.chooseFolderToolStripMenuItem.Click += new System.EventHandler(this.chooseFolderToolStripMenuItem_Click);
-            // 
-            // addToolStripMenuItem
-            // 
-            this.addToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.respawnToolStripMenuItem});
-            this.addToolStripMenuItem.Enabled = false;
-            this.addToolStripMenuItem.Name = "addToolStripMenuItem";
-            this.addToolStripMenuItem.Size = new System.Drawing.Size(41, 20);
-            this.addToolStripMenuItem.Text = "Add";
-            // 
-            // respawnToolStripMenuItem
-            // 
-            this.respawnToolStripMenuItem.Name = "respawnToolStripMenuItem";
-            this.respawnToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
-            this.respawnToolStripMenuItem.Text = "Respawn";
-            this.respawnToolStripMenuItem.Click += new System.EventHandler(this.respawnToolStripMenuItem_Click);
-            // 
-            // deleteToolStripMenuItem
-            // 
-            this.deleteToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.respawnToolStripMenuItem1});
-            this.deleteToolStripMenuItem.Enabled = false;
-            this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
-            this.deleteToolStripMenuItem.Text = "Delete";
-            // 
-            // respawnToolStripMenuItem1
-            // 
-            this.respawnToolStripMenuItem1.Name = "respawnToolStripMenuItem1";
-            this.respawnToolStripMenuItem1.Size = new System.Drawing.Size(121, 22);
-            this.respawnToolStripMenuItem1.Text = "Respawn";
-            this.respawnToolStripMenuItem1.Click += new System.EventHandler(this.respawnToolStripMenuItem1_Click);
             // 
             // toolStrip1
             // 
@@ -587,6 +557,17 @@
             this.tabPage1.ToolTipText = "Enemy / Item Routes";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
+            // propertyGrid6
+            // 
+            this.propertyGrid6.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.propertyGrid6.Location = new System.Drawing.Point(3, 234);
+            this.propertyGrid6.Name = "propertyGrid6";
+            this.propertyGrid6.PropertySort = System.Windows.Forms.PropertySort.Categorized;
+            this.propertyGrid6.Size = new System.Drawing.Size(356, 341);
+            this.propertyGrid6.TabIndex = 1;
+            this.propertyGrid6.ToolbarVisible = false;
+            // 
             // enemyRouteList
             // 
             this.enemyRouteList.FormattingEnabled = true;
@@ -621,6 +602,16 @@
             this.groupBox4.TabIndex = 2;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Checkpoints";
+            // 
+            // propertyGrid5
+            // 
+            this.propertyGrid5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.propertyGrid5.Location = new System.Drawing.Point(3, 182);
+            this.propertyGrid5.Name = "propertyGrid5";
+            this.propertyGrid5.Size = new System.Drawing.Size(348, 234);
+            this.propertyGrid5.TabIndex = 1;
+            this.propertyGrid5.ToolbarVisible = false;
             // 
             // chckList
             // 
@@ -764,6 +755,17 @@
             this.tabPage5.ToolTipText = "Starting Points";
             this.tabPage5.UseVisualStyleBackColor = true;
             // 
+            // propertyGrid8
+            // 
+            this.propertyGrid8.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.propertyGrid8.Location = new System.Drawing.Point(3, 156);
+            this.propertyGrid8.Name = "propertyGrid8";
+            this.propertyGrid8.PropertySort = System.Windows.Forms.PropertySort.Categorized;
+            this.propertyGrid8.Size = new System.Drawing.Size(356, 416);
+            this.propertyGrid8.TabIndex = 1;
+            this.propertyGrid8.ToolbarVisible = false;
+            // 
             // kartPointList
             // 
             this.kartPointList.FormattingEnabled = true;
@@ -785,6 +787,15 @@
             this.tabPage6.TabIndex = 5;
             this.tabPage6.ToolTipText = "Areas";
             this.tabPage6.UseVisualStyleBackColor = true;
+            // 
+            // propertyGrid7
+            // 
+            this.propertyGrid7.Location = new System.Drawing.Point(3, 221);
+            this.propertyGrid7.Name = "propertyGrid7";
+            this.propertyGrid7.PropertySort = System.Windows.Forms.PropertySort.Categorized;
+            this.propertyGrid7.Size = new System.Drawing.Size(356, 354);
+            this.propertyGrid7.TabIndex = 1;
+            this.propertyGrid7.ToolbarVisible = false;
             // 
             // areaList
             // 
@@ -882,84 +893,38 @@
             // 
             this.itemEdit_context.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.contextItemAdd,
-            this.contextItemEdit,
             this.contextItemDuplicate,
             this.contextItemDelete});
             this.itemEdit_context.Name = "contextMenuStrip1";
-            this.itemEdit_context.Size = new System.Drawing.Size(152, 92);
+            this.itemEdit_context.Size = new System.Drawing.Size(152, 70);
             // 
             // contextItemAdd
             // 
             this.contextItemAdd.Name = "contextItemAdd";
-            this.contextItemAdd.Size = new System.Drawing.Size(151, 22);
+            this.contextItemAdd.Size = new System.Drawing.Size(152, 22);
             this.contextItemAdd.Text = "Add Item";
-            // 
-            // contextItemEdit
-            // 
-            this.contextItemEdit.Name = "contextItemEdit";
-            this.contextItemEdit.Size = new System.Drawing.Size(151, 22);
-            this.contextItemEdit.Text = "Edit Item";
-            this.contextItemEdit.Click += new System.EventHandler(this.contextItemEdit_Click);
+            this.contextItemAdd.Click += new System.EventHandler(this.contextItemAdd_Click);
             // 
             // contextItemDuplicate
             // 
             this.contextItemDuplicate.Name = "contextItemDuplicate";
-            this.contextItemDuplicate.Size = new System.Drawing.Size(151, 22);
+            this.contextItemDuplicate.Size = new System.Drawing.Size(152, 22);
             this.contextItemDuplicate.Text = "Duplicate Item";
+            this.contextItemDuplicate.Click += new System.EventHandler(this.contextItemDuplicate_Click);
             // 
             // contextItemDelete
             // 
             this.contextItemDelete.Name = "contextItemDelete";
-            this.contextItemDelete.Size = new System.Drawing.Size(151, 22);
+            this.contextItemDelete.Size = new System.Drawing.Size(152, 22);
             this.contextItemDelete.Text = "Delete Item";
+            this.contextItemDelete.Click += new System.EventHandler(this.contextItemDelete_Click);
             // 
-            // propertyGrid5
+            // insertCourseModelToolStripMenuItem
             // 
-            this.propertyGrid5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.propertyGrid5.Location = new System.Drawing.Point(3, 182);
-            this.propertyGrid5.Name = "propertyGrid5";
-            this.propertyGrid5.Size = new System.Drawing.Size(348, 234);
-            this.propertyGrid5.TabIndex = 1;
-            this.propertyGrid5.ToolbarVisible = false;
-            // 
-            // propertyGrid6
-            // 
-            this.propertyGrid6.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.propertyGrid6.Location = new System.Drawing.Point(3, 234);
-            this.propertyGrid6.Name = "propertyGrid6";
-            this.propertyGrid6.PropertySort = System.Windows.Forms.PropertySort.Categorized;
-            this.propertyGrid6.Size = new System.Drawing.Size(356, 341);
-            this.propertyGrid6.TabIndex = 1;
-            this.propertyGrid6.ToolbarVisible = false;
-            // 
-            // propertyGrid7
-            // 
-            this.propertyGrid7.Location = new System.Drawing.Point(3, 221);
-            this.propertyGrid7.Name = "propertyGrid7";
-            this.propertyGrid7.PropertySort = System.Windows.Forms.PropertySort.Categorized;
-            this.propertyGrid7.Size = new System.Drawing.Size(356, 354);
-            this.propertyGrid7.TabIndex = 1;
-            this.propertyGrid7.ToolbarVisible = false;
-            // 
-            // propertyGrid8
-            // 
-            this.propertyGrid8.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.propertyGrid8.Location = new System.Drawing.Point(3, 156);
-            this.propertyGrid8.Name = "propertyGrid8";
-            this.propertyGrid8.PropertySort = System.Windows.Forms.PropertySort.Categorized;
-            this.propertyGrid8.Size = new System.Drawing.Size(356, 416);
-            this.propertyGrid8.TabIndex = 1;
-            this.propertyGrid8.ToolbarVisible = false;
-            // 
-            // bTIViewerToolStripMenuItem
-            // 
-            this.bTIViewerToolStripMenuItem.Name = "bTIViewerToolStripMenuItem";
-            this.bTIViewerToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.bTIViewerToolStripMenuItem.Text = "BTI Viewer";
-            this.bTIViewerToolStripMenuItem.Click += new System.EventHandler(this.bTIViewerToolStripMenuItem_Click);
+            this.insertCourseModelToolStripMenuItem.Name = "insertCourseModelToolStripMenuItem";
+            this.insertCourseModelToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.insertCourseModelToolStripMenuItem.Text = "Insert Course Model";
+            this.insertCourseModelToolStripMenuItem.Click += new System.EventHandler(this.insertCourseModelToolStripMenuItem_Click);
             // 
             // MainWindow
             // 
@@ -1025,13 +990,9 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
         private System.Windows.Forms.ToolStripLabel selectionInfo;
-        private System.Windows.Forms.ToolStripMenuItem addToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem respawnToolStripMenuItem;
         public OpenTK.GLControl glControl1;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem respawnToolStripMenuItem1;
         private System.Windows.Forms.ImageList imageList1;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
@@ -1076,7 +1037,6 @@
         private System.Windows.Forms.ListBox routeGroupList;
         private System.Windows.Forms.ToolStripMenuItem saveAsToolStripMenuItem;
         private System.Windows.Forms.ContextMenuStrip itemEdit_context;
-        private System.Windows.Forms.ToolStripMenuItem contextItemEdit;
         private System.Windows.Forms.ToolStripMenuItem contextItemAdd;
         private System.Windows.Forms.ToolStripMenuItem contextItemDuplicate;
         private System.Windows.Forms.ToolStripMenuItem contextItemDelete;
@@ -1091,6 +1051,7 @@
         private System.Windows.Forms.PropertyGrid propertyGrid7;
         private System.Windows.Forms.PropertyGrid propertyGrid8;
         private System.Windows.Forms.ToolStripMenuItem bTIViewerToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem insertCourseModelToolStripMenuItem;
     }
 }
 

@@ -570,7 +570,6 @@ namespace DouBOLDash
 
     class TrackObject
     {
-        LevelObject lvlobj = new LevelObject();
         List<LevelObject> lvldict = new List<LevelObject>();
 
         public float xPos, yPos, zPos;
@@ -580,15 +579,16 @@ namespace DouBOLDash
         public ushort objID;
         public short routeID;
         public long unk1, unk2, unk3;
+        public string modelName;
 
         public TrackObject()
         {
             this.xPos = 0;
             this.yPos = 0;
             this.zPos = 0;
-            this.xScale = 0;
-            this.yScale = 0;
-            this.zScale = 0;
+            this.xScale = 1;
+            this.yScale = 1;
+            this.zScale = 1;
 
             this.xRot = 0;
             this.yRot = 0;
@@ -601,6 +601,8 @@ namespace DouBOLDash
             this.unk1 = 0;
             this.unk2 = 0;
             this.unk3 = 0;
+
+            this.modelName = "null";
         }
 
         public void Parse(EndianBinaryReader reader, uint count)
@@ -608,6 +610,7 @@ namespace DouBOLDash
 
             for (uint i = 0; i < count; i++)
             {
+                LevelObject lvlobj = new LevelObject();
                 lvlobj.xPos = reader.ReadSingle();
                 lvlobj.yPos = reader.ReadSingle();
                 lvlobj.zPos = reader.ReadSingle();
@@ -1209,7 +1212,7 @@ namespace DouBOLDash
         }
     }
 
-    struct LevelObject
+    public class LevelObject
     {
         public float xPos, yPos, zPos;
         public float xScale, yScale, zScale;
