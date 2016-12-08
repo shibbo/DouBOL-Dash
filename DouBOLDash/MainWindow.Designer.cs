@@ -731,6 +731,7 @@
             this.propertyGrid3.TabIndex = 1;
             this.propertyGrid3.ToolbarVisible = false;
             this.propertyGrid3.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.propertyGrid3_PropertyValueChanged);
+            this.propertyGrid3.Click += new System.EventHandler(this.propertyGrid3_Click);
             // 
             // objList
             // 

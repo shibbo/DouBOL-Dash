@@ -21,5 +21,4 @@ C:\Users\MrRean\DouBOL-Dash\DouBOLDash\bin\Debug\OpenTK.GLControl.dll
 C:\Users\MrRean\DouBOL-Dash\DouBOLDash\obj\Debug\DouBOLDash.MainWindow.resources
 C:\Users\MrRean\DouBOL-Dash\DouBOLDash\obj\Debug\DouBOLDash.SettingsWindow.resources
 C:\Users\MrRean\DouBOL-Dash\DouBOLDash\obj\Debug\DouBOLDash.BMDViewer.resources
-C:\Users\MrRean\DouBOL-Dash\DouBOLDash\obj\Debug\DouBOLDash.RespawnAdd.resources
 C:\Users\MrRean\DouBOL-Dash\DouBOLDash\obj\Debug\DouBOLDash.BTIReader.resources
