@@ -29,11 +29,6 @@ namespace DouBOLDash
 {
     public partial class MainWindow : Form
     {
-        /* Here, variables that will be used throughout the file are here*/
-        public string FORM_NAME = "DouBOL Dash";
-        public string VERSION = " v0.1 ";
-        public string CURRENT_FILE = "";
-
         private const float k_FOV = (float)((70f * Math.PI) / 180f);
         private const float k_zNear = 0.01f;
         private const float k_zFar = 1000f;
@@ -76,6 +71,7 @@ namespace DouBOLDash
         public float unk1;
         public byte musicID, lapCount;
 
+        // dictionary that contains all of the music ids that i know so far
         Dictionary<int, string> idToMusic = new Dictionary<int, string>()
         {
             {0x21, "Baby Park"},
@@ -107,6 +103,7 @@ namespace DouBOLDash
             {0x3B, "Pipe Plaza"}
         };
 
+        // model storage (cache)
         Dictionary<string, Bmd> objModelList = new Dictionary<string, Bmd>();
 
         public MainWindow()
@@ -178,8 +175,6 @@ namespace DouBOLDash
                 MessageBox.Show("Folder path not changed.", "Invalid Folder");
         }
 
-        BackgroundWorker worker = new BackgroundWorker();
-
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog1 = new OpenFileDialog();
@@ -225,7 +220,11 @@ namespace DouBOLDash
                     GL.DeleteLists(courseList, 1);
                     GL.DeleteLists(checkpointList, 1);
                     GL.DeleteLists(objectList, 1);
+                    GL.DeleteLists(respawnList, 1);
+                    GL.DeleteLists(camList, 1);
+                    GL.DeleteLists(areaObjList, 1);
                 }
+
                 using (EndianBinaryReader reader = new EndianBinaryReader(File.Open(openFileDialog1.FileName, FileMode.Open)))
                 {
                     BOL bol = new BOL();
@@ -328,6 +327,8 @@ namespace DouBOLDash
                         pictureBox1.Image = minimap;
                         fileb.Close();
                     }
+                    else
+                        MessageBox.Show("The minimap file (" + bti_path + ".bti) doesn't exist.");
 
 
                     courseList = GL.GenLists(1);
@@ -344,7 +345,7 @@ namespace DouBOLDash
                         }
                         else
                         {
-                            Console.WriteLine(Properties.Settings.Default.curDir + "\\" + Properties.Settings.Default.curFile + ".bmd doesn't exist.");
+                            MessageBox.Show(Properties.Settings.Default.curDir + "\\" + Properties.Settings.Default.curFile + ".bmd doesn't exist.");
                             course = null;
                         }
                     }
@@ -386,14 +387,14 @@ namespace DouBOLDash
                 routeGroupList.Items.Add(routeSetup);
             }
 
-            UpdateEnemyPoints();
+            UpdateEnemyPoints(false);
             UpdateRoutePoints(false);
-            UpdateCheckpoints();
+            UpdateCheckpoints(false);
             UpdateObjects(false);
-            UpdateKartPoints();
-            UpdateAreas();
+            UpdateKartPoints(false);
+            UpdateAreas(false);
             UpdateCameras(false);
-            UpdateRespawns();
+            UpdateRespawns(false);
 
             loadingLabel.Text = "Ready!";
         }
@@ -740,7 +741,7 @@ namespace DouBOLDash
                 }
                 GL.EndList();
 
-                selectionInfo.Text = "Currently selected: Track object at (" + level.xPos + ", " + level.yPos + ", " + level.zPos + ") with ID " + level.objID.ToString("X") + ".";
+                selectionInfo.Text = "Currently selected: Track object at (" + level.xPos + ", " + level.yPos + ", " + level.zPos + ") (" + level.friendlyName + ") (ID: " + level.objID.ToString("X") + ")";
                 glControl1.Refresh();
             }
         }
@@ -914,7 +915,7 @@ namespace DouBOLDash
                 GL.PopMatrix();
                 GL.EndList();
 
-                selectionInfo.Text = "Currently selected: Route point at (" + kartObj.xPos + ", " + kartObj.yPos + ", " + kartObj.zPos + ") with player id " + kartObj.playerID + ".";
+                selectionInfo.Text = "Currently selected: Starting point at (" + kartObj.xPos + ", " + kartObj.yPos + ", " + kartObj.zPos + ") with player id " + kartObj.playerID + ".";
                 glControl1.Refresh();
             }
         }
@@ -941,9 +942,21 @@ namespace DouBOLDash
                 GL.Scale(2f, 2f, 2f);
                 DrawCube(1f, 1f, 1f, false, false, false);
                 GL.PopMatrix();
+
+                foreach (RoutePointObject objEntry in rpobj)
+                {
+                    if (objEntry.groupID == camObj.routeID && camObj.routeID != -1)
+                    {
+                        GL.PushMatrix();
+                        GL.Translate(objEntry.xPos, objEntry.yPos, objEntry.zPos);
+                        GL.Scale(2f, 2f, 2f);
+                        DrawCube(0.941f, 0.071f, 0.745f, false, false, false);
+                        GL.PopMatrix();
+                    }
+                }
                 GL.EndList();
 
-                selectionInfo.Text = "Currently selected: Route point at (" + camObj.xView1 + ", " + camObj.yView1 + ", " + camObj.zView1 + ") with name " + camObj.name + ".";
+                selectionInfo.Text = "Currently selected: Camera at (" + camObj.xView1 + ", " + camObj.yView1 + ", " + camObj.zView1 + ") (Route ID: " + camObj.routeID + ") with name " + camObj.name + ".";
                 glControl1.Refresh();
             }
         }
@@ -1174,7 +1187,7 @@ namespace DouBOLDash
         {
             if (e.Button == MouseButtons.Right && objList.SelectedIndex != -1)
             {
-                itemEdit_context.Show(objList, e.Location);
+                contextMenuStrip1.Show(objList, e.Location);
             }
         }
 
@@ -1375,8 +1388,133 @@ namespace DouBOLDash
             UpdateObjects(true);
         }
 
-        public void UpdateEnemyPoints()
+        private void bTIViewerToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            BTIReader btireader = new BTIReader();
+            btireader.Show();
+        }
+
+        private void contextItemAdd_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void insertCourseModelToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DialogResult res = MessageBox.Show("Select a course model to render. Be careful, however. This will overwrite the current course rendered! If you choose not to import one, hit 'Cancel'.", "Important", MessageBoxButtons.OKCancel);
+            if (res == DialogResult.OK)
+            {
+                OpenFileDialog openBMD = new OpenFileDialog();
+                openBMD.Filter = "Model files (*.bmd)|*.bmd|All files (*.*)|*.*";
+
+                if (openBMD.ShowDialog() == DialogResult.OK)
+                {
+                    // delete the course already rendered
+                    GL.DeleteLists(courseList, 1);
+
+                    courseList = GL.GenLists(1);
+
+                    FileBase fb = new FileBase();
+                    fb.Stream = new FileStream(openBMD.FileName, FileMode.Open);
+                    course = new Bmd(fb);
+                    fb.Close();
+
+                    GL.NewList(courseList, ListMode.Compile);
+                    if (course != null)
+                        DrawBMD(course);
+                    GL.EndList();
+                }
+            }
+        }
+
+        private void propertyGrid3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void propertyGrid8_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
+        {
+            UpdateKartPoints(true);
+        }
+
+        private void propertyGrid7_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
+        {
+            UpdateAreas(true);
+        }
+
+        private void propertyGrid5_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
+        {
+            UpdateCheckpoints(true);
+        }
+
+        private void propertyGrid6_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
+        {
+            UpdateEnemyPoints(true);
+        }
+
+        private void selectAllEnemy_Click(object sender, EventArgs e)
+        {
+            EnemyRoute curRoute = (EnemyRoute)enemyRouteList.SelectedItem;
+            byte groupID = curRoute.group;
+
+            foreach(EnemyRoute enemyRoute in enemyRouteList.Items)
+            {
+                if (enemyRoute.group == groupID)
+                {
+                    Console.WriteLine("found group " + groupID);
+                }
+            }
+        }
+
+        private void closeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+        private void selectAllInGroupsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            RoutePointObject rtPt = (RoutePointObject)routeList.SelectedItem;
+            uint groupID = rtPt.groupID;
+
+            selectedList = GL.GenLists(1);
+            GL.NewList(selectedList, ListMode.Compile);
+            foreach (RoutePointObject routePoint in routeList.Items)
+            {
+                if (routePoint.groupID == groupID)
+                {
+                    GL.PushMatrix();
+                    GL.Translate(routePoint.xPos, routePoint.yPos, routePoint.zPos);
+                    GL.Scale(2f, 2f, 2f);
+                    DrawCube(1f, 1f, 1f, false, false, false);
+                    GL.PopMatrix();
+                }
+            }
+            GL.EndList();
+        }
+
+        private void routeList_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right && routeList.SelectedIndex != -1)
+            {
+                routeContext.Show(routeList, e.Location);
+            }
+        }
+
+        public void UpdateEnemyPoints(bool isUpdate)
+        {
+            GL.DeleteLists(enemyPointList, 1);
+
+            if (isUpdate)
+            {
+                GL.DeleteLists(selectedList, 1);
+                enmRoute.Clear();
+                enemyRouteList.Refresh();
+
+                foreach (EnemyRoute enemyObj in enemyRouteList.Items)
+                {
+                    enmRoute.Add(enemyObj);
+                }
+            }
             uint count = 0;
             float posX1, posY1, posZ1;
             float posX2 = 0, posY2 = 0, posZ2 = 0;
@@ -1452,6 +1590,7 @@ namespace DouBOLDash
 
             if (isUpdate)
             {
+                GL.DeleteLists(selectedList, 1);
                 rpobj.Clear();
                 routeList.Refresh();
 
@@ -1542,14 +1681,25 @@ namespace DouBOLDash
             glControl1.Invalidate();
         }
 
-        private void bTIViewerToolStripMenuItem_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Updates checkpoints
+        /// </summary>
+        public void UpdateCheckpoints(bool isUpdate)
         {
-            BTIReader btireader = new BTIReader();
-            btireader.Show();
-        }
+            GL.DeleteLists(checkpointList, 1);
 
-        public void UpdateCheckpoints()
-        {
+            if (isUpdate)
+            {
+                GL.DeleteLists(selectedList, 1);
+                chkobj.Clear();
+                chckList.Refresh();
+
+                foreach (CheckpointObject chckPt in chckList.Items)
+                {
+                    chkobj.Add(chckPt);
+                }
+            }
+
             float xprev1 = 0, yprev1 = 0, zprev1 = 0;
             float xprev2 = 0, yprev2 = 0, zprev2 = 0;
             bool isFirst = true;
@@ -1606,76 +1756,39 @@ namespace DouBOLDash
             GL.EndList();
         }
 
-        private void contextItemAdd_Click(object sender, EventArgs e)
+        private void addObjectToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            LevelObject levelObject = new LevelObject();
-            levelObject.xScale = 1;
-            levelObject.yScale = 1;
-            levelObject.zScale = 1;
-            levelObject.routeID = -1;
-            levelObject.modelName = "null";
-            objList.Items.Add(levelObject);
-            objList.Refresh();
-
-            UpdateObjects(true);
+            ObjectAddForm objAdd = new ObjectAddForm();
+            objAdd.getList(objList);
+            objAdd.Show();
         }
 
-        private void contextItemDelete_Click(object sender, EventArgs e)
+        private void chckGroup_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (objList.SelectedIndex != -1)
-            {
-                objList.Items.Remove(objList.SelectedItem);
-                objList.Refresh();
-                UpdateObjects(true);
-            }
+            propertyGrid9.SelectedObject = chckGroup.SelectedItem;
         }
 
-        private void contextItemDuplicate_Click(object sender, EventArgs e)
+        private void routeGroupList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            LevelObject levelObject = (LevelObject)objList.SelectedItem;
-            objList.Items.Add(levelObject);
-            objList.Refresh();
-            UpdateObjects(true);
+            propertyGrid10.SelectedObject = routeGroupList.SelectedItem;
         }
 
-        private void insertCourseModelToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            DialogResult res = MessageBox.Show("Select a course model to render. Be careful, however. This will overwrite the current course rendered! If you choose not to import one, hit 'Cancel'.", "Important", MessageBoxButtons.OKCancel);
-            if (res == DialogResult.OK)
-            {
-                OpenFileDialog openBMD = new OpenFileDialog();
-                openBMD.Filter = "Model files (*.bmd)|*.bmd|All files (*.*)|*.*";
-
-                if (openBMD.ShowDialog() == DialogResult.OK)
-                {
-                    // delete the course already rendered
-                    GL.DeleteLists(courseList, 1);
-
-                    courseList = GL.GenLists(1);
-
-                    FileBase fb = new FileBase();
-                    fb.Stream = new FileStream(openBMD.FileName, FileMode.Open);
-                    course = new Bmd(fb);
-                    fb.Close();
-
-                    GL.NewList(courseList, ListMode.Compile);
-                    if (course != null)
-                        DrawBMD(course);
-                    GL.EndList();
-                }
-            }
-        }
-
-        private void propertyGrid3_Click(object sender, EventArgs e)
-        {
-
-        }
-
+        /// <summary>
+        /// Updates objects
+        /// </summary>
         Bmd objModel;
+
+        private void routeGroupList_SelectedIndexChanged_1(object sender, EventArgs e)
+        {
+            propertyGrid10.SelectedObject = routeGroupList.SelectedItem;
+        }
+
+        string missingFiles = "";
         public void UpdateObjects(bool isUpdate)
         {
             if (isUpdate)
             {
+                GL.DeleteLists(selectedList, 1);
                 lvlobj.Clear();
                 objList.Refresh();
 
@@ -1712,12 +1825,16 @@ namespace DouBOLDash
                     else
                     {
                         FileBase objFB = new FileBase();
-                        objFB.Stream = new FileStream(Properties.Settings.Default.curDir + "\\objects\\" + objEntry.modelName + ".bmd", FileMode.Open);
-                        Bmd obj = new Bmd(objFB);
-                        GL.Scale(objEntry.xScale, objEntry.yScale, objEntry.zScale);
-                        DrawBMD(obj);
-                        objModelList.Add(objEntry.modelName, obj);
-                        objFB.Close();
+                        if (File.Exists(Properties.Settings.Default.curDir + "\\objects\\" + objEntry.modelName + ".bmd"))
+                        {
+                            objFB.Stream = new FileStream(Properties.Settings.Default.curDir + "\\objects\\" + objEntry.modelName + ".bmd", FileMode.Open);
+                            Bmd obj = new Bmd(objFB);
+                            GL.Scale(objEntry.xScale, objEntry.yScale, objEntry.zScale);
+                            DrawBMD(obj);
+                            objModelList.Add(objEntry.modelName, obj);
+                        }
+                        else
+                            missingFiles += objEntry.modelName + ".bmd\n";
                     }
                 }
                 else
@@ -1727,11 +1844,28 @@ namespace DouBOLDash
                 }
                 GL.PopMatrix();
             }
+            if (missingFiles != "")
+                MessageBox.Show("There are files missing from the /objects directory. Please add these files along with the depencies of those files. Missing files:\n" + missingFiles);
+
             GL.EndList();
         }
 
-        public void UpdateKartPoints()
+        public void UpdateKartPoints(bool isUpdate)
         {
+            if (isUpdate)
+            {
+                GL.DeleteLists(selectedList, 1);
+                GL.DeleteLists(kartList, 1);
+                kartobj.Clear();
+                kartPointList.Refresh();
+
+                foreach (KartPointObject kartObj in kartPointList.Items)
+                {
+                    kartobj.Add(kartObj);
+                }
+                kartPointList.Items.Clear();
+            }
+
             int rotation;
             kartList = GL.GenLists(1);
             GL.NewList(kartList, ListMode.Compile);
@@ -1750,8 +1884,22 @@ namespace DouBOLDash
             GL.EndList();
         }
 
-        public void UpdateAreas()
+        public void UpdateAreas(bool isUpdate)
         {
+            if (isUpdate)
+            {
+                GL.DeleteLists(selectedList, 1);
+                areaobj.Clear();
+                areaList.Refresh();
+
+                foreach (AreaObject areaObj in areaList.Items)
+                {
+                    areaobj.Add(areaObj);
+                }
+
+                kartPointList.Items.Clear();
+            }
+
             int rotation;
             areaObjList = GL.GenLists(1);
             GL.NewList(areaObjList, ListMode.Compile);
@@ -1776,6 +1924,7 @@ namespace DouBOLDash
 
             if (isUpdate)
             {
+                GL.DeleteLists(selectedList, 1);
                 camobj.Clear();
                 cameraList.Refresh();
 
@@ -1803,8 +1952,22 @@ namespace DouBOLDash
             GL.EndList();
         }
 
-        public void UpdateRespawns()
+        public void UpdateRespawns(bool isUpdate)
         {
+            GL.DeleteLists(respawnList, 1);
+
+            if (isUpdate)
+            {
+                GL.DeleteLists(selectedList, 1);
+                resObj.Clear();
+                respList.Refresh();
+
+                foreach (RespawnObject respObj in respList.Items)
+                {
+                    resObj.Add(respObj);
+                }
+            }
+
             int rotation;
             respawnList = GL.GenLists(1);
             GL.NewList(respawnList, ListMode.Compile);

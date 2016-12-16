@@ -592,7 +592,7 @@ namespace DouBOLDash
         public ushort objID;
         public short routeID;
         public long unk1, unk2, unk3;
-        public string modelName;
+        public string modelName, friendlyName;
 
         public TrackObject()
         {
@@ -641,10 +641,15 @@ namespace DouBOLDash
 
                 MiscHacks misc = new MiscHacks();
                 lvlobj.modelName = misc.returnModel(lvlobj.objID);
+                lvlobj.friendlyName = misc.returnName(lvlobj.objID);
 
-                lvlobj.unk1 = reader.ReadInt64();
-                lvlobj.unk2 = reader.ReadInt64();
-                lvlobj.unk3 = reader.ReadInt64();
+                lvlobj.setting1 = reader.ReadInt64();
+                lvlobj.setting2 = reader.ReadInt64();
+                lvlobj.setting3 = reader.ReadInt64();
+
+                lvlobj.set1 = lvlobj.setting1.ToString("X8");
+                lvlobj.set2 = lvlobj.setting2.ToString("X8");
+                lvlobj.set3 = lvlobj.setting3.ToString("X8");
 
                 lvlobj.ID = i;
 
@@ -672,9 +677,9 @@ namespace DouBOLDash
 
                 writer.Write(lvlobj.objID);
                 writer.Write(lvlobj.routeID);
-                writer.Write(lvlobj.unk1);
-                writer.Write(lvlobj.unk2);
-                writer.Write(lvlobj.unk3);
+                writer.Write(lvlobj.setting1);
+                writer.Write(lvlobj.setting2);
+                writer.Write(lvlobj.setting3);
             }
         }
 
@@ -1099,7 +1104,7 @@ namespace DouBOLDash
                 writer.Write(resObj.unk1);
                 writer.Write(resObj.unk2);
                 writer.Write(resObj.unk3);
-            }
+            }                        
         }
 
         public List<RespawnObject> returnList()
@@ -1172,7 +1177,7 @@ namespace DouBOLDash
             get { return pointSetting2; }
             set { pointSetting2 = value; }
         }
-        [DisplayName("Route Link"), Category("Settings"), Description("loldunno.")]
+        [DisplayName("Route Link"), Category("Settings"), Description("-1 if it continues with the route, and if it's not -1, it will go to the group ID that is specified. If it's the same as the current group ID, it will loop.")]
         public short Link
         {
             get { return link; }
@@ -1189,6 +1194,20 @@ namespace DouBOLDash
     public class RouteGroupSetup
     {
         public ushort pointLength, pointStart;
+
+        [DisplayName("Length"), Category("Settings"), Description("The amount of points this group has.")]
+        public ushort PointLength
+        {
+            get { return pointLength; }
+            set { pointLength = value; }
+        }
+
+        [DisplayName("Start"), Category("Settings"), Description("The start of the group, like an index.")]
+        public ushort PointStart
+        {
+            get { return pointStart; }
+            set { pointStart = value; }
+        }
     }
 
     public class RoutePointObject
@@ -1233,8 +1252,9 @@ namespace DouBOLDash
         public int xRot, yRot, zRot;
         public ushort objID;
         public short routeID;
-        public long unk1, unk2, unk3;
-        public string modelName;
+        public long setting1, setting2, setting3;
+        public string set1, set2, set3; // string versions for hex converting
+        public string modelName, friendlyName;
         public uint ID;
 
         [DisplayName("X Position"), Category("Position"), Description("The X position of the object.")]
@@ -1302,22 +1322,22 @@ namespace DouBOLDash
             set { modelName = value; }
         }
         [DisplayName("Settings 1"), Category("Settings"), Description("The settings that coorespond to the object.")]
-        public long Setting1
+        public string Setting1
         {
-            get { return unk1; }
-            set { unk1 = value; }
+            get { return set1; }
+            set { set1 = value; }
         }
         [DisplayName("Settings 2"), Category("Settings"), Description("The settings that coorespond to the object.")]
-        public long Setting2
+        public string Setting2
         {
-            get { return unk2; }
-            set { unk2 = value; }
+            get { return set2; }
+            set { set2 = value; }
         }
         [DisplayName("Settings 3"), Category("Settings"), Description("The settings that coorespond to the object.")]
-        public long Setting3
+        public string Setting3
         {
-            get { return unk3; }
-            set { unk3 = value; }
+            get { return set3; }
+            set { set3 = value; }
         }
     }
 
@@ -1374,6 +1394,62 @@ namespace DouBOLDash
         public ushort pointLength, groupLink, index;
         public short prev1, prev2, prev3, prev4;
         public short next1, next2, next3, next4;
+
+        [DisplayName("Length"), Category("Settings"), Description("The amount of points in this group.")]
+        public ushort PointLength
+        {
+            get { return pointLength; }
+            set { pointLength = value; }
+        }
+
+        [DisplayName("Group Link"), Category("Settings"), Description("The group link.")]
+        public ushort GroupLink
+        {
+            get { return groupLink; }
+            set { groupLink = value; }
+        }
+
+        [DisplayName("Next Group 1"), Category("Settings"), Description("The next group that connects to this one.")]
+        public short Next1
+        {
+            get { return next1; }
+            set { next1 = value; }
+        }
+
+        [DisplayName("Next Group 2"), Category("Settings"), Description("The next group that connects to this one.")]
+        public short Next2
+        {
+            get { return next2; }
+            set { next2 = value; }
+        }
+
+        [DisplayName("Next Group 1"), Category("Settings"), Description("The next group that connects to this one.")]
+        public short Next3
+        {
+            get { return next3; }
+            set { next3 = value; }
+        }
+
+        [DisplayName("Previous Group 1"), Category("Settings"), Description("The previous group that connects to this one.")]
+        public short Previous1
+        {
+            get { return prev1; }
+            set { prev1 = value; }
+        }
+
+        [DisplayName("Previous Group 2"), Category("Settings"), Description("The previous group that connects to this one.")]
+        public short Previous2
+        {
+            get { return prev2; }
+            set { prev2 = value; }
+        }
+
+        [DisplayName("Previous Group 3"), Category("Settings"), Description("The previous group that connects to this one.")]
+        public short Previous3
+        {
+            get { return prev3; }
+            set { prev3 = value; }
+        }
     }
 
     struct KartPointObject
@@ -1384,47 +1460,47 @@ namespace DouBOLDash
         public byte polePos, playerID;
         public double rotation;
 
-        [DisplayName("X Position"), Category("Position"), Description("The X position of the object.")]
+        [DisplayName("X Position"), Category("Position"), Description("The X position of the starting point.")]
         public float XPosition
         {
             get { return xPos; }
             set { xPos = value; }
         }
 
-        [DisplayName("Y Position"), Category("Position"), Description("The Y position of the object.")]
+        [DisplayName("Y Position"), Category("Position"), Description("The Y position of the starting point.")]
         public float YPosition
         {
             get { return yPos; }
             set { yPos = value; }
         }
 
-        [DisplayName("Z Position"), Category("Position"), Description("The Z position of the object.")]
+        [DisplayName("Z Position"), Category("Position"), Description("The Z position of the starting point.")]
         public float ZPosition
         {
             get { return zPos; }
             set { zPos = value; }
         }
-        [DisplayName("X Scale"), Category("Position"), Description("The X scale of the object.")]
+        [DisplayName("X Scale"), Category("Position"), Description("The X scale of the starting point.")]
         public float XScale
         {
             get { return xScale; }
             set { xScale = value; }
         }
 
-        [DisplayName("Y Scale"), Category("Position"), Description("The Y scale of the object.")]
+        [DisplayName("Y Scale"), Category("Position"), Description("The Y scale of the starting point.")]
         public float YScale
         {
             get { return yScale; }
             set { yScale = value; }
         }
 
-        [DisplayName("Z Scale"), Category("Position"), Description("The Z scale of the object.")]
+        [DisplayName("Z Scale"), Category("Position"), Description("The Z scale of the starting point.")]
         public float ZScale
         {
             get { return zScale; }
             set { zScale = value; }
         }
-        [DisplayName("Rotation"), Category("Position"), Description("The rotation of the object.")]
+        [DisplayName("Rotation"), Category("Position"), Description("The rotation of the starting point.")]
         public double Rotation
         {
             get { return rotation; }

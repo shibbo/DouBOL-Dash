@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingsWindow));
             this.buttonOK = new System.Windows.Forms.Button();
             this.enableWireframe = new System.Windows.Forms.CheckBox();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
@@ -177,6 +178,7 @@
             this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.enableWireframe);
             this.Controls.Add(this.buttonOK);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "SettingsWindow";
             this.Text = "DouBOL Settings";
             this.ResumeLayout(false);

@@ -86,6 +86,12 @@
       <DependentUpon>MainWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="MiscHacks.cs" />
+    <Compile Include="ObjectAddForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ObjectAddForm.Designer.cs">
+      <DependentUpon>ObjectAddForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RendererBase.cs" />
@@ -105,6 +111,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ObjectAddForm.resx">
+      <DependentUpon>ObjectAddForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

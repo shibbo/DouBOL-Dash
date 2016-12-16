@@ -35,9 +35,11 @@
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.BMDViewerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.bTIViewerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.insertCourseModelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.chooseFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -49,7 +51,7 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
             this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPage9 = new System.Windows.Forms.TabPage();
+            this.bolTab = new System.Windows.Forms.TabPage();
             this.panel3 = new System.Windows.Forms.Panel();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -66,48 +68,51 @@
             this.label1 = new System.Windows.Forms.Label();
             this.musicSelect = new System.Windows.Forms.ComboBox();
             this.lapCounter = new System.Windows.Forms.NumericUpDown();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.enemyPointsTab = new System.Windows.Forms.TabPage();
             this.propertyGrid6 = new System.Windows.Forms.PropertyGrid();
             this.enemyRouteList = new System.Windows.Forms.ListBox();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.checkpointGroupTab = new System.Windows.Forms.TabPage();
+            this.propertyGrid9 = new System.Windows.Forms.PropertyGrid();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.chckGroup = new System.Windows.Forms.ListBox();
+            this.checkpointTab = new System.Windows.Forms.TabPage();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.propertyGrid5 = new System.Windows.Forms.PropertyGrid();
             this.chckList = new System.Windows.Forms.ListBox();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.chckGroup = new System.Windows.Forms.ListBox();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.routeGroupTab = new System.Windows.Forms.TabPage();
+            this.propertyGrid10 = new System.Windows.Forms.PropertyGrid();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.routeGroupList = new System.Windows.Forms.ListBox();
+            this.routeTab = new System.Windows.Forms.TabPage();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.propertyGrid1 = new System.Windows.Forms.PropertyGrid();
             this.routeList = new System.Windows.Forms.ListBox();
-            this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.routeGroupList = new System.Windows.Forms.ListBox();
-            this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.itemsTab = new System.Windows.Forms.TabPage();
             this.propertyGrid3 = new System.Windows.Forms.PropertyGrid();
             this.objList = new System.Windows.Forms.ListBox();
-            this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.startingPointTab = new System.Windows.Forms.TabPage();
             this.propertyGrid8 = new System.Windows.Forms.PropertyGrid();
             this.kartPointList = new System.Windows.Forms.ListBox();
-            this.tabPage6 = new System.Windows.Forms.TabPage();
+            this.areaTab = new System.Windows.Forms.TabPage();
             this.propertyGrid7 = new System.Windows.Forms.PropertyGrid();
             this.areaList = new System.Windows.Forms.ListBox();
-            this.tabPage7 = new System.Windows.Forms.TabPage();
+            this.cameraTab = new System.Windows.Forms.TabPage();
             this.propertyGrid2 = new System.Windows.Forms.PropertyGrid();
             this.cameraList = new System.Windows.Forms.ListBox();
-            this.tabPage8 = new System.Windows.Forms.TabPage();
+            this.respawnTab = new System.Windows.Forms.TabPage();
             this.propertyGrid4 = new System.Windows.Forms.PropertyGrid();
             this.respList = new System.Windows.Forms.ListBox();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
-            this.itemEdit_context = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.contextItemAdd = new System.Windows.Forms.ToolStripMenuItem();
-            this.contextItemDuplicate = new System.Windows.Forms.ToolStripMenuItem();
-            this.contextItemDelete = new System.Windows.Forms.ToolStripMenuItem();
-            this.insertCourseModelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.routeContext = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.selectAllInGroupsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.addObjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.tabControl1.SuspendLayout();
-            this.tabPage9.SuspendLayout();
+            this.bolTab.SuspendLayout();
             this.panel3.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -117,19 +122,22 @@
             ((System.ComponentModel.ISupportInitialize)(this.unknown4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.unknown3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.lapCounter)).BeginInit();
-            this.tabPage1.SuspendLayout();
-            this.tabPage2.SuspendLayout();
-            this.groupBox4.SuspendLayout();
+            this.enemyPointsTab.SuspendLayout();
+            this.checkpointGroupTab.SuspendLayout();
             this.groupBox3.SuspendLayout();
-            this.tabPage3.SuspendLayout();
-            this.groupBox6.SuspendLayout();
+            this.checkpointTab.SuspendLayout();
+            this.groupBox4.SuspendLayout();
+            this.routeGroupTab.SuspendLayout();
             this.groupBox5.SuspendLayout();
-            this.tabPage4.SuspendLayout();
-            this.tabPage5.SuspendLayout();
-            this.tabPage6.SuspendLayout();
-            this.tabPage7.SuspendLayout();
-            this.tabPage8.SuspendLayout();
-            this.itemEdit_context.SuspendLayout();
+            this.routeTab.SuspendLayout();
+            this.groupBox6.SuspendLayout();
+            this.itemsTab.SuspendLayout();
+            this.startingPointTab.SuspendLayout();
+            this.areaTab.SuspendLayout();
+            this.cameraTab.SuspendLayout();
+            this.respawnTab.SuspendLayout();
+            this.routeContext.SuspendLayout();
+            this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -149,7 +157,8 @@
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.openToolStripMenuItem,
             this.saveToolStripMenuItem,
-            this.saveAsToolStripMenuItem});
+            this.saveAsToolStripMenuItem,
+            this.closeToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
@@ -157,7 +166,8 @@
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
+            this.openToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
             this.openToolStripMenuItem.Text = "Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
@@ -165,7 +175,8 @@
             // 
             this.saveToolStripMenuItem.Enabled = false;
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
+            this.saveToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
             this.saveToolStripMenuItem.Text = "Save";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
@@ -173,9 +184,18 @@
             // 
             this.saveAsToolStripMenuItem.Enabled = false;
             this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
-            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
+            this.saveAsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.S)));
+            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
             this.saveAsToolStripMenuItem.Text = "Save As";
             this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.saveAsToolStripMenuItem_Click);
+            // 
+            // closeToolStripMenuItem
+            // 
+            this.closeToolStripMenuItem.Name = "closeToolStripMenuItem";
+            this.closeToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
+            this.closeToolStripMenuItem.Text = "Close";
+            this.closeToolStripMenuItem.Click += new System.EventHandler(this.closeToolStripMenuItem_Click);
             // 
             // toolsToolStripMenuItem
             // 
@@ -190,16 +210,23 @@
             // BMDViewerToolStripMenuItem
             // 
             this.BMDViewerToolStripMenuItem.Name = "BMDViewerToolStripMenuItem";
-            this.BMDViewerToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
+            this.BMDViewerToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.BMDViewerToolStripMenuItem.Text = "BMD Viewer";
             this.BMDViewerToolStripMenuItem.Click += new System.EventHandler(this.BMDViewerToolStripMenuItem_Click);
             // 
             // bTIViewerToolStripMenuItem
             // 
             this.bTIViewerToolStripMenuItem.Name = "bTIViewerToolStripMenuItem";
-            this.bTIViewerToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
+            this.bTIViewerToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.bTIViewerToolStripMenuItem.Text = "BTI Viewer";
             this.bTIViewerToolStripMenuItem.Click += new System.EventHandler(this.bTIViewerToolStripMenuItem_Click);
+            // 
+            // insertCourseModelToolStripMenuItem
+            // 
+            this.insertCourseModelToolStripMenuItem.Name = "insertCourseModelToolStripMenuItem";
+            this.insertCourseModelToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.insertCourseModelToolStripMenuItem.Text = "Insert Course Model";
+            this.insertCourseModelToolStripMenuItem.Click += new System.EventHandler(this.insertCourseModelToolStripMenuItem_Click);
             // 
             // optionsToolStripMenuItem
             // 
@@ -297,15 +324,17 @@
             // 
             // tabControl1
             // 
-            this.tabControl1.Controls.Add(this.tabPage9);
-            this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Controls.Add(this.tabPage3);
-            this.tabControl1.Controls.Add(this.tabPage4);
-            this.tabControl1.Controls.Add(this.tabPage5);
-            this.tabControl1.Controls.Add(this.tabPage6);
-            this.tabControl1.Controls.Add(this.tabPage7);
-            this.tabControl1.Controls.Add(this.tabPage8);
+            this.tabControl1.Controls.Add(this.bolTab);
+            this.tabControl1.Controls.Add(this.enemyPointsTab);
+            this.tabControl1.Controls.Add(this.checkpointGroupTab);
+            this.tabControl1.Controls.Add(this.checkpointTab);
+            this.tabControl1.Controls.Add(this.routeGroupTab);
+            this.tabControl1.Controls.Add(this.routeTab);
+            this.tabControl1.Controls.Add(this.itemsTab);
+            this.tabControl1.Controls.Add(this.startingPointTab);
+            this.tabControl1.Controls.Add(this.areaTab);
+            this.tabControl1.Controls.Add(this.cameraTab);
+            this.tabControl1.Controls.Add(this.respawnTab);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.ImageList = this.imageList1;
             this.tabControl1.ItemSize = new System.Drawing.Size(59, 19);
@@ -316,17 +345,17 @@
             this.tabControl1.Size = new System.Drawing.Size(370, 605);
             this.tabControl1.TabIndex = 0;
             // 
-            // tabPage9
+            // bolTab
             // 
-            this.tabPage9.Controls.Add(this.panel3);
-            this.tabPage9.ImageKey = "info.png";
-            this.tabPage9.Location = new System.Drawing.Point(4, 23);
-            this.tabPage9.Name = "tabPage9";
-            this.tabPage9.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage9.Size = new System.Drawing.Size(362, 578);
-            this.tabPage9.TabIndex = 8;
-            this.tabPage9.ToolTipText = "Track Information";
-            this.tabPage9.UseVisualStyleBackColor = true;
+            this.bolTab.Controls.Add(this.panel3);
+            this.bolTab.ImageKey = "info.png";
+            this.bolTab.Location = new System.Drawing.Point(4, 23);
+            this.bolTab.Name = "bolTab";
+            this.bolTab.Padding = new System.Windows.Forms.Padding(3);
+            this.bolTab.Size = new System.Drawing.Size(362, 578);
+            this.bolTab.TabIndex = 8;
+            this.bolTab.ToolTipText = "Track Information";
+            this.bolTab.UseVisualStyleBackColor = true;
             // 
             // panel3
             // 
@@ -544,18 +573,18 @@
             this.lapCounter.TabIndex = 0;
             this.lapCounter.ValueChanged += new System.EventHandler(this.lapCounter_ValueChanged);
             // 
-            // tabPage1
+            // enemyPointsTab
             // 
-            this.tabPage1.Controls.Add(this.propertyGrid6);
-            this.tabPage1.Controls.Add(this.enemyRouteList);
-            this.tabPage1.ImageKey = "enemyitemp.png";
-            this.tabPage1.Location = new System.Drawing.Point(4, 23);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(362, 578);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.ToolTipText = "Enemy / Item Routes";
-            this.tabPage1.UseVisualStyleBackColor = true;
+            this.enemyPointsTab.Controls.Add(this.propertyGrid6);
+            this.enemyPointsTab.Controls.Add(this.enemyRouteList);
+            this.enemyPointsTab.ImageKey = "enemyitemp.png";
+            this.enemyPointsTab.Location = new System.Drawing.Point(4, 23);
+            this.enemyPointsTab.Name = "enemyPointsTab";
+            this.enemyPointsTab.Padding = new System.Windows.Forms.Padding(3);
+            this.enemyPointsTab.Size = new System.Drawing.Size(362, 578);
+            this.enemyPointsTab.TabIndex = 0;
+            this.enemyPointsTab.ToolTipText = "Enemy / Item Routes";
+            this.enemyPointsTab.UseVisualStyleBackColor = true;
             // 
             // propertyGrid6
             // 
@@ -567,6 +596,7 @@
             this.propertyGrid6.Size = new System.Drawing.Size(356, 341);
             this.propertyGrid6.TabIndex = 1;
             this.propertyGrid6.ToolbarVisible = false;
+            this.propertyGrid6.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.propertyGrid6_PropertyValueChanged);
             // 
             // enemyRouteList
             // 
@@ -577,58 +607,35 @@
             this.enemyRouteList.TabIndex = 0;
             this.enemyRouteList.SelectedIndexChanged += new System.EventHandler(this.enemyRouteList_SelectedIndexChanged);
             // 
-            // tabPage2
+            // checkpointGroupTab
             // 
-            this.tabPage2.Controls.Add(this.groupBox4);
-            this.tabPage2.Controls.Add(this.groupBox3);
-            this.tabPage2.ImageKey = "cp.png";
-            this.tabPage2.Location = new System.Drawing.Point(4, 23);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(362, 578);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.ToolTipText = "Checkpoints";
-            this.tabPage2.UseVisualStyleBackColor = true;
+            this.checkpointGroupTab.Controls.Add(this.propertyGrid9);
+            this.checkpointGroupTab.Controls.Add(this.groupBox3);
+            this.checkpointGroupTab.Location = new System.Drawing.Point(4, 23);
+            this.checkpointGroupTab.Name = "checkpointGroupTab";
+            this.checkpointGroupTab.Padding = new System.Windows.Forms.Padding(3);
+            this.checkpointGroupTab.Size = new System.Drawing.Size(362, 578);
+            this.checkpointGroupTab.TabIndex = 10;
+            this.checkpointGroupTab.Text = "tabPage11";
+            this.checkpointGroupTab.UseVisualStyleBackColor = true;
             // 
-            // groupBox4
+            // propertyGrid9
             // 
-            this.groupBox4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.propertyGrid9.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
-            this.groupBox4.Controls.Add(this.propertyGrid5);
-            this.groupBox4.Controls.Add(this.chckList);
-            this.groupBox4.Location = new System.Drawing.Point(6, 150);
-            this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(354, 422);
-            this.groupBox4.TabIndex = 2;
-            this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "Checkpoints";
-            // 
-            // propertyGrid5
-            // 
-            this.propertyGrid5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.propertyGrid5.Location = new System.Drawing.Point(3, 182);
-            this.propertyGrid5.Name = "propertyGrid5";
-            this.propertyGrid5.Size = new System.Drawing.Size(348, 234);
-            this.propertyGrid5.TabIndex = 1;
-            this.propertyGrid5.ToolbarVisible = false;
-            // 
-            // chckList
-            // 
-            this.chckList.FormattingEnabled = true;
-            this.chckList.Location = new System.Drawing.Point(3, 16);
-            this.chckList.Name = "chckList";
-            this.chckList.Size = new System.Drawing.Size(348, 160);
-            this.chckList.TabIndex = 0;
-            this.chckList.SelectedIndexChanged += new System.EventHandler(this.chckList_SelectedIndexChanged);
+            this.propertyGrid9.Location = new System.Drawing.Point(2, 151);
+            this.propertyGrid9.Name = "propertyGrid9";
+            this.propertyGrid9.Size = new System.Drawing.Size(360, 421);
+            this.propertyGrid9.TabIndex = 3;
+            this.propertyGrid9.ToolbarVisible = false;
             // 
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.chckGroup);
-            this.groupBox3.Location = new System.Drawing.Point(6, 6);
+            this.groupBox3.Location = new System.Drawing.Point(2, 6);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(356, 138);
-            this.groupBox3.TabIndex = 1;
+            this.groupBox3.TabIndex = 2;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Checkpoint Groups";
             // 
@@ -640,19 +647,106 @@
             this.chckGroup.Name = "chckGroup";
             this.chckGroup.Size = new System.Drawing.Size(350, 119);
             this.chckGroup.TabIndex = 0;
+            this.chckGroup.SelectedIndexChanged += new System.EventHandler(this.chckGroup_SelectedIndexChanged);
             // 
-            // tabPage3
+            // checkpointTab
             // 
-            this.tabPage3.Controls.Add(this.groupBox6);
-            this.tabPage3.Controls.Add(this.groupBox5);
-            this.tabPage3.ImageKey = "paths.png";
-            this.tabPage3.Location = new System.Drawing.Point(4, 23);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(362, 578);
-            this.tabPage3.TabIndex = 2;
-            this.tabPage3.ToolTipText = "Routes";
-            this.tabPage3.UseVisualStyleBackColor = true;
+            this.checkpointTab.Controls.Add(this.groupBox4);
+            this.checkpointTab.ImageKey = "cp.png";
+            this.checkpointTab.Location = new System.Drawing.Point(4, 23);
+            this.checkpointTab.Name = "checkpointTab";
+            this.checkpointTab.Padding = new System.Windows.Forms.Padding(3);
+            this.checkpointTab.Size = new System.Drawing.Size(362, 578);
+            this.checkpointTab.TabIndex = 1;
+            this.checkpointTab.ToolTipText = "Checkpoints";
+            this.checkpointTab.UseVisualStyleBackColor = true;
+            // 
+            // groupBox4
+            // 
+            this.groupBox4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.groupBox4.Controls.Add(this.propertyGrid5);
+            this.groupBox4.Controls.Add(this.chckList);
+            this.groupBox4.Location = new System.Drawing.Point(0, 3);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(354, 572);
+            this.groupBox4.TabIndex = 2;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Checkpoints";
+            // 
+            // propertyGrid5
+            // 
+            this.propertyGrid5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.propertyGrid5.Location = new System.Drawing.Point(3, 182);
+            this.propertyGrid5.Name = "propertyGrid5";
+            this.propertyGrid5.Size = new System.Drawing.Size(348, 384);
+            this.propertyGrid5.TabIndex = 1;
+            this.propertyGrid5.ToolbarVisible = false;
+            this.propertyGrid5.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.propertyGrid5_PropertyValueChanged);
+            // 
+            // chckList
+            // 
+            this.chckList.FormattingEnabled = true;
+            this.chckList.Location = new System.Drawing.Point(3, 16);
+            this.chckList.Name = "chckList";
+            this.chckList.Size = new System.Drawing.Size(348, 160);
+            this.chckList.TabIndex = 0;
+            this.chckList.SelectedIndexChanged += new System.EventHandler(this.chckList_SelectedIndexChanged);
+            // 
+            // routeGroupTab
+            // 
+            this.routeGroupTab.Controls.Add(this.propertyGrid10);
+            this.routeGroupTab.Controls.Add(this.groupBox5);
+            this.routeGroupTab.Location = new System.Drawing.Point(4, 23);
+            this.routeGroupTab.Name = "routeGroupTab";
+            this.routeGroupTab.Padding = new System.Windows.Forms.Padding(3);
+            this.routeGroupTab.Size = new System.Drawing.Size(362, 578);
+            this.routeGroupTab.TabIndex = 9;
+            this.routeGroupTab.Text = "tabPage10";
+            this.routeGroupTab.UseVisualStyleBackColor = true;
+            // 
+            // propertyGrid10
+            // 
+            this.propertyGrid10.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.propertyGrid10.Location = new System.Drawing.Point(3, 313);
+            this.propertyGrid10.Name = "propertyGrid10";
+            this.propertyGrid10.Size = new System.Drawing.Size(356, 265);
+            this.propertyGrid10.TabIndex = 3;
+            this.propertyGrid10.ToolbarVisible = false;
+            // 
+            // groupBox5
+            // 
+            this.groupBox5.Controls.Add(this.routeGroupList);
+            this.groupBox5.Location = new System.Drawing.Point(3, 6);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(356, 301);
+            this.groupBox5.TabIndex = 2;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "Route Groups";
+            // 
+            // routeGroupList
+            // 
+            this.routeGroupList.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.routeGroupList.FormattingEnabled = true;
+            this.routeGroupList.Location = new System.Drawing.Point(3, 16);
+            this.routeGroupList.Name = "routeGroupList";
+            this.routeGroupList.Size = new System.Drawing.Size(350, 282);
+            this.routeGroupList.TabIndex = 0;
+            this.routeGroupList.SelectedIndexChanged += new System.EventHandler(this.routeGroupList_SelectedIndexChanged_1);
+            // 
+            // routeTab
+            // 
+            this.routeTab.Controls.Add(this.groupBox6);
+            this.routeTab.ImageKey = "paths.png";
+            this.routeTab.Location = new System.Drawing.Point(4, 23);
+            this.routeTab.Name = "routeTab";
+            this.routeTab.Padding = new System.Windows.Forms.Padding(3);
+            this.routeTab.Size = new System.Drawing.Size(362, 578);
+            this.routeTab.TabIndex = 2;
+            this.routeTab.ToolTipText = "Routes";
+            this.routeTab.UseVisualStyleBackColor = true;
             // 
             // groupBox6
             // 
@@ -660,9 +754,9 @@
             | System.Windows.Forms.AnchorStyles.Left)));
             this.groupBox6.Controls.Add(this.propertyGrid1);
             this.groupBox6.Controls.Add(this.routeList);
-            this.groupBox6.Location = new System.Drawing.Point(0, 173);
+            this.groupBox6.Location = new System.Drawing.Point(3, 3);
             this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(362, 406);
+            this.groupBox6.Size = new System.Drawing.Size(362, 570);
             this.groupBox6.TabIndex = 2;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Routes";
@@ -671,9 +765,9 @@
             // 
             this.propertyGrid1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
-            this.propertyGrid1.Location = new System.Drawing.Point(3, 143);
+            this.propertyGrid1.Location = new System.Drawing.Point(3, 373);
             this.propertyGrid1.Name = "propertyGrid1";
-            this.propertyGrid1.Size = new System.Drawing.Size(359, 259);
+            this.propertyGrid1.Size = new System.Drawing.Size(350, 260);
             this.propertyGrid1.TabIndex = 1;
             this.propertyGrid1.ToolbarVisible = false;
             this.propertyGrid1.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.propertyGrid1_PropertyValueChanged);
@@ -684,41 +778,23 @@
             this.routeList.FormattingEnabled = true;
             this.routeList.Location = new System.Drawing.Point(3, 16);
             this.routeList.Name = "routeList";
-            this.routeList.Size = new System.Drawing.Size(356, 121);
+            this.routeList.Size = new System.Drawing.Size(350, 355);
             this.routeList.TabIndex = 0;
             this.routeList.SelectedIndexChanged += new System.EventHandler(this.routeList_SelectedIndexChanged);
+            this.routeList.MouseDown += new System.Windows.Forms.MouseEventHandler(this.routeList_MouseDown);
             // 
-            // groupBox5
+            // itemsTab
             // 
-            this.groupBox5.Controls.Add(this.routeGroupList);
-            this.groupBox5.Location = new System.Drawing.Point(0, 6);
-            this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(356, 164);
-            this.groupBox5.TabIndex = 1;
-            this.groupBox5.TabStop = false;
-            this.groupBox5.Text = "Route Groups";
-            // 
-            // routeGroupList
-            // 
-            this.routeGroupList.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.routeGroupList.FormattingEnabled = true;
-            this.routeGroupList.Location = new System.Drawing.Point(3, 16);
-            this.routeGroupList.Name = "routeGroupList";
-            this.routeGroupList.Size = new System.Drawing.Size(350, 145);
-            this.routeGroupList.TabIndex = 0;
-            // 
-            // tabPage4
-            // 
-            this.tabPage4.Controls.Add(this.propertyGrid3);
-            this.tabPage4.Controls.Add(this.objList);
-            this.tabPage4.ImageKey = "objects.png";
-            this.tabPage4.Location = new System.Drawing.Point(4, 23);
-            this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(362, 578);
-            this.tabPage4.TabIndex = 3;
-            this.tabPage4.ToolTipText = "Objects";
-            this.tabPage4.UseVisualStyleBackColor = true;
+            this.itemsTab.Controls.Add(this.propertyGrid3);
+            this.itemsTab.Controls.Add(this.objList);
+            this.itemsTab.ImageKey = "objects.png";
+            this.itemsTab.Location = new System.Drawing.Point(4, 23);
+            this.itemsTab.Name = "itemsTab";
+            this.itemsTab.Padding = new System.Windows.Forms.Padding(3);
+            this.itemsTab.Size = new System.Drawing.Size(362, 578);
+            this.itemsTab.TabIndex = 3;
+            this.itemsTab.ToolTipText = "Objects";
+            this.itemsTab.UseVisualStyleBackColor = true;
             // 
             // propertyGrid3
             // 
@@ -743,18 +819,18 @@
             this.objList.SelectedIndexChanged += new System.EventHandler(this.objList_SelectedIndexChanged);
             this.objList.MouseDown += new System.Windows.Forms.MouseEventHandler(this.objList_MouseDown);
             // 
-            // tabPage5
+            // startingPointTab
             // 
-            this.tabPage5.Controls.Add(this.propertyGrid8);
-            this.tabPage5.Controls.Add(this.kartPointList);
-            this.tabPage5.ImageKey = "startungpos.png";
-            this.tabPage5.Location = new System.Drawing.Point(4, 23);
-            this.tabPage5.Name = "tabPage5";
-            this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage5.Size = new System.Drawing.Size(362, 578);
-            this.tabPage5.TabIndex = 4;
-            this.tabPage5.ToolTipText = "Starting Points";
-            this.tabPage5.UseVisualStyleBackColor = true;
+            this.startingPointTab.Controls.Add(this.propertyGrid8);
+            this.startingPointTab.Controls.Add(this.kartPointList);
+            this.startingPointTab.ImageKey = "startungpos.png";
+            this.startingPointTab.Location = new System.Drawing.Point(4, 23);
+            this.startingPointTab.Name = "startingPointTab";
+            this.startingPointTab.Padding = new System.Windows.Forms.Padding(3);
+            this.startingPointTab.Size = new System.Drawing.Size(362, 578);
+            this.startingPointTab.TabIndex = 4;
+            this.startingPointTab.ToolTipText = "Starting Points";
+            this.startingPointTab.UseVisualStyleBackColor = true;
             // 
             // propertyGrid8
             // 
@@ -766,6 +842,7 @@
             this.propertyGrid8.Size = new System.Drawing.Size(356, 416);
             this.propertyGrid8.TabIndex = 1;
             this.propertyGrid8.ToolbarVisible = false;
+            this.propertyGrid8.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.propertyGrid8_PropertyValueChanged);
             // 
             // kartPointList
             // 
@@ -776,18 +853,18 @@
             this.kartPointList.TabIndex = 0;
             this.kartPointList.SelectedIndexChanged += new System.EventHandler(this.kartPointList_SelectedIndexChanged);
             // 
-            // tabPage6
+            // areaTab
             // 
-            this.tabPage6.Controls.Add(this.propertyGrid7);
-            this.tabPage6.Controls.Add(this.areaList);
-            this.tabPage6.ImageKey = "arearererrere.png";
-            this.tabPage6.Location = new System.Drawing.Point(4, 23);
-            this.tabPage6.Name = "tabPage6";
-            this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage6.Size = new System.Drawing.Size(362, 578);
-            this.tabPage6.TabIndex = 5;
-            this.tabPage6.ToolTipText = "Areas";
-            this.tabPage6.UseVisualStyleBackColor = true;
+            this.areaTab.Controls.Add(this.propertyGrid7);
+            this.areaTab.Controls.Add(this.areaList);
+            this.areaTab.ImageKey = "arearererrere.png";
+            this.areaTab.Location = new System.Drawing.Point(4, 23);
+            this.areaTab.Name = "areaTab";
+            this.areaTab.Padding = new System.Windows.Forms.Padding(3);
+            this.areaTab.Size = new System.Drawing.Size(362, 578);
+            this.areaTab.TabIndex = 5;
+            this.areaTab.ToolTipText = "Areas";
+            this.areaTab.UseVisualStyleBackColor = true;
             // 
             // propertyGrid7
             // 
@@ -797,6 +874,7 @@
             this.propertyGrid7.Size = new System.Drawing.Size(356, 354);
             this.propertyGrid7.TabIndex = 1;
             this.propertyGrid7.ToolbarVisible = false;
+            this.propertyGrid7.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.propertyGrid7_PropertyValueChanged);
             // 
             // areaList
             // 
@@ -807,18 +885,18 @@
             this.areaList.TabIndex = 0;
             this.areaList.SelectedIndexChanged += new System.EventHandler(this.areaList_SelectedIndexChanged);
             // 
-            // tabPage7
+            // cameraTab
             // 
-            this.tabPage7.Controls.Add(this.propertyGrid2);
-            this.tabPage7.Controls.Add(this.cameraList);
-            this.tabPage7.ImageKey = "cam.png";
-            this.tabPage7.Location = new System.Drawing.Point(4, 23);
-            this.tabPage7.Name = "tabPage7";
-            this.tabPage7.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage7.Size = new System.Drawing.Size(362, 578);
-            this.tabPage7.TabIndex = 6;
-            this.tabPage7.ToolTipText = "Cameras";
-            this.tabPage7.UseVisualStyleBackColor = true;
+            this.cameraTab.Controls.Add(this.propertyGrid2);
+            this.cameraTab.Controls.Add(this.cameraList);
+            this.cameraTab.ImageKey = "cam.png";
+            this.cameraTab.Location = new System.Drawing.Point(4, 23);
+            this.cameraTab.Name = "cameraTab";
+            this.cameraTab.Padding = new System.Windows.Forms.Padding(3);
+            this.cameraTab.Size = new System.Drawing.Size(362, 578);
+            this.cameraTab.TabIndex = 6;
+            this.cameraTab.ToolTipText = "Cameras";
+            this.cameraTab.UseVisualStyleBackColor = true;
             // 
             // propertyGrid2
             // 
@@ -841,18 +919,18 @@
             this.cameraList.TabIndex = 0;
             this.cameraList.SelectedIndexChanged += new System.EventHandler(this.cameraList_SelectedIndexChanged);
             // 
-            // tabPage8
+            // respawnTab
             // 
-            this.tabPage8.Controls.Add(this.propertyGrid4);
-            this.tabPage8.Controls.Add(this.respList);
-            this.tabPage8.ImageKey = "respawn2.png";
-            this.tabPage8.Location = new System.Drawing.Point(4, 23);
-            this.tabPage8.Name = "tabPage8";
-            this.tabPage8.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage8.Size = new System.Drawing.Size(362, 578);
-            this.tabPage8.TabIndex = 7;
-            this.tabPage8.ToolTipText = "Respawns";
-            this.tabPage8.UseVisualStyleBackColor = true;
+            this.respawnTab.Controls.Add(this.propertyGrid4);
+            this.respawnTab.Controls.Add(this.respList);
+            this.respawnTab.ImageKey = "respawn2.png";
+            this.respawnTab.Location = new System.Drawing.Point(4, 23);
+            this.respawnTab.Name = "respawnTab";
+            this.respawnTab.Padding = new System.Windows.Forms.Padding(3);
+            this.respawnTab.Size = new System.Drawing.Size(362, 578);
+            this.respawnTab.TabIndex = 7;
+            this.respawnTab.ToolTipText = "Respawns";
+            this.respawnTab.UseVisualStyleBackColor = true;
             // 
             // propertyGrid4
             // 
@@ -890,42 +968,33 @@
             this.imageList1.Images.SetKeyName(7, "startungpos.png");
             this.imageList1.Images.SetKeyName(8, "info.png");
             // 
-            // itemEdit_context
+            // routeContext
             // 
-            this.itemEdit_context.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.contextItemAdd,
-            this.contextItemDuplicate,
-            this.contextItemDelete});
-            this.itemEdit_context.Name = "contextMenuStrip1";
-            this.itemEdit_context.Size = new System.Drawing.Size(152, 70);
+            this.routeContext.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.selectAllInGroupsToolStripMenuItem});
+            this.routeContext.Name = "routeContext";
+            this.routeContext.Size = new System.Drawing.Size(172, 26);
             // 
-            // contextItemAdd
+            // selectAllInGroupsToolStripMenuItem
             // 
-            this.contextItemAdd.Name = "contextItemAdd";
-            this.contextItemAdd.Size = new System.Drawing.Size(152, 22);
-            this.contextItemAdd.Text = "Add Item";
-            this.contextItemAdd.Click += new System.EventHandler(this.contextItemAdd_Click);
+            this.selectAllInGroupsToolStripMenuItem.Name = "selectAllInGroupsToolStripMenuItem";
+            this.selectAllInGroupsToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
+            this.selectAllInGroupsToolStripMenuItem.Text = "Select All In Group";
+            this.selectAllInGroupsToolStripMenuItem.Click += new System.EventHandler(this.selectAllInGroupsToolStripMenuItem_Click);
             // 
-            // contextItemDuplicate
+            // contextMenuStrip1
             // 
-            this.contextItemDuplicate.Name = "contextItemDuplicate";
-            this.contextItemDuplicate.Size = new System.Drawing.Size(152, 22);
-            this.contextItemDuplicate.Text = "Duplicate Item";
-            this.contextItemDuplicate.Click += new System.EventHandler(this.contextItemDuplicate_Click);
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.addObjectToolStripMenuItem});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(135, 26);
             // 
-            // contextItemDelete
+            // addObjectToolStripMenuItem
             // 
-            this.contextItemDelete.Name = "contextItemDelete";
-            this.contextItemDelete.Size = new System.Drawing.Size(152, 22);
-            this.contextItemDelete.Text = "Delete Item";
-            this.contextItemDelete.Click += new System.EventHandler(this.contextItemDelete_Click);
-            // 
-            // insertCourseModelToolStripMenuItem
-            // 
-            this.insertCourseModelToolStripMenuItem.Name = "insertCourseModelToolStripMenuItem";
-            this.insertCourseModelToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.insertCourseModelToolStripMenuItem.Text = "Insert Course Model";
-            this.insertCourseModelToolStripMenuItem.Click += new System.EventHandler(this.insertCourseModelToolStripMenuItem_Click);
+            this.addObjectToolStripMenuItem.Name = "addObjectToolStripMenuItem";
+            this.addObjectToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
+            this.addObjectToolStripMenuItem.Text = "Add Object";
+            this.addObjectToolStripMenuItem.Click += new System.EventHandler(this.addObjectToolStripMenuItem_Click);
             // 
             // MainWindow
             // 
@@ -949,7 +1018,7 @@
             this.panel1.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.tabControl1.ResumeLayout(false);
-            this.tabPage9.ResumeLayout(false);
+            this.bolTab.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
@@ -961,19 +1030,22 @@
             ((System.ComponentModel.ISupportInitialize)(this.unknown4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.unknown3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.lapCounter)).EndInit();
-            this.tabPage1.ResumeLayout(false);
-            this.tabPage2.ResumeLayout(false);
-            this.groupBox4.ResumeLayout(false);
+            this.enemyPointsTab.ResumeLayout(false);
+            this.checkpointGroupTab.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
-            this.tabPage3.ResumeLayout(false);
-            this.groupBox6.ResumeLayout(false);
+            this.checkpointTab.ResumeLayout(false);
+            this.groupBox4.ResumeLayout(false);
+            this.routeGroupTab.ResumeLayout(false);
             this.groupBox5.ResumeLayout(false);
-            this.tabPage4.ResumeLayout(false);
-            this.tabPage5.ResumeLayout(false);
-            this.tabPage6.ResumeLayout(false);
-            this.tabPage7.ResumeLayout(false);
-            this.tabPage8.ResumeLayout(false);
-            this.itemEdit_context.ResumeLayout(false);
+            this.routeTab.ResumeLayout(false);
+            this.groupBox6.ResumeLayout(false);
+            this.itemsTab.ResumeLayout(false);
+            this.startingPointTab.ResumeLayout(false);
+            this.areaTab.ResumeLayout(false);
+            this.cameraTab.ResumeLayout(false);
+            this.respawnTab.ResumeLayout(false);
+            this.routeContext.ResumeLayout(false);
+            this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -996,25 +1068,25 @@
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.ImageList imageList1;
         private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.TabPage enemyPointsTab;
+        private System.Windows.Forms.TabPage checkpointTab;
         private System.Windows.Forms.ListBox chckList;
-        private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.TabPage routeTab;
         private System.Windows.Forms.ListBox routeList;
-        private System.Windows.Forms.TabPage tabPage4;
+        private System.Windows.Forms.TabPage itemsTab;
         private System.Windows.Forms.ListBox objList;
-        private System.Windows.Forms.TabPage tabPage5;
+        private System.Windows.Forms.TabPage startingPointTab;
         private System.Windows.Forms.ListBox kartPointList;
-        private System.Windows.Forms.TabPage tabPage6;
+        private System.Windows.Forms.TabPage areaTab;
         private System.Windows.Forms.ListBox areaList;
-        private System.Windows.Forms.TabPage tabPage7;
+        private System.Windows.Forms.TabPage cameraTab;
         private System.Windows.Forms.ListBox cameraList;
-        private System.Windows.Forms.TabPage tabPage8;
+        private System.Windows.Forms.TabPage respawnTab;
         private System.Windows.Forms.ListBox enemyRouteList;
         public System.Windows.Forms.ListBox respList;
         private System.Windows.Forms.ToolStripMenuItem toolsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem BMDViewerToolStripMenuItem;
-        private System.Windows.Forms.TabPage tabPage9;
+        private System.Windows.Forms.TabPage bolTab;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label label3;
@@ -1031,16 +1103,8 @@
         public System.Windows.Forms.NumericUpDown unknown5;
         public System.Windows.Forms.NumericUpDown unknown4;
         private System.Windows.Forms.GroupBox groupBox4;
-        private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.ListBox chckGroup;
         private System.Windows.Forms.GroupBox groupBox6;
-        private System.Windows.Forms.GroupBox groupBox5;
-        private System.Windows.Forms.ListBox routeGroupList;
         private System.Windows.Forms.ToolStripMenuItem saveAsToolStripMenuItem;
-        private System.Windows.Forms.ContextMenuStrip itemEdit_context;
-        private System.Windows.Forms.ToolStripMenuItem contextItemAdd;
-        private System.Windows.Forms.ToolStripMenuItem contextItemDuplicate;
-        private System.Windows.Forms.ToolStripMenuItem contextItemDelete;
         private System.Windows.Forms.NumericUpDown musicInput;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.PropertyGrid propertyGrid1;
@@ -1053,6 +1117,19 @@
         private System.Windows.Forms.PropertyGrid propertyGrid8;
         private System.Windows.Forms.ToolStripMenuItem bTIViewerToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem insertCourseModelToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem closeToolStripMenuItem;
+        private System.Windows.Forms.ContextMenuStrip routeContext;
+        private System.Windows.Forms.ToolStripMenuItem selectAllInGroupsToolStripMenuItem;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem addObjectToolStripMenuItem;
+        private System.Windows.Forms.TabPage routeGroupTab;
+        private System.Windows.Forms.TabPage checkpointGroupTab;
+        private System.Windows.Forms.PropertyGrid propertyGrid9;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.ListBox chckGroup;
+        private System.Windows.Forms.PropertyGrid propertyGrid10;
+        private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.ListBox routeGroupList;
     }
 }
 

@@ -56,13 +56,72 @@ namespace DouBOLDash
             {"E7F", "kuribo1"},
             {"E80", "pakkun"},
             {"E82", "mash_balloon"},
+            {"106D", "wl_screen1"},
+            {"106F", "wlarrow1"},
             {"1195", "cannon1"},
             {"11A1", "nossie"},
+            {"11A4", "dinotree1"},
+            {"11A5", "swimnossie"},
+            {"11A6", "ptera"},
             {"125D", "dossun1"},
             {"1389", "sanbo1"},
             {"1392", "deserttree1"},
             {"138F", "antlion"},
             {"13ED", "snowrock1"}
+        };
+
+        Dictionary<string, string> objNames = new Dictionary<string, string>()
+        {
+            {"1", "Item Box"},
+            {"A", "Route Controlled Item Box"},
+            {"D4A", "Cataquack"},
+            {"D4B", "Seagull Flock"},
+            {"D4D", "Peach Beach Tree"},
+            {"D4F", "Noki Spectator A"},
+            {"D52", "Pianta Spectator A"},
+            {"D53", "Pianta Spectator B"},
+            {"D54", "Pianta Spectator C"},
+            {"DAF", "Daisy Cruiser Pool"},
+            {"DAE", "Daisy Cruiser Table"},
+            {"E75", "Mario Circuit Tree"},
+            {"E77", "Mario Circuit Flower"},
+            {"E78", "Chain Chomp"},
+            {"E7E", "Luigi Circuit Blimp"},
+            {"E7F", "Goomba"},
+            {"E80", "Piranha Plant (in pipe)"},
+            {"E82", "Mario Circuit Air Balloon"},
+            {"ED9", "Yoshi Circuit Helicopter"},
+            {"FA4", "Mushroom City Traffic Light"},
+            {"106B", "Waluigi Stadium Fire Ring"},
+            {"106D", "Waluigi Stadium Screen"},
+            {"106E", "Waluigi Stadium"},
+            {"106F", "Waluigi Stadium Arrow Sign"},
+            {"1195", "DK Mountain Cannon"},
+            {"1196", "DK Mountain Rock"},
+            {"1198", "DK Mountain Tree"},
+            {"119E", "Water Geyser"},
+            {"11A1", "Dinosaur (Land)"},
+            {"11A4", "Dino Dino Jungle Tree"},
+            {"11A5", "Dinosaur (Water)"},
+            {"11A6", "Dinosaur (Flying)"},
+            {"125D", "Thwomp"},
+            {"125E", "Lavaball"},
+            {"1262", "Fire Ring"},
+            {"1389", "Pokey"},
+            {"138B", "Dry Dry Desert Tornado"},
+            {"138F", "Antlion"},
+            {"1392", "Dry Dry Desert Tree"},
+            {"13ED", "Iceberg"},
+            {"13EE", "Skating Shy Guys"},
+            {"13F0", "Sherbet Land Snowman"},
+            {"13F3", "Sherbet Land Tree Light"}
+        };
+
+        // file names, seperated by colons
+        // this will help finding files if they don't exist for an object
+        Dictionary<string, string> fileNames = new Dictionary<string, string>()
+        {
+            {"106F", "wlarrow1.bck:wlarrow1.bmd:wlarrow1.btk"}
         };
 
         string name, obj;
@@ -75,6 +134,20 @@ namespace DouBOLDash
             }
             else
                 name = "null";
+
+            return name;
+        }
+
+        // returns a user friendly name
+        public string returnName(uint objectID)
+        {
+            obj = objectID.ToString("X");
+            if (objNames.ContainsKey(obj))
+            {
+                name = objNames[obj];
+            }
+            else
+                name = "Unknown";
 
             return name;
         }
