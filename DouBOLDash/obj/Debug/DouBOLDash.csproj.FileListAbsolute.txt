@@ -47,3 +47,16 @@ F:\DouBOL-Dash-master\DouBOL-Dash-master\DouBOLDash\obj\Debug\DouBOLDash.Propert
 F:\DouBOL-Dash-master\DouBOL-Dash-master\DouBOLDash\obj\Debug\DouBOLDash.SettingsWindow.resources
 F:\DouBOL-Dash-master\DouBOL-Dash-master\DouBOLDash\obj\Debug\DouBOLDash.csproj.GenerateResource.Cache
 F:\DouBOL-Dash-master\DouBOL-Dash-master\DouBOLDash\obj\Debug\DouBOLDash.ObjectAddForm.resources
+C:\Users\m\DouBOL-Dash\DouBOLDash\bin\Debug\DouBOLDash.exe.config
+C:\Users\m\DouBOL-Dash\DouBOLDash\obj\Debug\DouBOLDash.exe
+C:\Users\m\DouBOL-Dash\DouBOLDash\obj\Debug\DouBOLDash.pdb
+C:\Users\m\DouBOL-Dash\DouBOLDash\bin\Debug\DouBOLDash.exe
+C:\Users\m\DouBOL-Dash\DouBOLDash\bin\Debug\DouBOLDash.pdb
+C:\Users\m\DouBOL-Dash\DouBOLDash\obj\Debug\DouBOLDash.csprojResolveAssemblyReference.cache
+C:\Users\m\DouBOL-Dash\DouBOLDash\obj\Debug\DouBOLDash.BMDViewer.resources
+C:\Users\m\DouBOL-Dash\DouBOLDash\obj\Debug\DouBOLDash.BTIReader.resources
+C:\Users\m\DouBOL-Dash\DouBOLDash\obj\Debug\DouBOLDash.MainWindow.resources
+C:\Users\m\DouBOL-Dash\DouBOLDash\obj\Debug\DouBOLDash.ObjectAddForm.resources
+C:\Users\m\DouBOL-Dash\DouBOLDash\obj\Debug\DouBOLDash.Properties.Resources.resources
+C:\Users\m\DouBOL-Dash\DouBOLDash\obj\Debug\DouBOLDash.SettingsWindow.resources
+C:\Users\m\DouBOL-Dash\DouBOLDash\obj\Debug\DouBOLDash.csproj.GenerateResource.Cache

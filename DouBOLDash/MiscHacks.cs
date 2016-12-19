@@ -13,10 +13,7 @@
 */
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using OpenTK;
+using System.Windows.Forms;
 
 namespace DouBOLDash
 {
@@ -94,7 +91,7 @@ namespace DouBOLDash
             {"FA4", "Mushroom City Traffic Light"},
             {"106B", "Waluigi Stadium Fire Ring"},
             {"106D", "Waluigi Stadium Screen"},
-            {"106E", "Waluigi Stadium"},
+            {"106E", "Waluigi Stadium Piranha Plant"},
             {"106F", "Waluigi Stadium Arrow Sign"},
             {"1195", "DK Mountain Cannon"},
             {"1196", "DK Mountain Rock"},
@@ -114,8 +111,86 @@ namespace DouBOLDash
             {"13ED", "Iceberg"},
             {"13EE", "Skating Shy Guys"},
             {"13F0", "Sherbet Land Snowman"},
-            {"13F3", "Sherbet Land Tree Light"}
+            {"13F3", "Sherbet Land Tree Light"},
+            {"13F4", "Sherbet Land Snow Drift"}
         };
+
+        // a list of items that need routes to function (or whatnot)
+        // when this is gone through it will find ones that have -1 as the route when it should be > -1
+        List<uint> needRoute = new List<uint>
+        {
+            {10},
+            {3403},
+            {3502},
+            {3599},
+            {3710},
+            {3801},
+            {4001},
+            {4002},
+            {4003},
+            {4005},
+            {4006},
+            {4008},
+            {4009},
+            {4206},
+            {4502},
+            {4517},
+            {4518},
+            {5003},
+            {5102}
+        };
+
+        List<uint> hasNoRoute = new List<uint>();
+
+        // true == has routes that need fixing
+        // false == doesn't have any flaws in routes
+        public bool checkForRoute(List<LevelObject> levelObj)
+        {
+            // go through each object in the current list upon saving
+            foreach (LevelObject listObj in levelObj)
+            {
+                // store the current ID in objectID
+                uint objectID = listObj.objID;
+                // if the route is -1 (because we can suspect that there needs to be a route)
+                if (listObj.routeID == -1)
+                {
+                    // we go through each id in the above list (objects that need a route)
+                    foreach (uint currentID in needRoute)
+                    {
+                        // if the ID on the list is the object id, it needs a route
+                        if (currentID == objectID)
+                        {
+                            // add it to the list of items that need a route
+                            // we will yell at the user later
+                            hasNoRoute.Add(objectID);
+                        }
+                    }
+                }
+            }
+
+            // this means that there are objects that need a route.
+            if (hasNoRoute.Count > 0)
+            {
+                // empty message
+                string message = "";
+                // go through each route
+                foreach (uint route in hasNoRoute)
+                {
+                    // add the route name to a string to be able to insert into message
+                    string objName = returnName(route);
+                    message += route.ToString() + " (" + objName + ")\n";
+                }
+                // display message
+                MessageBox.Show("There are routes missing! Objects that are missing routes: \n" + message + "These need to be corrected in order for the file to save.");
+                // houston we have a problem
+                return true;
+            }
+            else
+            {
+                // no problem
+                return false;
+            }
+        }
 
         // file names, seperated by colons
         // this will help finding files if they don't exist for an object

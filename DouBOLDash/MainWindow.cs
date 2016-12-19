@@ -267,6 +267,7 @@ namespace DouBOLDash
                         bolInfo.fileSize = (int)f.Length;
                     }
 
+                    // here we parse each section in order, which is crucial
                     EnemyRoutes enmRoutes = new EnemyRoutes();
                     enmRoutes.Parse(reader, sec1Count);
                     enmRoute = enmRoutes.returnList();
@@ -314,9 +315,8 @@ namespace DouBOLDash
                     List<PositionObject> posObjs = new List<PositionObject>();
                     posObjs.Add(kart);
 
-                    // if you think we're loading the course model every build you're wrong
-                    // BuildScene will also handle changed objects in the scene, so we don't
-                    // want to load the same course model again. waste of time.
+                    // minimap BTI to load
+                    // loads the BTI, converts to bitmap, and loads it into picture box
                     string bti_path = Properties.Settings.Default.curFile.Replace("course", "map");
 
                     if (File.Exists(Properties.Settings.Default.curDir + "\\" + bti_path + ".bti"))
@@ -331,6 +331,12 @@ namespace DouBOLDash
                         MessageBox.Show("The minimap file (" + bti_path + ".bti) doesn't exist.");
 
 
+                    // generate the list that the course model will be rendered in
+                    // try to find the course model in the same folder the BLO was opened in
+                    // if it's not there, show an error andset it to null to avoid crashing
+                    // if you think we're loading the course model every build you're wrong
+                    // BuildScene will also handle changed objects in the scene, so we don't
+                    // want to load the same course model again. waste of time.
                     courseList = GL.GenLists(1);
 
                     if (Properties.Settings.Default.bmdEnabled != false)
@@ -365,6 +371,7 @@ namespace DouBOLDash
         {
             foreach (BOLInformation bolEntry in bolInf)
             {
+                // set the BOL information tab data
                 musicID = bolEntry.musicID;
                 lapCount = bolEntry.numLaps;
 
@@ -377,6 +384,7 @@ namespace DouBOLDash
                 musicInput.Value = musicID;
             }
 
+            // these don't need special functions yet
             foreach(CheckpointGroupObject objEntry in chkGRP)
             {
                 chckGroup.Items.Add(objEntry);
@@ -386,7 +394,8 @@ namespace DouBOLDash
             {
                 routeGroupList.Items.Add(routeSetup);
             }
-
+            
+            // after filling the lists with data we call functions that update the scene
             UpdateEnemyPoints(false);
             UpdateRoutePoints(false);
             UpdateCheckpoints(false);
@@ -420,6 +429,7 @@ namespace DouBOLDash
 
         private void glControl1_Resize(object sender, EventArgs e)
         {
+            // updates the scene upon window resize (which also resizes the GL)
             glControl1.MakeCurrent();
 
             UpdateViewport();
@@ -427,6 +437,7 @@ namespace DouBOLDash
 
         private void glControl1_MouseMove(object sender, MouseEventArgs e)
         {
+            // moves the camera around the scene
             float xdelta = (float)(e.X - m_LastMouseMove.X);
             float ydelta = (float)(e.Y - m_LastMouseMove.Y);
 
@@ -483,6 +494,7 @@ namespace DouBOLDash
 
         private void glControl1_KeyDown(object sender, KeyEventArgs e)
         {
+            // all of the keyboard shortcuts
             if (e.KeyCode == Keys.D1)
             {
                 if (Properties.Settings.Default.isWireframe == true)
@@ -575,6 +587,7 @@ namespace DouBOLDash
 
         public static void changeGLRender(bool isWireframe)
         {
+            // changes the GL render to wireframe or fill
             if (isWireframe)
                 GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Line);
             else
@@ -586,6 +599,7 @@ namespace DouBOLDash
 
         public static void refreshGL()
         {
+            // refreshes the GL scene
             MainWindow main = new MainWindow();
             main.glControl1.Refresh();
         }
@@ -979,6 +993,8 @@ namespace DouBOLDash
             camobj.Clear(); // camera list
             resObj.Clear(); // respawn list
 
+            MiscHacks misc = new MiscHacks();
+
             // here we set the information that goes into the reader (mostly caluclated crap though)
             foreach (BOLInformation bolInfo in bolInf)
             {
@@ -1069,6 +1085,11 @@ namespace DouBOLDash
             {
                 lvlobj.Add(lvlObj);
             }
+
+            bool routeNotGood = misc.checkForRoute(lvlobj);
+
+            if (routeNotGood)
+                return;
 
             foreach (KartPointObject kpObj in kartPointList.Items)
             {
