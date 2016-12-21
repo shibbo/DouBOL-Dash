@@ -74,8 +74,6 @@ namespace DouBOLDash
 
                 // 3 bytes => 24-bit integer
                 var value = values[0] + (values[1] << 8) + (values[2] << 16);
-
-                Console.WriteLine("Value: " + value);
             }
         }
     }
