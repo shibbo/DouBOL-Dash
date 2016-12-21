@@ -58,6 +58,7 @@ namespace DouBOLDash
             this.openBCOToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.selectFacesWithCollisionTypeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -204,7 +205,8 @@ namespace DouBOLDash
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.selectFacesWithCollisionTypeToolStripMenuItem});
+            this.selectFacesWithCollisionTypeToolStripMenuItem,
+            this.settingsToolStripMenuItem});
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
             this.toolStripMenuItem1.Size = new System.Drawing.Size(62, 20);
             this.toolStripMenuItem1.Text = "Do Stuff";
@@ -216,6 +218,13 @@ namespace DouBOLDash
             this.selectFacesWithCollisionTypeToolStripMenuItem.Text = "Select Faces With Collision Type";
             this.selectFacesWithCollisionTypeToolStripMenuItem.Click += new System.EventHandler(this.selectFacesWithCollisionTypeToolStripMenuItem_Click);
             // 
+            // settingsToolStripMenuItem
+            // 
+            this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(242, 22);
+            this.settingsToolStripMenuItem.Text = "Settings";
+            this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
+            // 
             // BCOEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -224,9 +233,10 @@ namespace DouBOLDash
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.glControl1);
             this.Controls.Add(this.menuStrip1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "BCOEditor";
-            this.Text = "bco viewer / editor whatever";
+            this.Text = "BCO Manager";
             this.panel1.ResumeLayout(false);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
@@ -255,5 +265,6 @@ namespace DouBOLDash
         private System.Windows.Forms.PropertyGrid propertyGrid2;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem selectFacesWithCollisionTypeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
     }
 }

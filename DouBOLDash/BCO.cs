@@ -38,17 +38,16 @@ namespace DouBOLDash
             bcoInfo.unk5 = reader.ReadUInt16();
             bcoInfo.unk6 = reader.ReadUInt16();
 
-            bcoInfo.unkOffs1 = reader.ReadUInt32();
-            bcoInfo.unkOffs2 = reader.ReadUInt32();
+            bcoInfo.unkOffs1 = reader.ReadUInt32(); // always the same value. probs not an offset
+            bcoInfo.unkOffs2 = reader.ReadUInt32(); // always the same value. probs not an offset
 
-            bcoInfo.unk7 = reader.ReadUInt16();
+            bcoInfo.unk7 = reader.ReadUInt16(); // last section count
             bcoInfo.unk8 = reader.ReadUInt16();
-            bcoInfo.unk9 = reader.ReadUInt16();
-            bcoInfo.unk10 = reader.ReadUInt16();
+            bcoInfo.firstSectionOffs = reader.ReadUInt32(); // unknown1
 
             bcoInfo.triOffs = reader.ReadUInt32();
             bcoInfo.vertOffs = reader.ReadUInt32();
-            bcoInfo.unkOffs3 = reader.ReadUInt32();
+            bcoInfo.unkOffs3 = reader.ReadUInt32(); // unknown2
 
             bcoList.Add(bcoInfo);
         }
@@ -56,6 +55,40 @@ namespace DouBOLDash
         public List<BCOInformation> returnBCOInf()
         {
             return bcoList;
+        }
+    }
+    
+    class BCOUnknown0
+    {
+        byte length;
+        byte[] values;
+        uint index;
+
+        public void Parse(EndianBinaryReader reader, uint count)
+        {
+            for (uint i = 0; i < count; i++)
+            {
+                length = reader.ReadByte();
+                values = reader.ReadBytes(3);
+                index = reader.ReadUInt32();
+
+                // 3 bytes => 24-bit integer
+                var value = values[0] + (values[1] << 8) + (values[2] << 16);
+
+                Console.WriteLine("Value: " + value);
+            }
+        }
+    }
+
+    class BCOUnknown1
+    {
+        int unk1;
+        public void Parse(EndianBinaryReader reader, uint count)
+        {
+            for (uint i = 0; i < count; i++)
+            {
+                unk1 = reader.ReadInt16();
+            }
         }
     }
 
@@ -121,9 +154,18 @@ namespace DouBOLDash
 
                 tri.unk1 = reader.ReadSingle();
 
-                reader.ReadBytes(6);
+                tri.unk2 = reader.ReadInt16();
+                tri.unk3 = reader.ReadInt16();
+                tri.unk4 = reader.ReadInt16();
+
                 tri.collisionFlag = reader.ReadInt16();
-                reader.ReadBytes(0xC);
+
+                tri.unk5 = reader.ReadInt16();
+                tri.unk6 = reader.ReadInt16();
+                tri.unk7 = reader.ReadInt16();
+                tri.unk8 = reader.ReadInt16();
+
+                reader.ReadBytes(0x04); // probably padding
 
                 tri.colStr = tri.collisionFlag.ToString("X4");
 
@@ -137,6 +179,22 @@ namespace DouBOLDash
         }
     }
 
+    class BCOUnknown2
+    {
+        byte id1, id2;
+        short unk1;
+        uint unk2, unk3;
+
+        public void Parse(EndianBinaryReader reader, uint count)
+        {
+            id1 = reader.ReadByte();
+            id2 = reader.ReadByte();
+            unk1 = reader.ReadInt16();
+            unk2 = reader.ReadUInt32();
+            unk3 = reader.ReadUInt32();
+        }
+    }
+
 
     public class BCOInformation
     {
@@ -144,7 +202,7 @@ namespace DouBOLDash
         public ushort unk1, unk2, unk3, unk4, unk5, unk6;
         public uint unkOffs1, unkOffs2;
         public ushort unk7, unk8, unk9, unk10, unk11;
-        public uint triOffs, vertOffs, unkOffs3;
+        public uint triOffs, vertOffs, unkOffs3, firstSectionOffs;
     }
 
     public class BCOVert
@@ -162,12 +220,69 @@ namespace DouBOLDash
         public float unk1;
         public short collisionFlag;
         public string colStr;
+        public short unk2, unk3, unk4, unk5, unk6, unk7, unk8;
 
-        [DisplayName("Collision Flag"), Category("Settings"), Description("The type of collision this triangle has.")]
+        [DisplayName("Collision Flags"), Category("Collision Flags"), Description("The type of collision this triangle has.")]
         public string CollisionFlag
         {
             get { return colStr; }
             set { colStr = value; }
+        }
+
+        [DisplayName("Unknown Index 1"), Category("Indexes"), Description("An unknown index.")]
+        public short UnknownIndex1
+        {
+            get { return unk6; }
+            set { unk6 = value; }
+        }
+
+        [DisplayName("Unknown Index 2"), Category("Indexes"), Description("An unknown index.")]
+        public short UnknownIndex2
+        {
+            get { return unk7; }
+            set { unk7 = value; }
+        }
+
+        [DisplayName("Unknown Index 3"), Category("Indexes"), Description("An unknown index.")]
+        public short UnknownIndex3
+        {
+            get { return unk8; }
+            set { unk8 = value; }
+        }
+
+        [DisplayName("Unknown Short 1"), Category("Unknown"), Description("An unknown short.")]
+        public short UnknownValue1
+        {
+            get { return unk2; }
+            set { unk2 = value; }
+        }
+
+        [DisplayName("Unknown Short 2"), Category("Unknown"), Description("An unknown short.")]
+        public short UnknownValue2
+        {
+            get { return unk3; }
+            set { unk3 = value; }
+        }
+
+        [DisplayName("Unknown Short 3"), Category("Unknown"), Description("An unknown short.")]
+        public short UnknownValue3
+        {
+            get { return unk4; }
+            set { unk4 = value; }
+        }
+
+        [DisplayName("Unknown Short 4"), Category("Unknown"), Description("An unknown short.")]
+        public short UnknownShort4
+        {
+            get { return unk5; }
+            set { unk5 = value; }
+        }
+
+        [DisplayName("Unknown Float 1"), Category("Unknown"), Description("An unknown float.")]
+        public float UnknownFloat1
+        {
+            get { return unk1; }
+            set { unk1 = value; }
         }
     }
 }

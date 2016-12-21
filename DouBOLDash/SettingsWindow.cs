@@ -62,6 +62,16 @@ namespace DouBOLDash
                 showRespawns.Checked = true;
             else
                 showRespawns.Checked = false;
+
+            if (Properties.Settings.Default.showVerts == true)
+                showVerts.Checked = true;
+            else
+                showVerts.Checked = false;
+
+            if (Properties.Settings.Default.showTris == true)
+                showTris.Checked = true;
+            else
+                showTris.Checked = false;
         }
 
         private void enableWireframe_CheckedChanged(object sender, EventArgs e)
@@ -226,6 +236,36 @@ namespace DouBOLDash
                 Properties.Settings.Default.showCameras = false;
                 Properties.Settings.Default.Save();
                 MainWindow.refreshGL();
+            }
+        }
+
+        private void showVerts_CheckedChanged(object sender, EventArgs e)
+        {
+            if (showVerts.Checked)
+            {
+                Properties.Settings.Default.showVerts = true;
+                Properties.Settings.Default.Save();
+                //MainWindow.refreshGL();
+            }
+            else
+            {
+                Properties.Settings.Default.showVerts = false;
+                Properties.Settings.Default.Save();
+                //MainWindow.refreshGL();
+            }
+        }
+
+        private void showTris_CheckedChanged(object sender, EventArgs e)
+        {
+            if (showTris.Checked)
+            {
+                Properties.Settings.Default.showTris = true;
+                Properties.Settings.Default.Save();
+            }
+            else
+            {
+                Properties.Settings.Default.showTris = false;
+                Properties.Settings.Default.Save();
             }
         }
     }

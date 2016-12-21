@@ -217,13 +217,25 @@ namespace DouBOLDash.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool showOnlyVerts {
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool showVerts {
             get {
-                return ((bool)(this["showOnlyVerts"]));
+                return ((bool)(this["showVerts"]));
             }
             set {
-                this["showOnlyVerts"] = value;
+                this["showVerts"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool showTris {
+            get {
+                return ((bool)(this["showTris"]));
+            }
+            set {
+                this["showTris"] = value;
             }
         }
     }

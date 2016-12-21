@@ -53,11 +53,17 @@ namespace DouBOLDash
             this.showRespawns = new System.Windows.Forms.CheckBox();
             this.showAreas = new System.Windows.Forms.CheckBox();
             this.showCameras = new System.Windows.Forms.CheckBox();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.showVerts = new System.Windows.Forms.CheckBox();
+            this.showTris = new System.Windows.Forms.CheckBox();
+            this.groupBox1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // buttonOK
             // 
-            this.buttonOK.Location = new System.Drawing.Point(142, 218);
+            this.buttonOK.Location = new System.Drawing.Point(273, 332);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new System.Drawing.Size(75, 23);
             this.buttonOK.TabIndex = 0;
@@ -68,7 +74,7 @@ namespace DouBOLDash
             // enableWireframe
             // 
             this.enableWireframe.AutoSize = true;
-            this.enableWireframe.Location = new System.Drawing.Point(8, 12);
+            this.enableWireframe.Location = new System.Drawing.Point(6, 19);
             this.enableWireframe.Name = "enableWireframe";
             this.enableWireframe.Size = new System.Drawing.Size(110, 17);
             this.enableWireframe.TabIndex = 1;
@@ -79,7 +85,7 @@ namespace DouBOLDash
             // checkBox1
             // 
             this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(8, 35);
+            this.checkBox1.Location = new System.Drawing.Point(6, 42);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(75, 17);
             this.checkBox1.TabIndex = 2;
@@ -90,7 +96,7 @@ namespace DouBOLDash
             // showEnemyRoutes
             // 
             this.showEnemyRoutes.AutoSize = true;
-            this.showEnemyRoutes.Location = new System.Drawing.Point(8, 57);
+            this.showEnemyRoutes.Location = new System.Drawing.Point(6, 64);
             this.showEnemyRoutes.Name = "showEnemyRoutes";
             this.showEnemyRoutes.Size = new System.Drawing.Size(125, 17);
             this.showEnemyRoutes.TabIndex = 3;
@@ -101,7 +107,7 @@ namespace DouBOLDash
             // showPaths
             // 
             this.showPaths.AutoSize = true;
-            this.showPaths.Location = new System.Drawing.Point(8, 80);
+            this.showPaths.Location = new System.Drawing.Point(6, 87);
             this.showPaths.Name = "showPaths";
             this.showPaths.Size = new System.Drawing.Size(83, 17);
             this.showPaths.TabIndex = 4;
@@ -112,7 +118,7 @@ namespace DouBOLDash
             // showCheckpoints
             // 
             this.showCheckpoints.AutoSize = true;
-            this.showCheckpoints.Location = new System.Drawing.Point(8, 103);
+            this.showCheckpoints.Location = new System.Drawing.Point(6, 110);
             this.showCheckpoints.Name = "showCheckpoints";
             this.showCheckpoints.Size = new System.Drawing.Size(115, 17);
             this.showCheckpoints.TabIndex = 5;
@@ -123,7 +129,7 @@ namespace DouBOLDash
             // showObjects
             // 
             this.showObjects.AutoSize = true;
-            this.showObjects.Location = new System.Drawing.Point(8, 126);
+            this.showObjects.Location = new System.Drawing.Point(6, 133);
             this.showObjects.Name = "showObjects";
             this.showObjects.Size = new System.Drawing.Size(92, 17);
             this.showObjects.TabIndex = 6;
@@ -134,7 +140,7 @@ namespace DouBOLDash
             // showKartPos
             // 
             this.showKartPos.AutoSize = true;
-            this.showKartPos.Location = new System.Drawing.Point(8, 149);
+            this.showKartPos.Location = new System.Drawing.Point(6, 156);
             this.showKartPos.Name = "showKartPos";
             this.showKartPos.Size = new System.Drawing.Size(137, 17);
             this.showKartPos.TabIndex = 7;
@@ -145,7 +151,7 @@ namespace DouBOLDash
             // showRespawns
             // 
             this.showRespawns.AutoSize = true;
-            this.showRespawns.Location = new System.Drawing.Point(8, 172);
+            this.showRespawns.Location = new System.Drawing.Point(6, 179);
             this.showRespawns.Name = "showRespawns";
             this.showRespawns.Size = new System.Drawing.Size(106, 17);
             this.showRespawns.TabIndex = 8;
@@ -156,7 +162,7 @@ namespace DouBOLDash
             // showAreas
             // 
             this.showAreas.AutoSize = true;
-            this.showAreas.Location = new System.Drawing.Point(8, 195);
+            this.showAreas.Location = new System.Drawing.Point(6, 202);
             this.showAreas.Name = "showAreas";
             this.showAreas.Size = new System.Drawing.Size(83, 17);
             this.showAreas.TabIndex = 9;
@@ -167,7 +173,7 @@ namespace DouBOLDash
             // showCameras
             // 
             this.showCameras.AutoSize = true;
-            this.showCameras.Location = new System.Drawing.Point(8, 218);
+            this.showCameras.Location = new System.Drawing.Point(6, 225);
             this.showCameras.Name = "showCameras";
             this.showCameras.Size = new System.Drawing.Size(97, 17);
             this.showCameras.TabIndex = 10;
@@ -175,27 +181,74 @@ namespace DouBOLDash
             this.showCameras.UseVisualStyleBackColor = true;
             this.showCameras.CheckedChanged += new System.EventHandler(this.showCameras_CheckedChanged);
             // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.checkBox1);
+            this.groupBox1.Controls.Add(this.showCameras);
+            this.groupBox1.Controls.Add(this.showAreas);
+            this.groupBox1.Controls.Add(this.enableWireframe);
+            this.groupBox1.Controls.Add(this.showRespawns);
+            this.groupBox1.Controls.Add(this.showEnemyRoutes);
+            this.groupBox1.Controls.Add(this.showKartPos);
+            this.groupBox1.Controls.Add(this.showPaths);
+            this.groupBox1.Controls.Add(this.showObjects);
+            this.groupBox1.Controls.Add(this.showCheckpoints);
+            this.groupBox1.Location = new System.Drawing.Point(3, 5);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(153, 321);
+            this.groupBox1.TabIndex = 11;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Course Rendering";
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.showTris);
+            this.groupBox2.Controls.Add(this.showVerts);
+            this.groupBox2.Location = new System.Drawing.Point(162, 5);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(186, 321);
+            this.groupBox2.TabIndex = 12;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Collision Rendering";
+            // 
+            // showVerts
+            // 
+            this.showVerts.AutoSize = true;
+            this.showVerts.Location = new System.Drawing.Point(7, 20);
+            this.showVerts.Name = "showVerts";
+            this.showVerts.Size = new System.Drawing.Size(96, 17);
+            this.showVerts.TabIndex = 0;
+            this.showVerts.Text = "Show Verticies";
+            this.showVerts.UseVisualStyleBackColor = true;
+            this.showVerts.CheckedChanged += new System.EventHandler(this.showVerts_CheckedChanged);
+            // 
+            // showTris
+            // 
+            this.showTris.AutoSize = true;
+            this.showTris.Location = new System.Drawing.Point(6, 42);
+            this.showTris.Name = "showTris";
+            this.showTris.Size = new System.Drawing.Size(99, 17);
+            this.showTris.TabIndex = 1;
+            this.showTris.Text = "Show Triangles";
+            this.showTris.UseVisualStyleBackColor = true;
+            this.showTris.CheckedChanged += new System.EventHandler(this.showTris_CheckedChanged);
+            // 
             // SettingsWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(227, 254);
-            this.Controls.Add(this.showCameras);
-            this.Controls.Add(this.showAreas);
-            this.Controls.Add(this.showRespawns);
-            this.Controls.Add(this.showKartPos);
-            this.Controls.Add(this.showObjects);
-            this.Controls.Add(this.showCheckpoints);
-            this.Controls.Add(this.showPaths);
-            this.Controls.Add(this.showEnemyRoutes);
-            this.Controls.Add(this.checkBox1);
-            this.Controls.Add(this.enableWireframe);
+            this.ClientSize = new System.Drawing.Size(357, 357);
+            this.Controls.Add(this.groupBox2);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.buttonOK);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "SettingsWindow";
             this.Text = "DouBOL Settings";
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -212,5 +265,9 @@ namespace DouBOLDash
         private System.Windows.Forms.CheckBox showRespawns;
         private System.Windows.Forms.CheckBox showAreas;
         private System.Windows.Forms.CheckBox showCameras;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.CheckBox showTris;
+        private System.Windows.Forms.CheckBox showVerts;
     }
 }

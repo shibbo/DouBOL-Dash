@@ -38,3 +38,5 @@ DouBOL Dash is licensed under GNU. It is a free program for all users to use. Un
 
 
 tl;dr if you take this and make money off of it you will never see the light of day ever again
+
+- shibboleet

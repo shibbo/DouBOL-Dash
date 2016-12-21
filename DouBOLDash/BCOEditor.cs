@@ -143,9 +143,14 @@ namespace DouBOLDash
 
             GL.Disable(EnableCap.Texture2D);
 
-            GL.CallList(vertList);
-            GL.CallList(triList);
+            if (Properties.Settings.Default.showVerts == true)
+                GL.CallList(vertList);
+            if (Properties.Settings.Default.showTris == true)
+                GL.CallList(triList);
+
             GL.CallList(selectedList);
+
+            GL.LineWidth(1f); // because the other routines screw this up
 
             GL.Begin(BeginMode.Lines);
             GL.Color4(1f, 0f, 0f, 1f);
@@ -188,17 +193,28 @@ namespace DouBOLDash
                         count = count / 36;
                         uint count2 = bcoInformation.vertOffs - bcoInformation.triOffs;
                         count2 = count2 / 36;
+                        uint count3 = bcoInformation.firstSectionOffs - 0x2C;
+                        count3 = count3 / 8;
+                        uint count4 = bcoInformation.triOffs - bcoInformation.firstSectionOffs;
+                        count4 = count4 / 2;
 
-                        reader.BaseStream.Seek(bcoInformation.triOffs, 0);
+                        BCOUnknown0 bcoUnk0 = new BCOUnknown0();
+                        bcoUnk0.Parse(reader, count3);
+
+                        BCOUnknown1 bcoUnk1 = new BCOUnknown1();
+                        bcoUnk1.Parse(reader, count4);
+
                         BCOTris bcoTris = new BCOTris();
                         bcoTris.Parse(reader, count2);
                         bcoTriangles = bcoTris.returnTris();
 
-                        reader.BaseStream.Seek(bcoInformation.vertOffs, 0);
                         BCOVerts bcoVerts = new BCOVerts();
                         bcoVerts.Parse(reader, count);
                         bcoListVerts = bcoVerts.returnBCOVerts();
                         vecList = bcoVerts.returnVectors();
+
+                        BCOUnknown2 bcoUnk2 = new BCOUnknown2();
+                        bcoUnk2.Parse(reader, bcoInformation.unk7);
                     }
 
                     // first we draw verts
@@ -220,8 +236,6 @@ namespace DouBOLDash
 
                     int index1, index2, index3;
                     Vector3 set1, set2, set3;
-
-                    Console.WriteLine(vecList.Count);
 
                     triList = GL.GenLists(1);
                     GL.NewList(triList, ListMode.Compile);
@@ -292,23 +306,25 @@ namespace DouBOLDash
                 selectedList = GL.GenLists(1);
                 GL.NewList(selectedList, ListMode.Compile);
 
-                GL.PushMatrix();
-                GL.Translate(set1.X, set1.Y, set1.Z);
-                GL.Scale(2f, 2f, 2f);
-                DrawCube(1f, 1f, 1f, false, false);
-                GL.PopMatrix();
+                GL.LineWidth(5f);
 
-                GL.PushMatrix();
-                GL.Translate(set2.X, set2.Y, set2.Z);
-                GL.Scale(2f, 2f, 2f);
-                DrawCube(1f, 1f, 1f, false, false);
-                GL.PopMatrix();
+                GL.Begin(BeginMode.Lines);
+                GL.Color4(1.000f, 0.255f, 0.212f, 1f);
+                GL.Vertex3(set1.X, set1.Y, set1.Z);
+                GL.Vertex3(set2.X, set2.Y, set2.Z);
+                GL.End();
 
-                GL.PushMatrix();
-                GL.Translate(set3.X, set3.Y, set3.Z);
-                GL.Scale(2f, 2f, 2f);
-                DrawCube(1f, 1f, 1f, false, false);
-                GL.PopMatrix();
+                GL.Begin(BeginMode.Lines);
+                GL.Color4(1.000f, 0.255f, 0.212f, 1f);
+                GL.Vertex3(set2.X, set2.Y, set2.Z);
+                GL.Vertex3(set3.X, set3.Y, set3.Z);
+                GL.End();
+
+                GL.Begin(BeginMode.Lines);
+                GL.Color4(1.000f, 0.255f, 0.212f, 1f);
+                GL.Vertex3(set3.X, set3.Y, set3.Z);
+                GL.Vertex3(set1.X, set1.Y, set1.Z);
+                GL.End();
 
                 GL.EndList();
 
@@ -335,41 +351,22 @@ namespace DouBOLDash
                         set2 = vecList[tri.index2];
                         set3 = vecList[tri.index3];
 
-                        GL.PushMatrix();
-                        GL.Translate(set1.X, set1.Y, set1.Z);
-                        GL.Scale(2f, 2f, 2f);
-                        DrawCube(1f, 1f, 1f, false, false);
-                        GL.PopMatrix();
-
-                        GL.PushMatrix();
-                        GL.Translate(set2.X, set2.Y, set2.Z);
-                        GL.Scale(2f, 2f, 2f);
-                        DrawCube(1f, 1f, 1f, false, false);
-                        GL.PopMatrix();
+                        GL.LineWidth(5f);
 
                         GL.Begin(BeginMode.Lines);
                         GL.Color4(1.000f, 0.255f, 0.212f, 1f);
-                        GL.LineWidth(2f);
                         GL.Vertex3(set1.X, set1.Y, set1.Z);
                         GL.Vertex3(set2.X, set2.Y, set2.Z);
                         GL.End();
 
-                        GL.PushMatrix();
-                        GL.Translate(set3.X, set3.Y, set3.Z);
-                        GL.Scale(2f, 2f, 2f);
-                        DrawCube(1f, 1f, 1f, false, false);
-                        GL.PopMatrix();
-
                         GL.Begin(BeginMode.Lines);
                         GL.Color4(1.000f, 0.255f, 0.212f, 1f);
-                        GL.LineWidth(2f);
                         GL.Vertex3(set2.X, set2.Y, set2.Z);
                         GL.Vertex3(set3.X, set3.Y, set3.Z);
                         GL.End();
 
                         GL.Begin(BeginMode.Lines);
                         GL.Color4(1.000f, 0.255f, 0.212f, 1f);
-                        GL.LineWidth(2f);
                         GL.Vertex3(set3.X, set3.Y, set3.Z);
                         GL.Vertex3(set1.X, set1.Y, set1.Z);
                         GL.End();
@@ -379,6 +376,17 @@ namespace DouBOLDash
 
                 glControl1.Update();
             }
+        }
+
+        private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SettingsWindow settings = new SettingsWindow();
+            settings.Show();
+        }
+
+        public void updateGL()
+        {
+            glControl1.Refresh();
         }
 
         public static void DrawCube(float color1, float color2, float color3, bool showAxis, bool useFill, RenderMode rnd = RenderMode.Opaque)

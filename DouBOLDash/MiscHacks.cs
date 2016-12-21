@@ -232,13 +232,16 @@ namespace DouBOLDash
         Dictionary<int, Color> colToColor = new Dictionary<int, Color>
         {
             {0x0000, Color.Brown}, // Sand
+            {0x0001, Color.RosyBrown}, // Offroad mud
             {0x0100, Color.DarkRed}, // Road
+            {0x0101, Color.SaddleBrown}, // Bridge / Wood
             {0x0102, Color.Silver}, // Cage Road
             {0x0103, Color.Brown}, // Dirt Road
-            {0x0101, Color.SaddleBrown}, // Bridge / Wood
             {0x0104, Color.PaleVioletRed}, // Carpet
             {0x0300, Color.DarkGreen}, // Grass
             {0x0400, Color.LightSkyBlue}, // Slippery Ice
+            {0x0504, Color.MediumPurple}, // Out of bounds 1
+            {0x0505, Color.Purple}, // Out of bounds 2
             {0x0800, Color.LightGreen}, // Speed Boost
             {0x0C00, Color.SandyBrown}, // Sand (Offroad)
             {0x0F01, Color.Orange}, // Lava (might just be like water?)
