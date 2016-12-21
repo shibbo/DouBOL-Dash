@@ -59,6 +59,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BCO.cs" />
+    <Compile Include="BCOEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BCOEditor.Designer.cs">
+      <DependentUpon>BCOEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="BigEndian.cs" />
     <Compile Include="Bmd.cs" />
     <Compile Include="BmdRenderer.cs" />
@@ -103,6 +110,9 @@
     </Compile>
     <Compile Include="System\IO\EndianBinaryReader.cs" />
     <Compile Include="System\IO\EndianBinaryWriter.cs" />
+    <EmbeddedResource Include="BCOEditor.resx">
+      <DependentUpon>BCOEditor.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="BMDViewer.resx">
       <DependentUpon>BMDViewer.cs</DependentUpon>
     </EmbeddedResource>

@@ -107,6 +107,12 @@
             this.selectAllInGroupsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.addObjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.enemyRouteContext = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.insertRouteHereToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.insertRouteAtBottomToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.duplicatePointToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteRoutePointToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.bCOToolToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -138,6 +144,7 @@
             this.respawnTab.SuspendLayout();
             this.routeContext.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
+            this.enemyRouteContext.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -165,6 +172,7 @@
             // 
             // openToolStripMenuItem
             // 
+            this.openToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("openToolStripMenuItem.Image")));
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
             this.openToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
             this.openToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
@@ -174,6 +182,7 @@
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Enabled = false;
+            this.saveToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("saveToolStripMenuItem.Image")));
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
             this.saveToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
             this.saveToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
@@ -183,6 +192,7 @@
             // saveAsToolStripMenuItem
             // 
             this.saveAsToolStripMenuItem.Enabled = false;
+            this.saveAsToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("saveAsToolStripMenuItem.Image")));
             this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
             this.saveAsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.S)));
@@ -192,6 +202,7 @@
             // 
             // closeToolStripMenuItem
             // 
+            this.closeToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("closeToolStripMenuItem.Image")));
             this.closeToolStripMenuItem.Name = "closeToolStripMenuItem";
             this.closeToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
             this.closeToolStripMenuItem.Text = "Close";
@@ -202,13 +213,15 @@
             this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.BMDViewerToolStripMenuItem,
             this.bTIViewerToolStripMenuItem,
-            this.insertCourseModelToolStripMenuItem});
+            this.insertCourseModelToolStripMenuItem,
+            this.bCOToolToolStripMenuItem});
             this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
             this.toolsToolStripMenuItem.Size = new System.Drawing.Size(47, 20);
             this.toolsToolStripMenuItem.Text = "Tools";
             // 
             // BMDViewerToolStripMenuItem
             // 
+            this.BMDViewerToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("BMDViewerToolStripMenuItem.Image")));
             this.BMDViewerToolStripMenuItem.Name = "BMDViewerToolStripMenuItem";
             this.BMDViewerToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.BMDViewerToolStripMenuItem.Text = "BMD Viewer";
@@ -216,6 +229,7 @@
             // 
             // bTIViewerToolStripMenuItem
             // 
+            this.bTIViewerToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("bTIViewerToolStripMenuItem.Image")));
             this.bTIViewerToolStripMenuItem.Name = "bTIViewerToolStripMenuItem";
             this.bTIViewerToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.bTIViewerToolStripMenuItem.Text = "BTI Viewer";
@@ -223,6 +237,7 @@
             // 
             // insertCourseModelToolStripMenuItem
             // 
+            this.insertCourseModelToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("insertCourseModelToolStripMenuItem.Image")));
             this.insertCourseModelToolStripMenuItem.Name = "insertCourseModelToolStripMenuItem";
             this.insertCourseModelToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.insertCourseModelToolStripMenuItem.Text = "Insert Course Model";
@@ -239,6 +254,7 @@
             // 
             // settingsToolStripMenuItem
             // 
+            this.settingsToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("settingsToolStripMenuItem.Image")));
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
             this.settingsToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.settingsToolStripMenuItem.Text = "Settings";
@@ -246,6 +262,7 @@
             // 
             // chooseFolderToolStripMenuItem
             // 
+            this.chooseFolderToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("chooseFolderToolStripMenuItem.Image")));
             this.chooseFolderToolStripMenuItem.Name = "chooseFolderToolStripMenuItem";
             this.chooseFolderToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.chooseFolderToolStripMenuItem.Text = "Choose folder";
@@ -348,7 +365,7 @@
             // bolTab
             // 
             this.bolTab.Controls.Add(this.panel3);
-            this.bolTab.ImageKey = "info.png";
+            this.bolTab.ImageKey = "blo informations.png";
             this.bolTab.Location = new System.Drawing.Point(4, 23);
             this.bolTab.Name = "bolTab";
             this.bolTab.Padding = new System.Windows.Forms.Padding(3);
@@ -577,7 +594,7 @@
             // 
             this.enemyPointsTab.Controls.Add(this.propertyGrid6);
             this.enemyPointsTab.Controls.Add(this.enemyRouteList);
-            this.enemyPointsTab.ImageKey = "enemyitemp.png";
+            this.enemyPointsTab.ImageKey = "enemy routes.png";
             this.enemyPointsTab.Location = new System.Drawing.Point(4, 23);
             this.enemyPointsTab.Name = "enemyPointsTab";
             this.enemyPointsTab.Padding = new System.Windows.Forms.Padding(3);
@@ -606,17 +623,18 @@
             this.enemyRouteList.Size = new System.Drawing.Size(356, 225);
             this.enemyRouteList.TabIndex = 0;
             this.enemyRouteList.SelectedIndexChanged += new System.EventHandler(this.enemyRouteList_SelectedIndexChanged);
+            this.enemyRouteList.MouseDown += new System.Windows.Forms.MouseEventHandler(this.enemyRouteList_MouseDown);
             // 
             // checkpointGroupTab
             // 
             this.checkpointGroupTab.Controls.Add(this.propertyGrid9);
             this.checkpointGroupTab.Controls.Add(this.groupBox3);
+            this.checkpointGroupTab.ImageKey = "checkpoints groups.png";
             this.checkpointGroupTab.Location = new System.Drawing.Point(4, 23);
             this.checkpointGroupTab.Name = "checkpointGroupTab";
             this.checkpointGroupTab.Padding = new System.Windows.Forms.Padding(3);
             this.checkpointGroupTab.Size = new System.Drawing.Size(362, 578);
             this.checkpointGroupTab.TabIndex = 10;
-            this.checkpointGroupTab.Text = "tabPage11";
             this.checkpointGroupTab.UseVisualStyleBackColor = true;
             // 
             // propertyGrid9
@@ -652,7 +670,7 @@
             // checkpointTab
             // 
             this.checkpointTab.Controls.Add(this.groupBox4);
-            this.checkpointTab.ImageKey = "cp.png";
+            this.checkpointTab.ImageKey = "checkpoints.png";
             this.checkpointTab.Location = new System.Drawing.Point(4, 23);
             this.checkpointTab.Name = "checkpointTab";
             this.checkpointTab.Padding = new System.Windows.Forms.Padding(3);
@@ -698,12 +716,12 @@
             // 
             this.routeGroupTab.Controls.Add(this.propertyGrid10);
             this.routeGroupTab.Controls.Add(this.groupBox5);
+            this.routeGroupTab.ImageKey = "route groups.png";
             this.routeGroupTab.Location = new System.Drawing.Point(4, 23);
             this.routeGroupTab.Name = "routeGroupTab";
             this.routeGroupTab.Padding = new System.Windows.Forms.Padding(3);
             this.routeGroupTab.Size = new System.Drawing.Size(362, 578);
             this.routeGroupTab.TabIndex = 9;
-            this.routeGroupTab.Text = "tabPage10";
             this.routeGroupTab.UseVisualStyleBackColor = true;
             // 
             // propertyGrid10
@@ -739,7 +757,7 @@
             // routeTab
             // 
             this.routeTab.Controls.Add(this.groupBox6);
-            this.routeTab.ImageKey = "paths.png";
+            this.routeTab.ImageKey = "route points.png";
             this.routeTab.Location = new System.Drawing.Point(4, 23);
             this.routeTab.Name = "routeTab";
             this.routeTab.Padding = new System.Windows.Forms.Padding(3);
@@ -823,7 +841,7 @@
             // 
             this.startingPointTab.Controls.Add(this.propertyGrid8);
             this.startingPointTab.Controls.Add(this.kartPointList);
-            this.startingPointTab.ImageKey = "startungpos.png";
+            this.startingPointTab.ImageKey = "starting points.png";
             this.startingPointTab.Location = new System.Drawing.Point(4, 23);
             this.startingPointTab.Name = "startingPointTab";
             this.startingPointTab.Padding = new System.Windows.Forms.Padding(3);
@@ -857,7 +875,7 @@
             // 
             this.areaTab.Controls.Add(this.propertyGrid7);
             this.areaTab.Controls.Add(this.areaList);
-            this.areaTab.ImageKey = "arearererrere.png";
+            this.areaTab.ImageKey = "areas.png";
             this.areaTab.Location = new System.Drawing.Point(4, 23);
             this.areaTab.Name = "areaTab";
             this.areaTab.Padding = new System.Windows.Forms.Padding(3);
@@ -889,7 +907,7 @@
             // 
             this.cameraTab.Controls.Add(this.propertyGrid2);
             this.cameraTab.Controls.Add(this.cameraList);
-            this.cameraTab.ImageKey = "cam.png";
+            this.cameraTab.ImageKey = "cameras.png";
             this.cameraTab.Location = new System.Drawing.Point(4, 23);
             this.cameraTab.Name = "cameraTab";
             this.cameraTab.Padding = new System.Windows.Forms.Padding(3);
@@ -923,7 +941,7 @@
             // 
             this.respawnTab.Controls.Add(this.propertyGrid4);
             this.respawnTab.Controls.Add(this.respList);
-            this.respawnTab.ImageKey = "respawn2.png";
+            this.respawnTab.ImageKey = "respawn points.png";
             this.respawnTab.Location = new System.Drawing.Point(4, 23);
             this.respawnTab.Name = "respawnTab";
             this.respawnTab.Padding = new System.Windows.Forms.Padding(3);
@@ -958,15 +976,26 @@
             this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
             this.imageList1.Tag = "";
             this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
-            this.imageList1.Images.SetKeyName(0, "cam.png");
-            this.imageList1.Images.SetKeyName(1, "cp.png");
-            this.imageList1.Images.SetKeyName(2, "enemyitemp.png");
-            this.imageList1.Images.SetKeyName(3, "respawn2.png");
-            this.imageList1.Images.SetKeyName(4, "paths.png");
-            this.imageList1.Images.SetKeyName(5, "arearererrere.png");
+            this.imageList1.Images.SetKeyName(0, "areas.png");
+            this.imageList1.Images.SetKeyName(1, "blo informations.png");
+            this.imageList1.Images.SetKeyName(2, "cameras.png");
+            this.imageList1.Images.SetKeyName(3, "checkpoints groups.png");
+            this.imageList1.Images.SetKeyName(4, "checkpoints.png");
+            this.imageList1.Images.SetKeyName(5, "enemy routes.png");
             this.imageList1.Images.SetKeyName(6, "objects.png");
-            this.imageList1.Images.SetKeyName(7, "startungpos.png");
-            this.imageList1.Images.SetKeyName(8, "info.png");
+            this.imageList1.Images.SetKeyName(7, "respawn points.png");
+            this.imageList1.Images.SetKeyName(8, "route groups.png");
+            this.imageList1.Images.SetKeyName(9, "route points.png");
+            this.imageList1.Images.SetKeyName(10, "starting points.png");
+            this.imageList1.Images.SetKeyName(11, "bmd viewer.png");
+            this.imageList1.Images.SetKeyName(12, "bti viewer.png");
+            this.imageList1.Images.SetKeyName(13, "close.png");
+            this.imageList1.Images.SetKeyName(14, "insertion of a course model.png");
+            this.imageList1.Images.SetKeyName(15, "open file.png");
+            this.imageList1.Images.SetKeyName(16, "reset.png");
+            this.imageList1.Images.SetKeyName(17, "save as.png");
+            this.imageList1.Images.SetKeyName(18, "save.png");
+            this.imageList1.Images.SetKeyName(19, "settings.png");
             // 
             // routeContext
             // 
@@ -995,6 +1024,55 @@
             this.addObjectToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
             this.addObjectToolStripMenuItem.Text = "Add Object";
             this.addObjectToolStripMenuItem.Click += new System.EventHandler(this.addObjectToolStripMenuItem_Click);
+            // 
+            // enemyRouteContext
+            // 
+            this.enemyRouteContext.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.insertRouteHereToolStripMenuItem,
+            this.insertRouteAtBottomToolStripMenuItem,
+            this.duplicatePointToolStripMenuItem,
+            this.deleteRoutePointToolStripMenuItem});
+            this.enemyRouteContext.Name = "enemyRouteContext";
+            this.enemyRouteContext.Size = new System.Drawing.Size(232, 92);
+            // 
+            // insertRouteHereToolStripMenuItem
+            // 
+            this.insertRouteHereToolStripMenuItem.Name = "insertRouteHereToolStripMenuItem";
+            this.insertRouteHereToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
+            this.insertRouteHereToolStripMenuItem.Text = "Insert Enemy Point Here";
+            this.insertRouteHereToolStripMenuItem.ToolTipText = "Inserts a enemy point before the current selected point.";
+            this.insertRouteHereToolStripMenuItem.Click += new System.EventHandler(this.insertRouteHereToolStripMenuItem_Click);
+            // 
+            // insertRouteAtBottomToolStripMenuItem
+            // 
+            this.insertRouteAtBottomToolStripMenuItem.Name = "insertRouteAtBottomToolStripMenuItem";
+            this.insertRouteAtBottomToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
+            this.insertRouteAtBottomToolStripMenuItem.Text = "Insert Enemy Point At Bottom";
+            this.insertRouteAtBottomToolStripMenuItem.ToolTipText = "Inserts a enemy route point at the bottom of a list.";
+            this.insertRouteAtBottomToolStripMenuItem.Click += new System.EventHandler(this.insertRouteAtBottomToolStripMenuItem_Click);
+            // 
+            // duplicatePointToolStripMenuItem
+            // 
+            this.duplicatePointToolStripMenuItem.Name = "duplicatePointToolStripMenuItem";
+            this.duplicatePointToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
+            this.duplicatePointToolStripMenuItem.Text = "Duplicate Enemy Point";
+            this.duplicatePointToolStripMenuItem.ToolTipText = "Duplicates the currently selected point.";
+            this.duplicatePointToolStripMenuItem.Click += new System.EventHandler(this.duplicatePointToolStripMenuItem_Click);
+            // 
+            // deleteRoutePointToolStripMenuItem
+            // 
+            this.deleteRoutePointToolStripMenuItem.Name = "deleteRoutePointToolStripMenuItem";
+            this.deleteRoutePointToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
+            this.deleteRoutePointToolStripMenuItem.Text = "Delete Enemy Point";
+            this.deleteRoutePointToolStripMenuItem.ToolTipText = "Removes the currently selected point.";
+            this.deleteRoutePointToolStripMenuItem.Click += new System.EventHandler(this.deleteEnemPointToolStripMenuItem_Click);
+            // 
+            // bCOToolToolStripMenuItem
+            // 
+            this.bCOToolToolStripMenuItem.Name = "bCOToolToolStripMenuItem";
+            this.bCOToolToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.bCOToolToolStripMenuItem.Text = "BCO Tool";
+            this.bCOToolToolStripMenuItem.Click += new System.EventHandler(this.bCOToolToolStripMenuItem_Click);
             // 
             // MainWindow
             // 
@@ -1046,6 +1124,7 @@
             this.respawnTab.ResumeLayout(false);
             this.routeContext.ResumeLayout(false);
             this.contextMenuStrip1.ResumeLayout(false);
+            this.enemyRouteContext.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1130,6 +1209,12 @@
         private System.Windows.Forms.PropertyGrid propertyGrid10;
         private System.Windows.Forms.GroupBox groupBox5;
         private System.Windows.Forms.ListBox routeGroupList;
+        private System.Windows.Forms.ContextMenuStrip enemyRouteContext;
+        private System.Windows.Forms.ToolStripMenuItem insertRouteHereToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem insertRouteAtBottomToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem duplicatePointToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem deleteRoutePointToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem bCOToolToolStripMenuItem;
     }
 }
 

@@ -214,5 +214,17 @@ namespace DouBOLDash.Properties {
                 this["showCameras"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool showOnlyVerts {
+            get {
+                return ((bool)(this["showOnlyVerts"]));
+            }
+            set {
+                this["showOnlyVerts"] = value;
+            }
+        }
     }
 }

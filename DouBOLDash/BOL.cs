@@ -591,7 +591,7 @@ namespace DouBOLDash
         public int xRot, yRot, zRot;
         public ushort objID;
         public short routeID;
-        public long unk1, unk2, unk3;
+        public byte[] settings;
         public string modelName, friendlyName;
 
         public TrackObject()
@@ -611,16 +611,12 @@ namespace DouBOLDash
 
             this.objID = 0;
             this.routeID = 0;
-            this.unk1 = 0;
-            this.unk2 = 0;
-            this.unk3 = 0;
 
             this.modelName = "null";
         }
 
         public void Parse(EndianBinaryReader reader, uint count)
         {
-
             for (uint i = 0; i < count; i++)
             {
                 LevelObject lvlobj = new LevelObject();
@@ -643,13 +639,7 @@ namespace DouBOLDash
                 lvlobj.modelName = misc.returnModel(lvlobj.objID);
                 lvlobj.friendlyName = misc.returnName(lvlobj.objID);
 
-                lvlobj.setting1 = reader.ReadInt64();
-                lvlobj.setting2 = reader.ReadInt64();
-                lvlobj.setting3 = reader.ReadInt64();
-
-                lvlobj.set1 = lvlobj.setting1.ToString("X8");
-                lvlobj.set2 = lvlobj.setting2.ToString("X8");
-                lvlobj.set3 = lvlobj.setting3.ToString("X8");
+                lvlobj.settings = reader.ReadBytes(24);
 
                 lvlobj.ID = i;
 
@@ -677,9 +667,7 @@ namespace DouBOLDash
 
                 writer.Write(lvlobj.objID);
                 writer.Write(lvlobj.routeID);
-                writer.Write(lvlobj.setting1);
-                writer.Write(lvlobj.setting2);
-                writer.Write(lvlobj.setting3);
+                writer.Write(lvlobj.settings);
             }
         }
 
@@ -1252,7 +1240,7 @@ namespace DouBOLDash
         public int xRot, yRot, zRot;
         public ushort objID;
         public short routeID;
-        public long setting1, setting2, setting3;
+        public byte[] settings;
         public string set1, set2, set3; // string versions for hex converting
         public string modelName, friendlyName;
         public uint ID;
@@ -1321,23 +1309,149 @@ namespace DouBOLDash
             get { return modelName; }
             set { modelName = value; }
         }
-        [DisplayName("Settings 1"), Category("Settings"), Description("The settings that coorespond to the object.")]
-        public string Setting1
+        [DisplayName("Setting 1"), Category("Settings"), Description("The settings that coorespond to the object.")]
+        public byte Setting1
         {
-            get { return set1; }
-            set { set1 = value; }
+            get { return settings[0]; }
+            set { settings[0] = value; }
         }
-        [DisplayName("Settings 2"), Category("Settings"), Description("The settings that coorespond to the object.")]
-        public string Setting2
+        [DisplayName("Setting 2"), Category("Settings"), Description("The settings that coorespond to the object.")]
+        public byte Setting2
         {
-            get { return set2; }
-            set { set2 = value; }
+            get { return settings[1]; }
+            set { settings[1] = value; }
         }
-        [DisplayName("Settings 3"), Category("Settings"), Description("The settings that coorespond to the object.")]
-        public string Setting3
+        [DisplayName("Setting 3"), Category("Settings"), Description("The settings that coorespond to the object.")]
+        public byte Setting3
         {
-            get { return set3; }
-            set { set3 = value; }
+            get { return settings[2]; }
+            set { settings[2] = value; }
+        }
+        [DisplayName("Setting 4"), Category("Settings"), Description("The settings that coorespond to the object.")]
+        public byte Setting4
+        {
+            get { return settings[3]; }
+            set { settings[3] = value; }
+        }
+        [DisplayName("Setting 5"), Category("Settings"), Description("The settings that coorespond to the object.")]
+        public byte Setting5
+        {
+            get { return settings[4]; }
+            set { settings[4] = value; }
+        }
+        [DisplayName("Setting 6"), Category("Settings"), Description("The settings that coorespond to the object.")]
+        public byte Setting6
+        {
+            get { return settings[5]; }
+            set { settings[5] = value; }
+        }
+        [DisplayName("Setting 7"), Category("Settings"), Description("The settings that coorespond to the object.")]
+        public byte Setting7
+        {
+            get { return settings[6]; }
+            set { settings[6] = value; }
+        }
+        [DisplayName("Setting 8"), Category("Settings"), Description("The settings that coorespond to the object.")]
+        public byte Setting8
+        {
+            get { return settings[7]; }
+            set { settings[7] = value; }
+        }
+        [DisplayName("Setting 9"), Category("Settings"), Description("The settings that coorespond to the object.")]
+        public byte Setting9
+        {
+            get { return settings[8]; }
+            set { settings[8] = value; }
+        }
+        [DisplayName("Setting 10"), Category("Settings"), Description("The settings that coorespond to the object.")]
+        public byte Setting10
+        {
+            get { return settings[9]; }
+            set { settings[9] = value; }
+        }
+        [DisplayName("Setting 11"), Category("Settings"), Description("The settings that coorespond to the object.")]
+        public byte Setting11
+        {
+            get { return settings[10]; }
+            set { settings[10] = value; }
+        }
+        [DisplayName("Setting 12"), Category("Settings"), Description("The settings that coorespond to the object.")]
+        public byte Setting12
+        {
+            get { return settings[11]; }
+            set { settings[11] = value; }
+        }
+        [DisplayName("Setting 13"), Category("Settings"), Description("The settings that coorespond to the object.")]
+        public byte Setting13
+        {
+            get { return settings[12]; }
+            set { settings[12] = value; }
+        }
+        [DisplayName("Setting 14"), Category("Settings"), Description("The settings that coorespond to the object.")]
+        public byte Setting14
+        {
+            get { return settings[13]; }
+            set { settings[13] = value; }
+        }
+        [DisplayName("Setting 15"), Category("Settings"), Description("The settings that coorespond to the object.")]
+        public byte Setting15
+        {
+            get { return settings[14]; }
+            set { settings[14] = value; }
+        }
+        [DisplayName("Setting 16"), Category("Settings"), Description("The settings that coorespond to the object.")]
+        public byte Setting16
+        {
+            get { return settings[15]; }
+            set { settings[15] = value; }
+        }
+        [DisplayName("Setting 17"), Category("Settings"), Description("The settings that coorespond to the object.")]
+        public byte Setting17
+        {
+            get { return settings[16]; }
+            set { settings[16] = value; }
+        }
+        [DisplayName("Setting 18"), Category("Settings"), Description("The settings that coorespond to the object.")]
+        public byte Setting18
+        {
+            get { return settings[17]; }
+            set { settings[17] = value; }
+        }
+        [DisplayName("Setting 19"), Category("Settings"), Description("The settings that coorespond to the object.")]
+        public byte Setting19
+        {
+            get { return settings[18]; }
+            set { settings[18] = value; }
+        }
+        [DisplayName("Setting 20"), Category("Settings"), Description("The settings that coorespond to the object.")]
+        public byte Setting20
+        {
+            get { return settings[19]; }
+            set { settings[19] = value; }
+        }
+        [DisplayName("Setting 21"), Category("Settings"), Description("The settings that coorespond to the object.")]
+        public byte Setting21
+        {
+            get { return settings[20]; }
+            set { settings[21] = value; }
+        }
+        [DisplayName("Setting 22"), Category("Settings"), Description("The settings that coorespond to the object.")]
+        public byte Setting22
+        {
+            get { return settings[21]; }
+            set { settings[22] = value; }
+        }
+        [DisplayName("Setting 23"), Category("Settings"), Description("The settings that coorespond to the object.")]
+        public byte Setting23
+        {
+            get { return settings[22]; }
+            set { settings[22] = value; }
+        }
+        [DisplayName("Setting 24"), Category("Settings"), Description("The settings that coorespond to the object.")]
+        public byte Setting24
+        {
+            get { return settings[23]; }
+            set { settings[23] = value; }
         }
     }
 

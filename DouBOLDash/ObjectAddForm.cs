@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 
 namespace DouBOLDash
 {
@@ -53,7 +54,52 @@ namespace DouBOLDash
 
         private void listBox1_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            
+
+        }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            // here we have to get the object's id from the textbox as a hex string
+            // then we convert it to ushort (uint16) and then use that
+
+            string value = textBox1.Text;
+            ushort objectID = Convert.ToUInt16(value, 16);
+
+            LevelObject trackObj = new LevelObject();
+            trackObj.objID = objectID;
+            MiscHacks misc = new MiscHacks();
+            trackObj.modelName = misc.returnModel(objectID);
+            trackObj.friendlyName = misc.returnName(objectID);
+
+            if (trackObj.modelName != "null")
+            {
+                FileBase objFB = new FileBase();
+                if (File.Exists(Properties.Settings.Default.curDir + "\\objects\\" + trackObj.modelName + ".bmd"))
+                {
+                    objFB.Stream = new FileStream(Properties.Settings.Default.curDir + "\\objects\\" + trackObj.modelName + ".bmd", FileMode.Open);
+                    rofl.Items.Add(trackObj);
+                    rofl.Refresh();
+                    Close();
+                }
+                else
+                {
+                    MessageBox.Show("File \\objects\\" + trackObj.modelName + ".bmd does not exist. Please add this file and it's depencies before you can add this object.");
+                    Close();
+                    return;
+                }
+            }
+            else
+            {
+                rofl.Items.Add(trackObj);
+                rofl.Refresh();
+                Close();
+            }
         }
     }
 }
+

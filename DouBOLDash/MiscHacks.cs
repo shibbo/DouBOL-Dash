@@ -14,6 +14,7 @@
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using System.Drawing;
 
 namespace DouBOLDash
 {
@@ -225,6 +226,41 @@ namespace DouBOLDash
                 name = "Unknown";
 
             return name;
+        }
+
+        // this is for BCO
+        Dictionary<int, Color> colToColor = new Dictionary<int, Color>
+        {
+            {0x0000, Color.Brown}, // Sand
+            {0x0100, Color.DarkRed}, // Road
+            {0x0102, Color.Silver}, // Cage Road
+            {0x0103, Color.Brown}, // Dirt Road
+            {0x0101, Color.SaddleBrown}, // Bridge / Wood
+            {0x0104, Color.PaleVioletRed}, // Carpet
+            {0x0300, Color.DarkGreen}, // Grass
+            {0x0400, Color.LightSkyBlue}, // Slippery Ice
+            {0x0800, Color.LightGreen}, // Speed Boost
+            {0x0C00, Color.SandyBrown}, // Sand (Offroad)
+            {0x0F01, Color.Orange}, // Lava (might just be like water?)
+            {0x1000, Color.DarkOrange}, // Quicksand Sinkhole
+            {0x1200, Color.Brown}, // Wall
+            {0x1300, Color.DarkKhaki} // Sand out of bounds
+        };
+
+        // returns a color based on the collision id
+        // uses the colToColor dictionary to get the color value
+        public Color returnColor(int collisionFlag)
+        {
+            Color colColor;
+
+            if (colToColor.ContainsKey(collisionFlag))
+            {
+                colColor = colToColor[collisionFlag];
+            }
+            else
+                colColor = Color.DeepSkyBlue;
+
+            return colColor;
         }
     }
 }

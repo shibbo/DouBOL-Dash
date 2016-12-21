@@ -155,7 +155,7 @@ namespace DouBOLDash
 
         private void doFolderChoose()
         {
-            MessageBox.Show("Please choose the root directory of the filesystem.\nIf one is not chosen, some rendering may not be supported.", "Choose Folder");
+            MessageBox.Show("Please choose the root directory of the filesystem.\nIf one is not chosen, some rendering may not be supported.", "Choose Folder", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
             FolderBrowserDialog fbDialog = new FolderBrowserDialog();
 
@@ -163,16 +163,16 @@ namespace DouBOLDash
             {
                 if (Directory.Exists(fbDialog.SelectedPath + "/Course"))
                 {
-                    MessageBox.Show("Path successfully changed.", "Success");
+                    MessageBox.Show("Path successfully changed.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     Properties.Settings.Default.envDir = fbDialog.SelectedPath;
                     Properties.Settings.Default.Save();
                     Properties.Settings.Default.bmdEnabled = true;
                 }
                 else
-                    MessageBox.Show("/Course folder not found. Settings were not changed.", "Invalid Folder");
+                    MessageBox.Show("/Course folder not found. Settings were not changed.", "Invalid Folder", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else
-                MessageBox.Show("Folder path not changed.", "Invalid Folder");
+                MessageBox.Show("Folder path not changed.", "Invalid Folder", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
@@ -182,6 +182,8 @@ namespace DouBOLDash
 
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
+                this.Text += " " + openFileDialog1.FileName;
+                this.Update();
                 saveToolStripMenuItem.Enabled = true;
                 saveAsToolStripMenuItem.Enabled = true;
 
@@ -1096,6 +1098,12 @@ namespace DouBOLDash
                 kartobj.Add(kpObj);
             }
 
+            if (kartobj.Count < 1)
+            {
+                MessageBox.Show("You need at least one starting point!");
+                return;
+            }
+
             foreach (AreaObject areaObj in areaList.Items)
             {
                 areaobj.Add(areaObj);
@@ -1535,6 +1543,8 @@ namespace DouBOLDash
                 {
                     enmRoute.Add(enemyObj);
                 }
+
+                enemyRouteList.Items.Clear();
             }
             uint count = 0;
             float posX1, posY1, posZ1;
@@ -1794,17 +1804,73 @@ namespace DouBOLDash
             propertyGrid10.SelectedObject = routeGroupList.SelectedItem;
         }
 
-        /// <summary>
-        /// Updates objects
-        /// </summary>
-        Bmd objModel;
+        private void insertRouteHereToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            EnemyRoute enemyRoute = new EnemyRoute();
+            enemyRoute.link = -1;
+            enemyRouteList.Items.Insert(enemyRouteList.SelectedIndex, enemyRoute);
+
+            UpdateEnemyPoints(true);
+        }
 
         private void routeGroupList_SelectedIndexChanged_1(object sender, EventArgs e)
         {
             propertyGrid10.SelectedObject = routeGroupList.SelectedItem;
         }
 
-        string missingFiles = "";
+        private void enemyRouteList_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right && enemyRouteList.SelectedIndex != -1)
+            {
+                enemyRouteContext.Show(enemyRouteList, e.Location);
+            }
+        }
+
+        private void deleteEnemPointToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (enemyRouteList.SelectedIndex != -1)
+            {
+                EnemyRoute enmRoute = (EnemyRoute)enemyRouteList.SelectedItem;
+                if (enmRoute.link != -1)
+                {
+                    DialogResult result = MessageBox.Show("You are deleting a point that creates a new group, or ends one. Are you sure you want to delete it?", "Deleting Important Point", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+                    if (result == DialogResult.Yes)
+                    {
+                        enemyRouteList.Items.Remove(enemyRouteList.SelectedItem);
+
+                        UpdateEnemyPoints(true);
+                    }
+                    else
+                        return;
+                }
+            }
+        }
+
+        private void insertRouteAtBottomToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            EnemyRoute enemyRoute = new EnemyRoute();
+            enemyRoute.link = -1;
+            enemyRouteList.Items.Add(enemyRoute);
+
+            UpdateEnemyPoints(true);
+        }
+
+        private void duplicatePointToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            EnemyRoute enemyRoute = (EnemyRoute)enemyRouteList.SelectedItem;
+            enemyRouteList.Items.Add(enemyRoute);
+
+            UpdateEnemyPoints(true);
+        }
+
+        private void bCOToolToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            BCOEditor bco = new BCOEditor();
+            bco.Show();
+        }
+
+        Bmd objModel;
         public void UpdateObjects(bool isUpdate)
         {
             if (isUpdate)
@@ -1854,8 +1920,6 @@ namespace DouBOLDash
                             DrawBMD(obj);
                             objModelList.Add(objEntry.modelName, obj);
                         }
-                        else
-                            missingFiles += objEntry.modelName + ".bmd\n";
                     }
                 }
                 else
@@ -1865,9 +1929,6 @@ namespace DouBOLDash
                 }
                 GL.PopMatrix();
             }
-            if (missingFiles != "")
-                MessageBox.Show("There are files missing from the /objects directory. Please add these files along with the depencies of those files. Missing files:\n" + missingFiles);
-
             GL.EndList();
         }
 
