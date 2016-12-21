@@ -29,7 +29,7 @@ namespace DouBOLDash
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new BCOEditor());
+            Application.Run(new MainWindow());
         }
     }
 }
