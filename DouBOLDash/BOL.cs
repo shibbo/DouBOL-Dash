@@ -15,7 +15,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.IO;
 using System.ComponentModel;
 
@@ -311,15 +310,15 @@ namespace DouBOLDash
         {
             this.pointLength = 0;
             this.groupLink = 0;
-            this.prev1 = 0;
-            this.prev2 = 0;
-            this.prev3 = 0;
-            this.prev4 = 0;
+            this.prev1 = -1;
+            this.prev2 = -1;
+            this.prev3 = -1;
+            this.prev4 = -1;
 
-            this.next1 = 0;
-            this.next2 = 0;
-            this.next3 = 0;
-            this.next4 = 0;
+            this.next1 = -1;
+            this.next2 = -1;
+            this.next3 = -1;
+            this.next4 = -1;
 
             this.index = 0;
         }
@@ -591,7 +590,9 @@ namespace DouBOLDash
         public int xRot, yRot, zRot;
         public ushort objID;
         public short routeID;
-        public byte[] settings;
+        public byte settings0, settings1, settings2, settings3, settings4, settings5, settings6, settings7, settings8;
+        public byte settings9, settings10, settings11, settings12, settings13, settings14, settings15, settings16;
+        public byte settings17, settings18, settings19, settings20, settings21, settings22, settings23;
         public string modelName, friendlyName;
 
         public TrackObject()
@@ -610,7 +611,32 @@ namespace DouBOLDash
             this.rotation = 0;
 
             this.objID = 0;
-            this.routeID = 0;
+            this.routeID = -1;
+
+            this.settings0 = 0;
+            this.settings1 = 0;
+            this.settings2 = 0;
+            this.settings3 = 0;
+            this.settings4 = 0;
+            this.settings5 = 0;
+            this.settings6 = 0;
+            this.settings7 = 0;
+            this.settings8 = 0;
+            this.settings9 = 0;
+            this.settings10 = 0;
+            this.settings11 = 0;
+            this.settings12 = 0;
+            this.settings13 = 0;
+            this.settings14 = 0;
+            this.settings15 = 0;
+            this.settings16 = 0;
+            this.settings17 = 0;
+            this.settings18 = 0;
+            this.settings19 = 0;
+            this.settings20 = 0;
+            this.settings21 = 0;
+            this.settings22 = 0;
+            this.settings23 = 0;
 
             this.modelName = "null";
         }
@@ -639,7 +665,30 @@ namespace DouBOLDash
                 lvlobj.modelName = misc.returnModel(lvlobj.objID);
                 lvlobj.friendlyName = misc.returnName(lvlobj.objID);
 
-                lvlobj.settings = reader.ReadBytes(24);
+                lvlobj.settings0 = reader.ReadByte();
+                lvlobj.settings1 = reader.ReadByte();
+                lvlobj.settings2 = reader.ReadByte();
+                lvlobj.settings3 = reader.ReadByte();
+                lvlobj.settings4 = reader.ReadByte();
+                lvlobj.settings5 = reader.ReadByte();
+                lvlobj.settings6 = reader.ReadByte();
+                lvlobj.settings7 = reader.ReadByte();
+                lvlobj.settings8 = reader.ReadByte();
+                lvlobj.settings9 = reader.ReadByte();
+                lvlobj.settings10 = reader.ReadByte();
+                lvlobj.settings11 = reader.ReadByte();
+                lvlobj.settings12 = reader.ReadByte();
+                lvlobj.settings13 = reader.ReadByte();
+                lvlobj.settings14 = reader.ReadByte();
+                lvlobj.settings15 = reader.ReadByte();
+                lvlobj.settings16 = reader.ReadByte();
+                lvlobj.settings17 = reader.ReadByte();
+                lvlobj.settings18 = reader.ReadByte();
+                lvlobj.settings19 = reader.ReadByte();
+                lvlobj.settings20 = reader.ReadByte();
+                lvlobj.settings21 = reader.ReadByte();
+                lvlobj.settings22 = reader.ReadByte();
+                lvlobj.settings23 = reader.ReadByte();
 
                 lvlobj.ID = i;
 
@@ -667,7 +716,30 @@ namespace DouBOLDash
 
                 writer.Write(lvlobj.objID);
                 writer.Write(lvlobj.routeID);
-                writer.Write(lvlobj.settings);
+                writer.Write(lvlobj.settings0);
+                writer.Write(lvlobj.settings1);
+                writer.Write(lvlobj.settings2);
+                writer.Write(lvlobj.settings3);
+                writer.Write(lvlobj.settings4);
+                writer.Write(lvlobj.settings5);
+                writer.Write(lvlobj.settings6);
+                writer.Write(lvlobj.settings7);
+                writer.Write(lvlobj.settings8);
+                writer.Write(lvlobj.settings9);
+                writer.Write(lvlobj.settings10);
+                writer.Write(lvlobj.settings11);
+                writer.Write(lvlobj.settings12);
+                writer.Write(lvlobj.settings13);
+                writer.Write(lvlobj.settings14);
+                writer.Write(lvlobj.settings15);
+                writer.Write(lvlobj.settings16);
+                writer.Write(lvlobj.settings17);
+                writer.Write(lvlobj.settings18);
+                writer.Write(lvlobj.settings19);
+                writer.Write(lvlobj.settings20);
+                writer.Write(lvlobj.settings21);
+                writer.Write(lvlobj.settings22);
+                writer.Write(lvlobj.settings23);
             }
         }
 
@@ -1240,7 +1312,9 @@ namespace DouBOLDash
         public int xRot, yRot, zRot;
         public ushort objID;
         public short routeID;
-        public byte[] settings;
+        public byte settings0, settings1, settings2, settings3, settings4, settings5, settings6, settings7, settings8;
+        public byte settings9, settings10, settings11, settings12, settings13, settings14, settings15, settings16;
+        public byte settings17, settings18, settings19, settings20, settings21, settings22, settings23;
         public string set1, set2, set3; // string versions for hex converting
         public string modelName, friendlyName;
         public uint ID;
@@ -1312,146 +1386,146 @@ namespace DouBOLDash
         [DisplayName("Setting 1"), Category("Settings"), Description("The settings that coorespond to the object.")]
         public byte Setting1
         {
-            get { return settings[0]; }
-            set { settings[0] = value; }
+            get { return settings0; }
+            set { settings0 = value; }
         }
         [DisplayName("Setting 2"), Category("Settings"), Description("The settings that coorespond to the object.")]
         public byte Setting2
         {
-            get { return settings[1]; }
-            set { settings[1] = value; }
+            get { return settings1; }
+            set { settings1 = value; }
         }
         [DisplayName("Setting 3"), Category("Settings"), Description("The settings that coorespond to the object.")]
         public byte Setting3
         {
-            get { return settings[2]; }
-            set { settings[2] = value; }
+            get { return settings2; }
+            set { settings2 = value; }
         }
         [DisplayName("Setting 4"), Category("Settings"), Description("The settings that coorespond to the object.")]
         public byte Setting4
         {
-            get { return settings[3]; }
-            set { settings[3] = value; }
+            get { return settings3; }
+            set { settings3 = value; }
         }
         [DisplayName("Setting 5"), Category("Settings"), Description("The settings that coorespond to the object.")]
         public byte Setting5
         {
-            get { return settings[4]; }
-            set { settings[4] = value; }
+            get { return settings4; }
+            set { settings4 = value; }
         }
         [DisplayName("Setting 6"), Category("Settings"), Description("The settings that coorespond to the object.")]
         public byte Setting6
         {
-            get { return settings[5]; }
-            set { settings[5] = value; }
+            get { return settings5; }
+            set { settings5 = value; }
         }
         [DisplayName("Setting 7"), Category("Settings"), Description("The settings that coorespond to the object.")]
         public byte Setting7
         {
-            get { return settings[6]; }
-            set { settings[6] = value; }
+            get { return settings6; }
+            set { settings6 = value; }
         }
         [DisplayName("Setting 8"), Category("Settings"), Description("The settings that coorespond to the object.")]
         public byte Setting8
         {
-            get { return settings[7]; }
-            set { settings[7] = value; }
+            get { return settings7; }
+            set { settings7 = value; }
         }
         [DisplayName("Setting 9"), Category("Settings"), Description("The settings that coorespond to the object.")]
         public byte Setting9
         {
-            get { return settings[8]; }
-            set { settings[8] = value; }
+            get { return settings8; }
+            set { settings8 = value; }
         }
         [DisplayName("Setting 10"), Category("Settings"), Description("The settings that coorespond to the object.")]
         public byte Setting10
         {
-            get { return settings[9]; }
-            set { settings[9] = value; }
+            get { return settings9; }
+            set { settings9 = value; }
         }
         [DisplayName("Setting 11"), Category("Settings"), Description("The settings that coorespond to the object.")]
         public byte Setting11
         {
-            get { return settings[10]; }
-            set { settings[10] = value; }
+            get { return settings10; }
+            set { settings10 = value; }
         }
         [DisplayName("Setting 12"), Category("Settings"), Description("The settings that coorespond to the object.")]
         public byte Setting12
         {
-            get { return settings[11]; }
-            set { settings[11] = value; }
+            get { return settings11; }
+            set { settings11 = value; }
         }
         [DisplayName("Setting 13"), Category("Settings"), Description("The settings that coorespond to the object.")]
         public byte Setting13
         {
-            get { return settings[12]; }
-            set { settings[12] = value; }
+            get { return settings12; }
+            set { settings12 = value; }
         }
         [DisplayName("Setting 14"), Category("Settings"), Description("The settings that coorespond to the object.")]
         public byte Setting14
         {
-            get { return settings[13]; }
-            set { settings[13] = value; }
+            get { return settings13; }
+            set { settings13 = value; }
         }
         [DisplayName("Setting 15"), Category("Settings"), Description("The settings that coorespond to the object.")]
         public byte Setting15
         {
-            get { return settings[14]; }
-            set { settings[14] = value; }
+            get { return settings14; }
+            set { settings14 = value; }
         }
         [DisplayName("Setting 16"), Category("Settings"), Description("The settings that coorespond to the object.")]
         public byte Setting16
         {
-            get { return settings[15]; }
-            set { settings[15] = value; }
+            get { return settings15; }
+            set { settings15 = value; }
         }
         [DisplayName("Setting 17"), Category("Settings"), Description("The settings that coorespond to the object.")]
         public byte Setting17
         {
-            get { return settings[16]; }
-            set { settings[16] = value; }
+            get { return settings16; }
+            set { settings16 = value; }
         }
         [DisplayName("Setting 18"), Category("Settings"), Description("The settings that coorespond to the object.")]
         public byte Setting18
         {
-            get { return settings[17]; }
-            set { settings[17] = value; }
+            get { return settings17; }
+            set { settings17 = value; }
         }
         [DisplayName("Setting 19"), Category("Settings"), Description("The settings that coorespond to the object.")]
         public byte Setting19
         {
-            get { return settings[18]; }
-            set { settings[18] = value; }
+            get { return settings18; }
+            set { settings18 = value; }
         }
         [DisplayName("Setting 20"), Category("Settings"), Description("The settings that coorespond to the object.")]
         public byte Setting20
         {
-            get { return settings[19]; }
-            set { settings[19] = value; }
+            get { return settings19; }
+            set { settings19 = value; }
         }
         [DisplayName("Setting 21"), Category("Settings"), Description("The settings that coorespond to the object.")]
         public byte Setting21
         {
-            get { return settings[20]; }
-            set { settings[21] = value; }
+            get { return settings20; }
+            set { settings20 = value; }
         }
         [DisplayName("Setting 22"), Category("Settings"), Description("The settings that coorespond to the object.")]
         public byte Setting22
         {
-            get { return settings[21]; }
-            set { settings[22] = value; }
+            get { return settings21; }
+            set { settings21 = value; }
         }
         [DisplayName("Setting 23"), Category("Settings"), Description("The settings that coorespond to the object.")]
         public byte Setting23
         {
-            get { return settings[22]; }
-            set { settings[22] = value; }
+            get { return settings22; }
+            set { settings22 = value; }
         }
         [DisplayName("Setting 24"), Category("Settings"), Description("The settings that coorespond to the object.")]
         public byte Setting24
         {
-            get { return settings[23]; }
-            set { settings[23] = value; }
+            get { return settings23; }
+            set { settings23 = value; }
         }
     }
 

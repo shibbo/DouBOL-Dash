@@ -34,7 +34,7 @@ There is also a BTI viewer for the BTI format, BMD viewer for the model format, 
 Thanks to StapleButter for the main BMD rendering code, and miluaces for minor changes. Icons for the project were made by MelonSpeedruns.
 
 # License and Distribution
-DouBOL Dash is licensed under GNU. It is a free program for all users to use. Under this license, a person may not redistribute without credit, or make any profit money-wise.
+DouBOL Dash is licensed under the GPL. It is a free program for all users to use. Under this license, a person may not redistribute without credit, or make any profit money-wise.
 
 
 tl;dr if you take this and make money off of it you will never see the light of day ever again

@@ -13,13 +13,7 @@
 */
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Globalization;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using System.IO;
 using OpenTK;
@@ -29,6 +23,10 @@ namespace DouBOLDash
 {
     public partial class MainWindow : Form
     {
+
+        public string PROGRAM_NAME = "DouBOL Dash ";
+        public string VERSION = "v0.1 Beta ";
+
         private const float k_FOV = (float)((70f * Math.PI) / 180f);
         private const float k_zNear = 0.01f;
         private const float k_zFar = 1000f;
@@ -100,7 +98,8 @@ namespace DouBOLDash
             {0x38, "Tilt-A-Kart"},
             {0x39, "Unused"},
             {0x3A, "Cookie Land"},
-            {0x3B, "Pipe Plaza"}
+            {0x3B, "Pipe Plaza"},
+            {0x45, "Ending Credits"}
         };
 
         // model storage (cache)
@@ -150,7 +149,7 @@ namespace DouBOLDash
             if (idToMusic.ContainsKey(id))
                 musicSelect.Text = idToMusic[id];
             else
-                musicSelect.Text = "wat";
+                musicSelect.Text = "Unused";
         }
 
         private void doFolderChoose()
@@ -182,191 +181,198 @@ namespace DouBOLDash
 
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                this.Text += " " + openFileDialog1.FileName;
-                this.Update();
-                saveToolStripMenuItem.Enabled = true;
-                saveAsToolStripMenuItem.Enabled = true;
-
-                lapCounter.Enabled = true;
-                musicInput.Enabled = true;
-                musicSelect.Enabled = true;
-                unknown3.Enabled = true;
-                unknown4.Enabled = true;
-                unknown5.Enabled = true;
-
-                // clear all listboxes
-                enemyRouteList.Items.Clear();
-                chckGroup.Items.Clear();
-                chckList.Items.Clear();
-                routeGroupList.Items.Clear();
-                routeList.Items.Clear();
-                objList.Items.Clear();
-                kartPointList.Items.Clear();
-                areaList.Items.Clear();
-                cameraList.Items.Clear();
-                respList.Items.Clear();
-
-                string dirName = Path.GetDirectoryName(openFileDialog1.FileName);
-                string fileName = Path.GetFileNameWithoutExtension(openFileDialog1.FileName);
-
-                Properties.Settings.Default.curDir = dirName;
-                Properties.Settings.Default.curFile = fileName;
-                Properties.Settings.Default.Save();
-
-                if (loaded)
-                {
-                    // if these aren't cleared, then we get an out of bounds
-                    GL.DeleteLists(selectedList, 1);
-                    GL.DeleteLists(enemyPointList, 1);
-                    GL.DeleteLists(routePointList, 1);
-                    GL.DeleteLists(courseList, 1);
-                    GL.DeleteLists(checkpointList, 1);
-                    GL.DeleteLists(objectList, 1);
-                    GL.DeleteLists(respawnList, 1);
-                    GL.DeleteLists(camList, 1);
-                    GL.DeleteLists(areaObjList, 1);
-                }
-
-                using (EndianBinaryReader reader = new EndianBinaryReader(File.Open(openFileDialog1.FileName, FileMode.Open)))
-                {
-                    BOL bol = new BOL();
-                    bol.Parse(reader);
-                    bolInf = bol.returnList();
-
-                    uint offs0 = bol.returnOffset(0); // enemy/item point offset
-                    uint offs1 = bol.returnOffset(1); // checkpoint groups
-                    uint offs2 = bol.returnOffset(2); // route group offset
-                    uint offs3 = bol.returnOffset(3); // route point offset
-                    uint offs4 = bol.returnOffset(4); // object offset
-                    uint offs5 = bol.returnOffset(5); // kart point offset 
-                    uint offs6 = bol.returnOffset(6); // area offset
-
-                    uint count0 = bol.returnCount(0); // enemy/item route count
-                    uint count1 = bol.returnCount(1); // group count
-                    uint count2 = bol.returnCount(2); // object count
-                    uint count3 = bol.returnCount(3); // area count
-                    uint count4 = bol.returnCount(4); // camera count
-                    uint count5 = bol.returnCount(5); // route count (unused)
-                    uint count6 = bol.returnCount(6); // respawn point count
-
-                    uint sec1Count = 0;
-                    if (count0 > 0)
-                    {
-                        // this is a failsafe that the old BOL editor doesn't do
-                        sec1Count = offs1 - offs0;
-                        sec1Count = sec1Count / 0x20;
-                    }
-                    else
-                        sec1Count = 0;
-
-                    uint sec3Count = offs3 - offs2;
-                    sec3Count = sec3Count / 0x10;
-
-                    // get the filesize for future offset reference
-                    foreach (BOLInformation bolInfo in bolInf)
-                    {
-                        FileInfo f = new FileInfo(openFileDialog1.FileName);
-                        bolInfo.fileSize = (int)f.Length;
-                    }
-
-                    // here we parse each section in order, which is crucial
-                    EnemyRoutes enmRoutes = new EnemyRoutes();
-                    enmRoutes.Parse(reader, sec1Count);
-                    enmRoute = enmRoutes.returnList();
-
-                    CheckpointGroup chckGroups = new CheckpointGroup();
-                    chckGroups.Parse(reader, count1);
-                    Dictionary<uint, uint> dictionary1 = chckGroups.returnDictionary();
-                    chkGRP = chckGroups.returnList();
-
-                    Checkpoint chckPt = new Checkpoint();
-                    chckPt.Parse(reader, dictionary1, count1);
-                    chkobj = chckPt.returnList();
-
-                    RouteGroup routeGrp = new RouteGroup();
-                    routeGrp.Parse(reader, sec3Count);
-                    Dictionary<uint, RouteGroupSetup> dictionary2 = routeGrp.returnDictionary();
-                    grpSetup = routeGrp.returnList();
-
-                    RoutePoint routePt = new RoutePoint();
-                    routePt.Parse(reader, dictionary2);
-                    rpobj = routePt.returnList();
-
-                    TrackObject obj = new TrackObject();
-                    obj.Parse(reader, count2);
-                    lvlobj = obj.returnList();
-
-                    KartPoint kart = new KartPoint();
-                    kart.Parse(reader);
-                    kartobj = kart.returnList();
-
-                    Area area = new Area();
-                    area.Parse(reader, count3);
-                    areaobj = area.returnList();
-
-                    Camera camera = new Camera();
-                    camera.Parse(reader, count4);
-                    camobj = camera.returnList();
-
-                    Respawn respawn = new Respawn();
-                    respawn.Parse(reader, count6);
-                    resObj = respawn.returnList();
-
-                    reader.Close();
-
-                    List<PositionObject> posObjs = new List<PositionObject>();
-                    posObjs.Add(kart);
-
-                    // minimap BTI to load
-                    // loads the BTI, converts to bitmap, and loads it into picture box
-                    string bti_path = Properties.Settings.Default.curFile.Replace("course", "map");
-
-                    if (File.Exists(Properties.Settings.Default.curDir + "\\" + bti_path + ".bti"))
-                    { 
-                        FileBase fileb = new FileBase();
-                        fileb.Stream = new FileStream(Properties.Settings.Default.curDir + "\\" + bti_path + ".bti", FileMode.Open);
-                        minimap = BTIFile.ReadBTIToBitmap(fileb);
-                        pictureBox1.Image = minimap;
-                        fileb.Close();
-                    }
-                    else
-                        MessageBox.Show("The minimap file (" + bti_path + ".bti) doesn't exist.");
-
-
-                    // generate the list that the course model will be rendered in
-                    // try to find the course model in the same folder the BLO was opened in
-                    // if it's not there, show an error andset it to null to avoid crashing
-                    // if you think we're loading the course model every build you're wrong
-                    // BuildScene will also handle changed objects in the scene, so we don't
-                    // want to load the same course model again. waste of time.
-                    courseList = GL.GenLists(1);
-
-                    if (Properties.Settings.Default.bmdEnabled != false)
-                    {
-                        FileBase fb = new FileBase();
-                        if (File.Exists(Properties.Settings.Default.curDir + "\\" + Properties.Settings.Default.curFile + ".bmd"))
-                        {
-                            Console.WriteLine(Properties.Settings.Default.curDir + "\\" + Properties.Settings.Default.curFile + ".bmd");
-                            fb.Stream = new FileStream(Properties.Settings.Default.curDir + "\\" + Properties.Settings.Default.curFile + ".bmd", FileMode.Open);
-                            course = new Bmd(fb);
-                            fb.Close();
-                        }
-                        else
-                        {
-                            MessageBox.Show(Properties.Settings.Default.curDir + "\\" + Properties.Settings.Default.curFile + ".bmd doesn't exist.");
-                            course = null;
-                        }
-                    }
-
-                    loadingLabel.Text = "Loading course model...";
-                    GL.NewList(courseList, ListMode.Compile);
-                    if (course != null)
-                        DrawBMD(course);
-                    GL.EndList();
-
-                    BuildScene();
-                }
+                parseBOL(openFileDialog1.FileName);
             }
+        }
+
+        public void parseBOL(string file)
+        {
+            this.Text = PROGRAM_NAME + VERSION + file;
+            this.Update();
+
+            saveToolStripMenuItem.Enabled = true;
+            saveAsToolStripMenuItem.Enabled = true;
+
+            lapCounter.Enabled = true;
+            musicInput.Enabled = true;
+            musicSelect.Enabled = true;
+            unknown3.Enabled = true;
+            unknown4.Enabled = true;
+            unknown5.Enabled = true;
+
+            // clear all listboxes
+            enemyRouteList.Items.Clear();
+            chckGroup.Items.Clear();
+            chckList.Items.Clear();
+            routeGroupList.Items.Clear();
+            routeList.Items.Clear();
+            objList.Items.Clear();
+            kartPointList.Items.Clear();
+            areaList.Items.Clear();
+            cameraList.Items.Clear();
+            respList.Items.Clear();
+
+            string dirName = Path.GetDirectoryName(file);
+            string fileName = Path.GetFileNameWithoutExtension(file);
+
+            Properties.Settings.Default.curDir = dirName;
+            Properties.Settings.Default.curFile = fileName;
+            Properties.Settings.Default.Save();
+
+            if (loaded)
+            {
+                // if these aren't cleared, then we get an out of bounds
+                GL.DeleteLists(selectedList, 1);
+                GL.DeleteLists(enemyPointList, 1);
+                GL.DeleteLists(routePointList, 1);
+                GL.DeleteLists(courseList, 1);
+                GL.DeleteLists(checkpointList, 1);
+                GL.DeleteLists(objectList, 1);
+                GL.DeleteLists(respawnList, 1);
+                GL.DeleteLists(camList, 1);
+                GL.DeleteLists(areaObjList, 1);
+            }
+
+            using (EndianBinaryReader reader = new EndianBinaryReader(File.Open(file, FileMode.Open)))
+            {
+                BOL bol = new BOL();
+                bol.Parse(reader);
+                bolInf = bol.returnList();
+
+                uint offs0 = bol.returnOffset(0); // enemy/item point offset
+                uint offs1 = bol.returnOffset(1); // checkpoint groups
+                uint offs2 = bol.returnOffset(2); // route group offset
+                uint offs3 = bol.returnOffset(3); // route point offset
+                uint offs4 = bol.returnOffset(4); // object offset
+                uint offs5 = bol.returnOffset(5); // kart point offset 
+                uint offs6 = bol.returnOffset(6); // area offset
+
+                uint count0 = bol.returnCount(0); // enemy/item route count
+                uint count1 = bol.returnCount(1); // group count
+                uint count2 = bol.returnCount(2); // object count
+                uint count3 = bol.returnCount(3); // area count
+                uint count4 = bol.returnCount(4); // camera count
+                uint count5 = bol.returnCount(5); // route count (unused)
+                uint count6 = bol.returnCount(6); // respawn point count
+
+                uint sec1Count = 0;
+                if (count0 > 0)
+                {
+                    // this is a failsafe that the old BOL editor doesn't do
+                    sec1Count = offs1 - offs0;
+                    sec1Count = sec1Count / 0x20;
+                }
+                else
+                    sec1Count = 0;
+
+                uint sec3Count = offs3 - offs2;
+                sec3Count = sec3Count / 0x10;
+
+                // get the filesize for future offset reference
+                foreach (BOLInformation bolInfo in bolInf)
+                {
+                    FileInfo f = new FileInfo(file);
+                    bolInfo.fileSize = (int)f.Length;
+                }
+
+                // here we parse each section in order, which is crucial
+                EnemyRoutes enmRoutes = new EnemyRoutes();
+                enmRoutes.Parse(reader, sec1Count);
+                enmRoute = enmRoutes.returnList();
+
+                CheckpointGroup chckGroups = new CheckpointGroup();
+                chckGroups.Parse(reader, count1);
+                Dictionary<uint, uint> dictionary1 = chckGroups.returnDictionary();
+                chkGRP = chckGroups.returnList();
+
+                Checkpoint chckPt = new Checkpoint();
+                chckPt.Parse(reader, dictionary1, count1);
+                chkobj = chckPt.returnList();
+
+                RouteGroup routeGrp = new RouteGroup();
+                routeGrp.Parse(reader, sec3Count);
+                Dictionary<uint, RouteGroupSetup> dictionary2 = routeGrp.returnDictionary();
+                grpSetup = routeGrp.returnList();
+
+                RoutePoint routePt = new RoutePoint();
+                routePt.Parse(reader, dictionary2);
+                rpobj = routePt.returnList();
+
+                TrackObject obj = new TrackObject();
+                obj.Parse(reader, count2);
+                lvlobj = obj.returnList();
+
+                KartPoint kart = new KartPoint();
+                kart.Parse(reader);
+                kartobj = kart.returnList();
+
+                Area area = new Area();
+                area.Parse(reader, count3);
+                areaobj = area.returnList();
+
+                Camera camera = new Camera();
+                camera.Parse(reader, count4);
+                camobj = camera.returnList();
+
+                Respawn respawn = new Respawn();
+                respawn.Parse(reader, count6);
+                resObj = respawn.returnList();
+
+                reader.Close();
+
+                List<PositionObject> posObjs = new List<PositionObject>();
+                posObjs.Add(kart);
+
+                // minimap BTI to load
+                // loads the BTI, converts to bitmap, and loads it into picture box
+                string bti_path = Properties.Settings.Default.curFile.Replace("course", "map");
+
+                if (File.Exists(Properties.Settings.Default.curDir + "\\" + bti_path + ".bti"))
+                {
+                    FileBase fileb = new FileBase();
+                    fileb.Stream = new FileStream(Properties.Settings.Default.curDir + "\\" + bti_path + ".bti", FileMode.Open);
+                    minimap = BTIFile.ReadBTIToBitmap(fileb);
+                    pictureBox1.Image = minimap;
+                    fileb.Close();
+                }
+                else
+                    MessageBox.Show("The minimap file (" + bti_path + ".bti) doesn't exist.");
+
+
+                // generate the list that the course model will be rendered in
+                // try to find the course model in the same folder the BLO was opened in
+                // if it's not there, show an error andset it to null to avoid crashing
+                // if you think we're loading the course model every build you're wrong
+                // BuildScene will also handle changed objects in the scene, so we don't
+                // want to load the same course model again. waste of time.
+                courseList = GL.GenLists(1);
+
+                if (Properties.Settings.Default.bmdEnabled != false)
+                {
+                    FileBase fb = new FileBase();
+                    if (File.Exists(Properties.Settings.Default.curDir + "\\" + Properties.Settings.Default.curFile + ".bmd"))
+                    {
+                        Console.WriteLine(Properties.Settings.Default.curDir + "\\" + Properties.Settings.Default.curFile + ".bmd");
+                        fb.Stream = new FileStream(Properties.Settings.Default.curDir + "\\" + Properties.Settings.Default.curFile + ".bmd", FileMode.Open);
+                        course = new Bmd(fb);
+                        fb.Close();
+                    }
+                    else
+                    {
+                        MessageBox.Show(Properties.Settings.Default.curDir + "\\" + Properties.Settings.Default.curFile + ".bmd doesn't exist.");
+                        course = null;
+                    }
+                }
+
+                loadingLabel.Text = "Loading course model...";
+                GL.NewList(courseList, ListMode.Compile);
+                if (course != null)
+                    DrawBMD(course);
+                GL.EndList();
+
+                BuildScene();
+
+                }
         }
 
         public void BuildScene()
@@ -385,21 +391,13 @@ namespace DouBOLDash
                 lapCounter.Value = lapCount;
                 musicInput.Value = musicID;
             }
-
-            // these don't need special functions yet
-            foreach(CheckpointGroupObject objEntry in chkGRP)
-            {
-                chckGroup.Items.Add(objEntry);
-            }
-
-            foreach(RouteGroupSetup routeSetup in grpSetup)
-            {
-                routeGroupList.Items.Add(routeSetup);
-            }
             
             // after filling the lists with data we call functions that update the scene
             UpdateEnemyPoints(false);
+            UpdateRouteGroups(false);
+            UpdateRouteGroups(false);
             UpdateRoutePoints(false);
+            UpdateCheckpointGroups(false);
             UpdateCheckpoints(false);
             UpdateObjects(false);
             UpdateKartPoints(false);
@@ -701,11 +699,6 @@ namespace DouBOLDash
             bmdviewer.Show();
         }
 
-        private void panel1_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
         Bmd obj;
         Vector3 min = Vector3.Zero;
         Vector3 max = Vector3.Zero;
@@ -827,7 +820,7 @@ namespace DouBOLDash
         {
             if (respList.SelectedIndex != -1)
             {
-
+                // something will happen here
             }
         }
 
@@ -1216,7 +1209,7 @@ namespace DouBOLDash
         {
             if (e.Button == MouseButtons.Right && objList.SelectedIndex != -1)
             {
-                contextMenuStrip1.Show(objList, e.Location);
+                objectContext.Show(objList, e.Location);
             }
         }
 
@@ -1226,11 +1219,6 @@ namespace DouBOLDash
                 MessageBox.Show("Select an item.");
         }
 
-        private void label3_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void musicInput_ValueChanged(object sender, EventArgs e)
         {
             foreach(BOLInformation bolInfo in bolInf)
@@ -1238,11 +1226,6 @@ namespace DouBOLDash
                 bolInfo.musicID = (byte)musicInput.Value;
                 musicSelect.SelectedIndex = (int)musicInput.Value - 0x21;
             }
-        }
-
-        private void propertyGrid1_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void propertyGrid1_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
@@ -1423,11 +1406,6 @@ namespace DouBOLDash
             btireader.Show();
         }
 
-        private void contextItemAdd_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void insertCourseModelToolStripMenuItem_Click(object sender, EventArgs e)
         {
             DialogResult res = MessageBox.Show("Select a course model to render. Be careful, however. This will overwrite the current course rendered! If you choose not to import one, hit 'Cancel'.", "Important", MessageBoxButtons.OKCancel);
@@ -1454,11 +1432,6 @@ namespace DouBOLDash
                     GL.EndList();
                 }
             }
-        }
-
-        private void propertyGrid3_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void propertyGrid8_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
@@ -1615,6 +1588,25 @@ namespace DouBOLDash
             GL.EndList();
         }
 
+        public void UpdateRouteGroups(bool isUpdate)
+        {
+            if (isUpdate)
+            {
+                routeGroupList.Items.Clear();
+                grpSetup.Clear();
+
+                foreach (RouteGroupSetup routeSetup in routeGroupList.Items)
+                {
+                    grpSetup.Add(routeSetup);
+                }
+            }
+
+            foreach (RouteGroupSetup routeSetup in grpSetup)
+            {
+                routeGroupList.Items.Add(routeSetup);
+            }
+        }
+
         public void UpdateRoutePoints(bool isUpdate)
         {
             GL.DeleteLists(routePointList, 1);
@@ -1712,6 +1704,26 @@ namespace DouBOLDash
             glControl1.Invalidate();
         }
 
+        public void UpdateCheckpointGroups(bool isUpdate)
+        {
+            if (isUpdate)
+            {
+                chkGRP.Clear();
+
+                foreach (CheckpointGroupObject chckPtGrp in chckGroup.Items)
+                {
+                    chkGRP.Add(chckPtGrp);
+                }
+
+                chckGroup.Items.Clear();
+            }
+
+            foreach (CheckpointGroupObject objEntry in chkGRP)
+            {
+                chckGroup.Items.Add(objEntry);
+            }
+        }
+
         /// <summary>
         /// Updates checkpoints
         /// </summary>
@@ -1729,6 +1741,8 @@ namespace DouBOLDash
                 {
                     chkobj.Add(chckPt);
                 }
+
+                chckList.Items.Clear();
             }
 
             float xprev1 = 0, yprev1 = 0, zprev1 = 0;
@@ -1858,16 +1872,149 @@ namespace DouBOLDash
 
         private void duplicatePointToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            EnemyRoute enemyRoute = (EnemyRoute)enemyRouteList.SelectedItem;
-            enemyRouteList.Items.Add(enemyRoute);
+            if (enemyRouteList.SelectedIndex != -1)
+            {
+                EnemyRoute enemyRoute = (EnemyRoute)enemyRouteList.SelectedItem;
+                enemyRouteList.Items.Add(enemyRoute);
 
-            UpdateEnemyPoints(true);
+                UpdateEnemyPoints(true);
+            }
         }
 
         private void bCOToolToolStripMenuItem_Click(object sender, EventArgs e)
         {
             BCOEditor bco = new BCOEditor();
             bco.Show();
+        }
+
+        private void deleteObjectToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (objList.SelectedIndex != -1)
+            {
+                objList.Items.Remove(objList.SelectedItem);
+                UpdateObjects(true);
+            }
+        }
+
+        private void duplicateObjectToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (objList.SelectedIndex != -1)
+            {
+                LevelObject levelObject = (LevelObject)objList.SelectedItem;
+                objList.Items.Add(levelObject);
+                UpdateObjects(true);
+            }
+        }
+
+        private void addCheckpointGroupToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CheckpointGroupObject checkpointGroup = new CheckpointGroupObject();
+            int count = chckGroup.Items.Count;
+
+            checkpointGroup.groupLink = (ushort)count;
+            chckGroup.Items.Add(checkpointGroup);
+            UpdateCheckpointGroups(true);
+        }
+
+        private void deleteCheckpointGroupToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (chckGroup.SelectedIndex != -1)
+            {
+                CheckpointGroupObject checkpointGrp = (CheckpointGroupObject)chckGroup.SelectedItem;
+
+                ushort id = checkpointGrp.index;
+
+                foreach (CheckpointObject chckObj in chckList.Items)
+                {
+                    if (chckObj.groupID == id)
+                    {
+                        DialogResult result = MessageBox.Show("This checkpoint group you want to delete has checkpoints still assigned to it. Deleting this will be dangerous. Are you sure you want to delete this?", "Dangerous Deletion", MessageBoxButtons.YesNo, MessageBoxIcon.Stop);
+
+                        if (result == DialogResult.Yes)
+                        {
+                            chckGroup.Items.Remove(chckGroup.SelectedItem);
+                            UpdateCheckpointGroups(true);
+                            return;
+                        }
+                        else
+                            return;
+                    }
+                    else
+                    {
+                        chckGroup.Items.Remove(chckGroup.SelectedItem);
+                        UpdateCheckpointGroups(true);
+                        return;
+                    }
+                }
+            }
+        }
+
+        private void duplicateCheckpointGroupToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (chckGroup.SelectedIndex != -1)
+            {
+                CheckpointGroupObject checkpointGrp = (CheckpointGroupObject)chckGroup.SelectedItem;
+                chckGroup.Items.Add(checkpointGrp);
+                UpdateCheckpointGroups(true);
+            }
+        }
+
+        private void addCheckpointToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CheckpointObject checkpoint = new CheckpointObject();
+            chckList.Items.Add(checkpoint);
+            UpdateCheckpoints(true);
+        }
+
+        private void insertCheckpointHereToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (chckList.SelectedIndex != -1)
+            {
+                CheckpointObject checkpoint = new CheckpointObject();
+                chckList.Items.Insert(chckList.SelectedIndex, checkpoint);
+                UpdateCheckpoints(true);
+            }
+        }
+
+        private void deleteCheckpointToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (chckList.SelectedIndex != -1)
+            {
+                chckList.Items.Remove(chckList.SelectedItem);
+                UpdateCheckpoints(true);
+            }
+        }
+
+        private void duplicateCheckpointToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (chckList.SelectedIndex != -1)
+            {
+                CheckpointObject checkpoint = (CheckpointObject)chckList.SelectedItem;
+                chckList.Items.Add(checkpoint);
+                UpdateCheckpoints(true);
+            }
+        }
+
+        private void chckList_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right && chckList.SelectedIndex != -1)
+            {
+                checkpointContext.Show(chckList, e.Location);
+            }
+        }
+
+        private void chckGroup_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right && chckGroup.SelectedIndex != -1)
+            {
+                checkpointGroupContext.Show(chckGroup, e.Location);
+            }
+        }
+
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AboutBox about = new AboutBox();
+            about.Show();
         }
 
         Bmd objModel;
