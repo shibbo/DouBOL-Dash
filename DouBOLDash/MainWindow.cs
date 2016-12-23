@@ -415,7 +415,6 @@ namespace DouBOLDash
             // after filling the lists with data we call functions that update the scene
             UpdateEnemyPoints(false);
             UpdateRouteGroups(false);
-            UpdateRouteGroups(false);
             UpdateRoutePoints(false);
             UpdateCheckpointGroups(false);
             UpdateCheckpoints(false);
@@ -1000,7 +999,9 @@ namespace DouBOLDash
         private void saveCourse(string file)
         {
             enmRoute.Clear(); // enemy route list
+            chkGRP.Clear(); // checkpoint group list
             chkobj.Clear(); // checkpoint list
+            grpSetup.Clear(); // route group list
             rpobj.Clear(); // route point list
             lvlobj.Clear(); // object list
             kartobj.Clear(); // kart list
@@ -1015,11 +1016,11 @@ namespace DouBOLDash
             {
                 // why would you even need negative entry counts
                 bolInfo.sec1Count = (ushort)enemyRouteList.Items.Count;
-                //bolInfo.sec2Count this doesn't have to be calculated until we make a list for it
+                bolInfo.sec2Count = (ushort)chckGroup.Items.Count;
                 bolInfo.sec5Count = (ushort)objList.Items.Count;
                 bolInfo.sec7Count = (ushort)areaList.Items.Count;
                 bolInfo.sec8Count = (ushort)cameraList.Items.Count;
-                //bolInfo.sec3Count this doesn't have to be calculated until we make a list for it
+                bolInfo.sec3Count = (ushort)routeGroupList.Items.Count;
                 bolInfo.sec9Count = (ushort)respList.Items.Count;
 
                 uint offset = 0x7C;
@@ -1086,9 +1087,19 @@ namespace DouBOLDash
                 enmRoute.Add(enmObj);
             }
 
+            foreach (CheckpointGroupObject chkGrpObj in chckGroup.Items)
+            {
+                chkGRP.Add(chkGrpObj);
+            }
+
             foreach (CheckpointObject chkObj in chckList.Items)
             {
                 chkobj.Add(chkObj);
+            }
+
+            foreach (RouteGroupSetup routeGroupObj in routeGroupList.Items)
+            {
+                grpSetup.Add(routeGroupObj);
             }
 
             foreach (RoutePointObject routeObj in routeList.Items)

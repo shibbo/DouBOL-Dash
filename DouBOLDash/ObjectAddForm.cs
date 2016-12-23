@@ -100,7 +100,7 @@ namespace DouBOLDash
             {"1198", "DK Mountain Tree"},
             {"1199", "Unknown Object"},
             {"119A", "Butterfly Group"},
-            {"119C", "Unknown Object"},
+            {"119C", "Bird Flock"},
             {"119E", "Water Geyser"},
             {"11A1", "Dinosaur (Land)"},
             {"11A4", "Dino Dino Jungle Tree"},
@@ -282,6 +282,7 @@ namespace DouBOLDash
 
             LevelObject trackObj = new LevelObject();
             trackObj.objID = objID;
+            trackObj.routeID = -1;
 
             MiscHacks misc = new MiscHacks();
             trackObj.modelName = misc.returnModel(objID);
@@ -327,6 +328,7 @@ namespace DouBOLDash
 
             LevelObject trackObj = new LevelObject();
             trackObj.objID = objectID;
+            trackObj.routeID = -1;
             MiscHacks misc = new MiscHacks();
             trackObj.modelName = misc.returnModel(objectID);
             trackObj.friendlyName = misc.returnName(objectID);
