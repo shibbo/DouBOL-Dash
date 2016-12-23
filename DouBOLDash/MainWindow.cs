@@ -18,7 +18,6 @@ using System.Windows.Forms;
 using System.IO;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
-using System.Diagnostics;
 
 namespace DouBOLDash
 {
