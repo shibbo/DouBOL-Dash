@@ -139,6 +139,12 @@ namespace DouBOLDash
             this.duplicateCheckpointToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.selectAllInGroupToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.unknown7 = new System.Windows.Forms.NumericUpDown();
+            this.unknown8 = new System.Windows.Forms.NumericUpDown();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.checkForUpdateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -173,6 +179,8 @@ namespace DouBOLDash
             this.enemyRouteContext.SuspendLayout();
             this.checkpointGroupContext.SuspendLayout();
             this.checkpointContext.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.unknown7)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.unknown8)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -429,11 +437,11 @@ namespace DouBOLDash
             this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.groupBox2.Controls.Add(this.pictureBox1);
-            this.groupBox2.Location = new System.Drawing.Point(0, 262);
+            this.groupBox2.Location = new System.Drawing.Point(0, 305);
             this.groupBox2.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.groupBox2.Size = new System.Drawing.Size(421, 370);
+            this.groupBox2.Size = new System.Drawing.Size(421, 327);
             this.groupBox2.TabIndex = 2;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Track Minimap";
@@ -444,13 +452,17 @@ namespace DouBOLDash
             this.pictureBox1.Location = new System.Drawing.Point(3, 22);
             this.pictureBox1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(415, 344);
+            this.pictureBox1.Size = new System.Drawing.Size(415, 301);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.label8);
+            this.groupBox1.Controls.Add(this.label7);
+            this.groupBox1.Controls.Add(this.unknown8);
+            this.groupBox1.Controls.Add(this.unknown7);
             this.groupBox1.Controls.Add(this.label6);
             this.groupBox1.Controls.Add(this.musicInput);
             this.groupBox1.Controls.Add(this.label5);
@@ -467,7 +479,7 @@ namespace DouBOLDash
             this.groupBox1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.groupBox1.Size = new System.Drawing.Size(424, 264);
+            this.groupBox1.Size = new System.Drawing.Size(424, 309);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Track Information";
@@ -487,7 +499,7 @@ namespace DouBOLDash
             this.musicInput.Location = new System.Drawing.Point(117, 75);
             this.musicInput.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.musicInput.Maximum = new decimal(new int[] {
-            59,
+            69,
             0,
             0,
             0});
@@ -851,7 +863,7 @@ namespace DouBOLDash
             this.groupBox6.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.groupBox6.Name = "groupBox6";
             this.groupBox6.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.groupBox6.Size = new System.Drawing.Size(422, 594);
+            this.groupBox6.Size = new System.Drawing.Size(422, 609);
             this.groupBox6.TabIndex = 2;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Routes";
@@ -860,10 +872,10 @@ namespace DouBOLDash
             // 
             this.propertyGrid1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
-            this.propertyGrid1.Location = new System.Drawing.Point(3, 488);
+            this.propertyGrid1.Location = new System.Drawing.Point(3, 373);
             this.propertyGrid1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.propertyGrid1.Name = "propertyGrid1";
-            this.propertyGrid1.Size = new System.Drawing.Size(408, 189);
+            this.propertyGrid1.Size = new System.Drawing.Size(408, 228);
             this.propertyGrid1.TabIndex = 1;
             this.propertyGrid1.ToolbarVisible = false;
             this.propertyGrid1.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.propertyGrid1_PropertyValueChanged);
@@ -875,7 +887,7 @@ namespace DouBOLDash
             this.routeList.Location = new System.Drawing.Point(3, 21);
             this.routeList.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.routeList.Name = "routeList";
-            this.routeList.Size = new System.Drawing.Size(408, 463);
+            this.routeList.Size = new System.Drawing.Size(408, 344);
             this.routeList.TabIndex = 0;
             this.routeList.SelectedIndexChanged += new System.EventHandler(this.routeList_SelectedIndexChanged);
             this.routeList.MouseDown += new System.Windows.Forms.MouseEventHandler(this.routeList_MouseDown);
@@ -928,7 +940,7 @@ namespace DouBOLDash
             this.startingPointTab.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.startingPointTab.Name = "startingPointTab";
             this.startingPointTab.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.startingPointTab.Size = new System.Drawing.Size(424, 764);
+            this.startingPointTab.Size = new System.Drawing.Size(415, 613);
             this.startingPointTab.TabIndex = 4;
             this.startingPointTab.ToolTipText = "Starting Points";
             this.startingPointTab.UseVisualStyleBackColor = true;
@@ -941,7 +953,7 @@ namespace DouBOLDash
             this.propertyGrid8.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.propertyGrid8.Name = "propertyGrid8";
             this.propertyGrid8.PropertySort = System.Windows.Forms.PropertySort.Categorized;
-            this.propertyGrid8.Size = new System.Drawing.Size(415, 544);
+            this.propertyGrid8.Size = new System.Drawing.Size(415, 393);
             this.propertyGrid8.TabIndex = 1;
             this.propertyGrid8.ToolbarVisible = false;
             this.propertyGrid8.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.propertyGrid8_PropertyValueChanged);
@@ -1131,9 +1143,10 @@ namespace DouBOLDash
             this.insertRouteHereToolStripMenuItem,
             this.insertRouteAtBottomToolStripMenuItem,
             this.duplicatePointToolStripMenuItem,
-            this.deleteRoutePointToolStripMenuItem});
+            this.deleteRoutePointToolStripMenuItem,
+            this.selectAllInGroupToolStripMenuItem});
             this.enemyRouteContext.Name = "enemyRouteContext";
-            this.enemyRouteContext.Size = new System.Drawing.Size(232, 92);
+            this.enemyRouteContext.Size = new System.Drawing.Size(232, 114);
             // 
             // insertRouteHereToolStripMenuItem
             // 
@@ -1252,7 +1265,8 @@ namespace DouBOLDash
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.aboutToolStripMenuItem});
+            this.aboutToolStripMenuItem,
+            this.checkForUpdateToolStripMenuItem});
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
             this.toolStripMenuItem1.Size = new System.Drawing.Size(49, 19);
             this.toolStripMenuItem1.Text = "Other";
@@ -1263,6 +1277,80 @@ namespace DouBOLDash
             this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.aboutToolStripMenuItem.Text = "About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
+            // 
+            // selectAllInGroupToolStripMenuItem
+            // 
+            this.selectAllInGroupToolStripMenuItem.Name = "selectAllInGroupToolStripMenuItem";
+            this.selectAllInGroupToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
+            this.selectAllInGroupToolStripMenuItem.Text = "Select All In Group";
+            this.selectAllInGroupToolStripMenuItem.Click += new System.EventHandler(this.selectAllInGroupToolStripMenuItem_Click);
+            // 
+            // unknown7
+            // 
+            this.unknown7.DecimalPlaces = 2;
+            this.unknown7.Enabled = false;
+            this.unknown7.Location = new System.Drawing.Point(118, 245);
+            this.unknown7.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.unknown7.Maximum = new decimal(new int[] {
+            2147483647,
+            0,
+            0,
+            0});
+            this.unknown7.Minimum = new decimal(new int[] {
+            2147483647,
+            0,
+            0,
+            -2147483648});
+            this.unknown7.Name = "unknown7";
+            this.unknown7.Size = new System.Drawing.Size(140, 25);
+            this.unknown7.TabIndex = 13;
+            this.unknown7.ValueChanged += new System.EventHandler(this.unknown7_ValueChanged);
+            // 
+            // unknown8
+            // 
+            this.unknown8.DecimalPlaces = 2;
+            this.unknown8.Enabled = false;
+            this.unknown8.Location = new System.Drawing.Point(118, 278);
+            this.unknown8.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.unknown8.Maximum = new decimal(new int[] {
+            2147483647,
+            0,
+            0,
+            0});
+            this.unknown8.Minimum = new decimal(new int[] {
+            2147483647,
+            0,
+            0,
+            -2147483648});
+            this.unknown8.Name = "unknown8";
+            this.unknown8.Size = new System.Drawing.Size(140, 25);
+            this.unknown8.TabIndex = 14;
+            this.unknown8.ValueChanged += new System.EventHandler(this.unknown8_ValueChanged);
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(8, 247);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(104, 17);
+            this.label7.TabIndex = 15;
+            this.label7.Text = "Unknown Float 4";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(8, 280);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(104, 17);
+            this.label8.TabIndex = 16;
+            this.label8.Text = "Unknown Float 5";
+            // 
+            // checkForUpdateToolStripMenuItem
+            // 
+            this.checkForUpdateToolStripMenuItem.Name = "checkForUpdateToolStripMenuItem";
+            this.checkForUpdateToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+            this.checkForUpdateToolStripMenuItem.Text = "Check For Update";
+            this.checkForUpdateToolStripMenuItem.Click += new System.EventHandler(this.checkForUpdateToolStripMenuItem_Click);
             // 
             // MainWindow
             // 
@@ -1319,6 +1407,8 @@ namespace DouBOLDash
             this.enemyRouteContext.ResumeLayout(false);
             this.checkpointGroupContext.ResumeLayout(false);
             this.checkpointContext.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.unknown7)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.unknown8)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1422,6 +1512,12 @@ namespace DouBOLDash
         private System.Windows.Forms.ToolStripMenuItem duplicateCheckpointToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem selectAllInGroupToolStripMenuItem;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label7;
+        public System.Windows.Forms.NumericUpDown unknown8;
+        public System.Windows.Forms.NumericUpDown unknown7;
+        private System.Windows.Forms.ToolStripMenuItem checkForUpdateToolStripMenuItem;
     }
 }
 

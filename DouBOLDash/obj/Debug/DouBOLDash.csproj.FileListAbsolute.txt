@@ -62,3 +62,4 @@ C:\Users\m\DouBOL-Dash\DouBOLDash\obj\Debug\DouBOLDash.SettingsWindow.resources
 C:\Users\m\DouBOL-Dash\DouBOLDash\obj\Debug\DouBOLDash.csproj.GenerateResource.Cache
 C:\Users\m\DouBOL-Dash\DouBOLDash\obj\Debug\DouBOLDash.BCOEditor.resources
 C:\Users\m\DouBOL-Dash\DouBOLDash\obj\Debug\DouBOLDash.AboutBox.resources
+C:\Users\m\DouBOL-Dash\DouBOLDash\obj\Debug\DouBOLDash.UpdateForm.resources

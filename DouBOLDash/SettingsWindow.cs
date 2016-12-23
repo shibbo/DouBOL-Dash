@@ -72,6 +72,11 @@ namespace DouBOLDash
                 showTris.Checked = true;
             else
                 showTris.Checked = false;
+
+            if (Properties.Settings.Default.checkForUpdate == true)
+                checkForUpdates.Checked = true;
+            else
+                checkForUpdates.Checked = false;
         }
 
         private void enableWireframe_CheckedChanged(object sender, EventArgs e)
@@ -265,6 +270,20 @@ namespace DouBOLDash
             else
             {
                 Properties.Settings.Default.showTris = false;
+                Properties.Settings.Default.Save();
+            }
+        }
+
+        private void checkForUpdates_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkForUpdates.Checked)
+            {
+                Properties.Settings.Default.checkForUpdate = true;
+                Properties.Settings.Default.Save();
+            }
+            else
+            {
+                Properties.Settings.Default.checkForUpdate = false;
                 Properties.Settings.Default.Save();
             }
         }

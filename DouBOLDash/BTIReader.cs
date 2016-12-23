@@ -14,6 +14,7 @@
 using System;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Drawing.Imaging;
 using System.IO;
 
 namespace DouBOLDash
@@ -38,6 +39,17 @@ namespace DouBOLDash
                 bti = BTIFile.ReadBTIToBitmap(fileb);
                 pictureBox1.Image = bti;
                 fileb.Close();
+            }
+        }
+
+        private void exportToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog saveImage = new SaveFileDialog();
+            saveImage.Filter = "PNG files (*.png)|*.png|All files (*.*)|*.*";
+
+            if (saveImage.ShowDialog() == DialogResult.OK)
+            {
+                pictureBox1.Image.Save(saveImage.FileName, ImageFormat.Png);
             }
         }
     }

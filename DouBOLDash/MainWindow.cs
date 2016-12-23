@@ -18,6 +18,7 @@ using System.Windows.Forms;
 using System.IO;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
+using System.Diagnostics;
 
 namespace DouBOLDash
 {
@@ -99,6 +100,15 @@ namespace DouBOLDash
             {0x39, "Unused"},
             {0x3A, "Cookie Land"},
             {0x3B, "Pipe Plaza"},
+            {0x3C, "Unused"},
+            {0x3D, "Unused"},
+            {0x3E, "Unused"},
+            {0x3F, "Unused"},
+            {0x40, "Unused"},
+            {0x41, "Unused"},
+            {0x42, "Unused"},
+            {0x43, "Unused"},
+            {0x44, "Unused"},
             {0x45, "Ending Credits"}
         };
 
@@ -131,6 +141,13 @@ namespace DouBOLDash
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            if (Properties.Settings.Default.checkForUpdate == true)
+            {
+                UpdateForm update = new UpdateForm();
+                update.doUpdateCheck(false);
+                update.Show();
+            }
+
             tabControl1.SizeMode = TabSizeMode.Normal;
             tabControl1.SizeMode = TabSizeMode.Fixed;
             tabControl1.ShowToolTips = true;
@@ -199,6 +216,8 @@ namespace DouBOLDash
             unknown3.Enabled = true;
             unknown4.Enabled = true;
             unknown5.Enabled = true;
+            unknown7.Enabled = true;
+            unknown8.Enabled = true;
 
             // clear all listboxes
             enemyRouteList.Items.Clear();
@@ -386,6 +405,8 @@ namespace DouBOLDash
                 unknown3.Value = (decimal)bolEntry.unk3;
                 unknown4.Value = (decimal)bolEntry.unk4;
                 unknown5.Value = (decimal)bolEntry.unk5;
+                unknown7.Value = (decimal)bolEntry.unk7;
+                unknown8.Value = (decimal)bolEntry.unk8;
 
                 setMusic(musicID);
                 lapCounter.Value = lapCount;
@@ -832,7 +853,7 @@ namespace DouBOLDash
 
                 chckList.ClearSelected();
 
-                UpdateRespawns(chckList);
+                UpdateRespawns(true);
 
                 glControl1.Refresh();
             }
@@ -1262,35 +1283,6 @@ namespace DouBOLDash
             }
         }
 
-        public void UpdateRespawns(ListBox list)
-        {
-            List<RespawnObject> shitballs = new List<RespawnObject>();
-
-            foreach (RespawnObject respobj in list.Items)
-            {
-                shitballs.Add(respobj);
-            }
-
-            GL.DeleteLists(respawnList, 1);
-            list.Items.Clear();
-
-            respawnList = GL.GenLists(1);
-            GL.NewList(respawnList, ListMode.Compile);
-            foreach (RespawnObject resp in shitballs)
-            {
-                GL.PushMatrix();
-                GL.Translate(resp.xPos, resp.yPos, resp.zPos);
-                GL.Scale(1f, 1f, 1f);
-                DrawCube(1f, 0.863f, 0f, true, true, false);
-                GL.PopMatrix();
-
-                list.Items.Add(resp);
-            }
-            GL.EndList();
-
-            glControl1.Refresh();
-        }
-
         private void propertyGrid2_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
         {
             UpdateCameras(true);
@@ -1456,16 +1448,7 @@ namespace DouBOLDash
 
         private void selectAllEnemy_Click(object sender, EventArgs e)
         {
-            EnemyRoute curRoute = (EnemyRoute)enemyRouteList.SelectedItem;
-            byte groupID = curRoute.group;
 
-            foreach(EnemyRoute enemyRoute in enemyRouteList.Items)
-            {
-                if (enemyRoute.group == groupID)
-                {
-                    Console.WriteLine("found group " + groupID);
-                }
-            }
         }
 
         private void closeToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1477,6 +1460,7 @@ namespace DouBOLDash
         {
             RoutePointObject rtPt = (RoutePointObject)routeList.SelectedItem;
             uint groupID = rtPt.groupID;
+            uint nodeCount = 0;
 
             selectedList = GL.GenLists(1);
             GL.NewList(selectedList, ListMode.Compile);
@@ -1489,9 +1473,12 @@ namespace DouBOLDash
                     GL.Scale(2f, 2f, 2f);
                     DrawCube(1f, 1f, 1f, false, false, false);
                     GL.PopMatrix();
+                    nodeCount += 1;
                 }
             }
             GL.EndList();
+
+            selectionInfo.Text = "Currently selected: " + nodeCount + " node(s) in route group " + groupID + ".";
         }
 
         private void routeList_MouseDown(object sender, MouseEventArgs e)
@@ -2017,6 +2004,55 @@ namespace DouBOLDash
             about.Show();
         }
 
+        private void selectAllInGroupToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            EnemyRoute curRoute = (EnemyRoute)enemyRouteList.SelectedItem;
+            byte groupID = curRoute.group;
+            uint enemyCount = 0;
+
+            selectedList = GL.GenLists(1);
+            GL.NewList(selectedList, ListMode.Compile);
+            foreach (EnemyRoute enemyRoute in enemyRouteList.Items)
+            {
+                if (enemyRoute.group == groupID)
+                {
+                    GL.PushMatrix();
+                    GL.Translate(enemyRoute.xPos, enemyRoute.yPos, enemyRoute.zPos);
+                    GL.Scale(2f, 2f, 2f);
+                    DrawCube(1f, 1f, 1f, false, false, false);
+                    GL.PopMatrix();
+                    enemyCount += 1;
+                }
+            }
+            GL.EndList();
+
+            selectionInfo.Text = "Currently selected: " + enemyCount + " node(s) in enemy group " + groupID + ".";
+        }
+
+        private void unknown7_ValueChanged(object sender, EventArgs e)
+        {
+            foreach (BOLInformation bol in bolInf)
+            {
+                bol.unk7 = (float)unknown7.Value;
+            }
+        }
+
+        private void unknown8_ValueChanged(object sender, EventArgs e)
+        {
+            foreach (BOLInformation bol in bolInf)
+            {
+                bol.unk8 = (float)unknown8.Value;
+            }
+        }
+
+        private void checkForUpdateToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.knowsNewUpdate = false; // has to be set in order for the dialog to even show
+
+            UpdateForm update = new UpdateForm();
+            update.doUpdateCheck(true);
+        }
+
         Bmd objModel;
         public void UpdateObjects(bool isUpdate)
         {
@@ -2081,9 +2117,10 @@ namespace DouBOLDash
 
         public void UpdateKartPoints(bool isUpdate)
         {
+            GL.DeleteLists(selectedList, 1);
+
             if (isUpdate)
             {
-                GL.DeleteLists(selectedList, 1);
                 GL.DeleteLists(kartList, 1);
                 kartobj.Clear();
                 kartPointList.Refresh();
@@ -2115,9 +2152,10 @@ namespace DouBOLDash
 
         public void UpdateAreas(bool isUpdate)
         {
+            GL.DeleteLists(selectedList, 1);
+
             if (isUpdate)
             {
-                GL.DeleteLists(selectedList, 1);
                 areaobj.Clear();
                 areaList.Refresh();
 
@@ -2210,6 +2248,7 @@ namespace DouBOLDash
                 GL.Scale(1f, 1f, 1f);
                 DrawCube(1f, 0.863f, 0f, true, true, false);
                 GL.PopMatrix();
+
                 respList.Items.Add(objEntry);
             }
             GL.EndList();

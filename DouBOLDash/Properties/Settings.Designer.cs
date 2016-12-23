@@ -238,5 +238,29 @@ namespace DouBOLDash.Properties {
                 this["showTris"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool checkForUpdate {
+            get {
+                return ((bool)(this["checkForUpdate"]));
+            }
+            set {
+                this["checkForUpdate"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool knowsNewUpdate {
+            get {
+                return ((bool)(this["knowsNewUpdate"]));
+            }
+            set {
+                this["knowsNewUpdate"] = value;
+            }
+        }
     }
 }

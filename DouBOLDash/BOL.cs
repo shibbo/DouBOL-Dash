@@ -32,11 +32,11 @@ namespace DouBOLDash
         BOLInformation bolInfo = new BOLInformation();
 
         string type;
-        float unk3, unk4, unk5;
+        float unk3, unk4, unk5, unk7, unk8;
         uint magic, unk1, unk2;
         byte numLaps, musicID;
         ushort sec1Count, sec2Count, sec3Count, sec5Count, sec7Count, sec8Count, sec9Count;
-        uint unk6, unk7, unk8, unk9, unk10, unk11, fileStart;
+        uint unk6, unk9, unk10, unk11, fileStart;
         uint sec1Offs, sec2Offs, sec3Offs, sec4Offs, sec5Offs, sec6Offs, sec7Offs, sec8Offs, sec9Offs, sec10Offs, sec11Offs;
 
         public BOL()
@@ -110,8 +110,8 @@ namespace DouBOLDash
             counts.Add(bolInfo.sec9Count);
 
             bolInfo.unk6 = reader.ReadUInt32();
-            bolInfo.unk7 = reader.ReadUInt32();
-            bolInfo.unk8 = reader.ReadUInt32();
+            bolInfo.unk7 = reader.ReadSingle();
+            bolInfo.unk8 = reader.ReadSingle();
             bolInfo.unk9 = reader.ReadUInt32();
             bolInfo.unk10 = reader.ReadUInt32();
             bolInfo.unk11 = reader.ReadUInt32();
@@ -1176,11 +1176,11 @@ namespace DouBOLDash
     class BOLInformation
     {
         public string type;
-        public float unk3, unk4, unk5;
+        public float unk3, unk4, unk5, unk7, unk8;
         public uint magic, unk1, unk2;
         public byte numLaps, musicID;
         public ushort sec1Count, sec2Count, sec3Count, sec4Count, sec5Count, sec6Count, sec7Count, sec8Count, sec9Count;
-        public uint unk6, unk7, unk8, unk9, unk10, unk11, fileStart;
+        public uint unk6, unk9, unk10, unk11, fileStart;
         public uint sec1Offs, sec2Offs, sec3Offs, sec4Offs, sec5Offs, sec6Offs, sec7Offs, sec8Offs, sec9Offs, sec10Offs, sec11Offs;
         public int fileSize;
         

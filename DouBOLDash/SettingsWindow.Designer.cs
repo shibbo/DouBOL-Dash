@@ -55,10 +55,13 @@ namespace DouBOLDash
             this.showCameras = new System.Windows.Forms.CheckBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.showVerts = new System.Windows.Forms.CheckBox();
             this.showTris = new System.Windows.Forms.CheckBox();
+            this.showVerts = new System.Windows.Forms.CheckBox();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.checkForUpdates = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // buttonOK
@@ -206,21 +209,10 @@ namespace DouBOLDash
             this.groupBox2.Controls.Add(this.showVerts);
             this.groupBox2.Location = new System.Drawing.Point(162, 5);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(186, 321);
+            this.groupBox2.Size = new System.Drawing.Size(186, 70);
             this.groupBox2.TabIndex = 12;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Collision Rendering";
-            // 
-            // showVerts
-            // 
-            this.showVerts.AutoSize = true;
-            this.showVerts.Location = new System.Drawing.Point(7, 20);
-            this.showVerts.Name = "showVerts";
-            this.showVerts.Size = new System.Drawing.Size(96, 17);
-            this.showVerts.TabIndex = 0;
-            this.showVerts.Text = "Show Verticies";
-            this.showVerts.UseVisualStyleBackColor = true;
-            this.showVerts.CheckedChanged += new System.EventHandler(this.showVerts_CheckedChanged);
             // 
             // showTris
             // 
@@ -233,11 +225,44 @@ namespace DouBOLDash
             this.showTris.UseVisualStyleBackColor = true;
             this.showTris.CheckedChanged += new System.EventHandler(this.showTris_CheckedChanged);
             // 
+            // showVerts
+            // 
+            this.showVerts.AutoSize = true;
+            this.showVerts.Location = new System.Drawing.Point(7, 20);
+            this.showVerts.Name = "showVerts";
+            this.showVerts.Size = new System.Drawing.Size(96, 17);
+            this.showVerts.TabIndex = 0;
+            this.showVerts.Text = "Show Verticies";
+            this.showVerts.UseVisualStyleBackColor = true;
+            this.showVerts.CheckedChanged += new System.EventHandler(this.showVerts_CheckedChanged);
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.checkForUpdates);
+            this.groupBox3.Location = new System.Drawing.Point(162, 82);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(186, 244);
+            this.groupBox3.TabIndex = 13;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Program Settings";
+            // 
+            // checkForUpdates
+            // 
+            this.checkForUpdates.AutoSize = true;
+            this.checkForUpdates.Location = new System.Drawing.Point(7, 20);
+            this.checkForUpdates.Name = "checkForUpdates";
+            this.checkForUpdates.Size = new System.Drawing.Size(172, 17);
+            this.checkForUpdates.TabIndex = 0;
+            this.checkForUpdates.Text = "Check For Updates On Startup";
+            this.checkForUpdates.UseVisualStyleBackColor = true;
+            this.checkForUpdates.CheckedChanged += new System.EventHandler(this.checkForUpdates_CheckedChanged);
+            // 
             // SettingsWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(357, 357);
+            this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.buttonOK);
@@ -248,6 +273,8 @@ namespace DouBOLDash
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -269,5 +296,7 @@ namespace DouBOLDash
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.CheckBox showTris;
         private System.Windows.Forms.CheckBox showVerts;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.CheckBox checkForUpdates;
     }
 }
