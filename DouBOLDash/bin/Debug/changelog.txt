@@ -1,7 +1,4 @@
-DouBOL Dash vX.X Changelog
-Generated 12/23/16
+DouBOL Dash v0.1 Beta Changelog
+Generated 12/24/16
 
-- do shit
-- do more shit
-- rofl
-- ayyyy
+- initial release

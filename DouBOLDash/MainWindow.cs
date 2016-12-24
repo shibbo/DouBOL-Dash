@@ -345,10 +345,10 @@ namespace DouBOLDash
                 // loads the BTI, converts to bitmap, and loads it into picture box
                 string bti_path = Properties.Settings.Default.curFile.Replace("course", "map");
 
-                if (File.Exists(Properties.Settings.Default.curDir + "\\" + bti_path + ".bti"))
+                if (File.Exists(Properties.Settings.Default.curDir + "/" + bti_path + ".bti"))
                 {
                     FileBase fileb = new FileBase();
-                    fileb.Stream = new FileStream(Properties.Settings.Default.curDir + "\\" + bti_path + ".bti", FileMode.Open);
+                    fileb.Stream = new FileStream(Properties.Settings.Default.curDir + "/" + bti_path + ".bti", FileMode.Open);
                     minimap = BTIFile.ReadBTIToBitmap(fileb);
                     pictureBox1.Image = minimap;
                     fileb.Close();
@@ -368,16 +368,16 @@ namespace DouBOLDash
                 if (Properties.Settings.Default.bmdEnabled != false)
                 {
                     FileBase fb = new FileBase();
-                    if (File.Exists(Properties.Settings.Default.curDir + "\\" + Properties.Settings.Default.curFile + ".bmd"))
+                    if (File.Exists(Properties.Settings.Default.curDir + "/" + Properties.Settings.Default.curFile + ".bmd"))
                     {
-                        Console.WriteLine(Properties.Settings.Default.curDir + "\\" + Properties.Settings.Default.curFile + ".bmd");
-                        fb.Stream = new FileStream(Properties.Settings.Default.curDir + "\\" + Properties.Settings.Default.curFile + ".bmd", FileMode.Open);
+                        Console.WriteLine(Properties.Settings.Default.curDir + "/" + Properties.Settings.Default.curFile + ".bmd");
+                        fb.Stream = new FileStream(Properties.Settings.Default.curDir + "/" + Properties.Settings.Default.curFile + ".bmd", FileMode.Open);
                         course = new Bmd(fb);
                         fb.Close();
                     }
                     else
                     {
-                        MessageBox.Show(Properties.Settings.Default.curDir + "\\" + Properties.Settings.Default.curFile + ".bmd doesn't exist.");
+                        MessageBox.Show(Properties.Settings.Default.curDir + "/" + Properties.Settings.Default.curFile + ".bmd doesn't exist.");
                         course = null;
                     }
                 }
@@ -992,7 +992,7 @@ namespace DouBOLDash
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
             // saves to the file already open
-            saveCourse(Properties.Settings.Default.curDir + "\\" + Properties.Settings.Default.curFile + ".bol");
+            saveCourse(Properties.Settings.Default.curDir + "/" + Properties.Settings.Default.curFile + ".bol");
         }
 
 
@@ -2359,9 +2359,9 @@ namespace DouBOLDash
                     else
                     {
                         FileBase objFB = new FileBase();
-                        if (File.Exists(Properties.Settings.Default.curDir + "\\objects\\" + objEntry.modelName + ".bmd"))
+                        if (File.Exists(Properties.Settings.Default.curDir + "/objects/" + objEntry.modelName + ".bmd"))
                         {
-                            objFB.Stream = new FileStream(Properties.Settings.Default.curDir + "\\objects\\" + objEntry.modelName + ".bmd", FileMode.Open);
+                            objFB.Stream = new FileStream(Properties.Settings.Default.curDir + "/objects/" + objEntry.modelName + ".bmd", FileMode.Open);
                             Bmd obj = new Bmd(objFB);
                             GL.Scale(objEntry.xScale, objEntry.yScale, objEntry.zScale);
                             DrawBMD(obj);

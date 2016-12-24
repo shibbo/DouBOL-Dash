@@ -312,16 +312,16 @@ namespace DouBOLDash
             if (trackObj.modelName != "null")
             {
                 FileBase objFB = new FileBase();
-                if (File.Exists(Properties.Settings.Default.curDir + "\\objects\\" + trackObj.modelName + ".bmd"))
+                if (File.Exists(Properties.Settings.Default.curDir + "/objects/" + trackObj.modelName + ".bmd"))
                 {
-                    objFB.Stream = new FileStream(Properties.Settings.Default.curDir + "\\objects\\" + trackObj.modelName + ".bmd", FileMode.Open);
+                    objFB.Stream = new FileStream(Properties.Settings.Default.curDir + "/objects/" + trackObj.modelName + ".bmd", FileMode.Open);
                     rofl.Items.Add(trackObj);
                     rofl.Refresh();
                     Close();
                 }
                 else
                 {
-                    MessageBox.Show("File \\objects\\" + trackObj.modelName + ".bmd does not exist. Please add this file and it's depencies before you can add this object.");
+                    MessageBox.Show("File /objects/" + trackObj.modelName + ".bmd does not exist. Please add this file and it's dependencies before you can add this object.");
                     Close();
                     return;
                 }
@@ -357,16 +357,16 @@ namespace DouBOLDash
             if (trackObj.modelName != "null")
             {
                 FileBase objFB = new FileBase();
-                if (File.Exists(Properties.Settings.Default.curDir + "\\objects\\" + trackObj.modelName + ".bmd"))
+                if (File.Exists(Properties.Settings.Default.curDir + "/objects/" + trackObj.modelName + ".bmd"))
                 {
-                    objFB.Stream = new FileStream(Properties.Settings.Default.curDir + "\\objects\\" + trackObj.modelName + ".bmd", FileMode.Open);
+                    objFB.Stream = new FileStream(Properties.Settings.Default.curDir + "/objects/" + trackObj.modelName + ".bmd", FileMode.Open);
                     rofl.Items.Add(trackObj);
                     rofl.Refresh();
                     Close();
                 }
                 else
                 {
-                    MessageBox.Show("File \\objects\\" + trackObj.modelName + ".bmd does not exist. Please add this file and it's depencies before you can add this object.");
+                    MessageBox.Show("File /objects/" + trackObj.modelName + ".bmd does not exist. Please add this file and it's depencies before you can add this object.");
                     Close();
                     return;
                 }
