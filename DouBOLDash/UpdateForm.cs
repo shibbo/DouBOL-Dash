@@ -26,7 +26,7 @@ namespace DouBOLDash
             InitializeComponent();
         }
 
-        public string NEXT_VER = "v0.1";
+        public string NEXT_VER = "v0.2";
 
         private void UpdateForm_Load(object sender, EventArgs e)
         {

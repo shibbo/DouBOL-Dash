@@ -483,7 +483,7 @@ namespace DouBOLDash
                 RouteGroupSetup group = new RouteGroupSetup();
                 group.pointLength = reader.ReadUInt16();
                 group.pointStart = reader.ReadUInt16();
-                this.groupID = i;
+                group.groupID = i;
 
                 reader.ReadBytes(12);
 
@@ -1254,6 +1254,7 @@ namespace DouBOLDash
     public class RouteGroupSetup
     {
         public ushort pointLength, pointStart;
+        public uint groupID;
 
         [DisplayName("Length"), Category("Settings"), Description("The amount of points this group has.")]
         public ushort PointLength
@@ -1267,6 +1268,13 @@ namespace DouBOLDash
         {
             get { return pointStart; }
             set { pointStart = value; }
+        }
+
+        [DisplayName("Group ID"), Category("Settings"), Description("The group id."), ReadOnly(true)]
+        public uint GroupID
+        {
+            get { return groupID; }
+            set { groupID = value; }
         }
     }
 

@@ -208,8 +208,8 @@ namespace DouBOLDash
             this.selectFacesWithCollisionTypeToolStripMenuItem,
             this.settingsToolStripMenuItem});
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(62, 20);
-            this.toolStripMenuItem1.Text = "Do Stuff";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(61, 20);
+            this.toolStripMenuItem1.Text = "Options";
             // 
             // selectFacesWithCollisionTypeToolStripMenuItem
             // 

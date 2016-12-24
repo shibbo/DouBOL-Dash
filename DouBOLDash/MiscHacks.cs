@@ -137,7 +137,7 @@ namespace DouBOLDash
             {"11A6", "Dinosaur (Flying)"},
             {"125D", "Thwomp"},
             {"125E", "Lavaball"},
-            {"125F", "Unknown Object"},
+            {"125F", "Metal Bowser Statue"},
             {"1261", "Unknown Object"},
             {"1262", "Fire Ring"},
             {"1327", "Unknown Object"},
@@ -181,6 +181,7 @@ namespace DouBOLDash
             {4508},
             {4517},
             {4518},
+            {4703},
             {5003},
             {5102}
         };

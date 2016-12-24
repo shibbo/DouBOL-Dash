@@ -108,7 +108,7 @@ namespace DouBOLDash
             {"11A6", "Dinosaur (Flying)"},
             {"125D", "Thwomp"},
             {"125E", "Lavaball"},
-            {"125F", "Unknown Object"},
+            {"125F", "Metal Bowser Statue"},
             {"1261", "Unknown Object"},
             {"1262", "Fire Ring"},
             {"1327", "Unknown Object"},
@@ -137,8 +137,31 @@ namespace DouBOLDash
         }
 
         Dictionary<int, string> descList = new Dictionary<int, string>() {
-            {0, "A regular item box. Item boxes generate an item for the player, and can be singular, double, or quadtriple."},
-            {4, "A route controlled item box. It functions the same as item boxes, except that it needs a route. Item boxes generate an item for the player, and can be singular, double, or quadtriple. Note: This needs a path to function properly!" }
+            {0, "A regular item box. Item boxes generate an item for the player, and can be singular, double, or quadtruple."},
+            {4, "A route controlled item box. It functions the same as item boxes, except that it needs a route. Item boxes generate an item for the player, and can be singular, double, or quadtruple. \n\nNote: This needs a path to function properly!"},
+            {14, "An enemy that will spring the player up into the air if you run into it! Beware!\n\nNote: Needs a route to function!"},
+            {15, "A nice seagull flock for decoration.\n\nNote: Needs a route to function!"},
+            {16, "A tree from Peach Beach."},
+            {18, "A Noki from Super Mario Sunshine. Is placed out of bounds of the player for functionality."},
+            {19, "A pianta from Super Mario Sunshine. Is placed out of bounds of the player for functionality." },
+            {20, "A pianta from Super Mario Sunshine. Is placed out of bounds of the player for functionality." },
+            {21, "A pianta from Super Mario Sunshine. Is placed out of bounds of the player for functionality." },
+            {31, "A chain chomp that hops around stuck to a chain. Every now and then, it will extend and attack players nearby."},
+            {32, "A blimp with a logo of Luigi on it.\n\nNote: Needs a route to function!"},
+            {33, "One of the oldest enemies that Mario knows. Waddles back and forth, and will spin the player out upon contact.\n\nNote: Needs a route to function!"},
+            {34, "A piranha plant in a pipe. When the player approaches, the piranha plant will attempt to chomp on the player, knocking them over."},
+            {57, "A group of butterflies that fly around.\n\nNote: Needs a route to function!"},
+            {58, "A flock of birds.\n\nNote: Needs a route to function!"},
+            {59, "A geyser of water that will send the player flying in the air if the player collides with it."},
+            {60, "A dinosaur that stomps the player with 4 feet. If the player is directly under the foot stomped, they will be flattened. If they collide with the leg or face, they will spin out."},
+            {61, "A tree from the track Dino Dino Jungle."},
+            {62, "A dinosaur that swims in the water.\n\nNote: Needs a route to function!"},
+            {63, "A dinosaur that flies through the air.\n\nNote: Needs a route to function!"},
+            {64, "An enemy that can crush the player. If hit from the side, it will spin the player out."},
+            {65, "A ball of lava that rises from lava and can burn the player upon contact."},
+            {66, "A statue of Bowser that moves back and forth and shoots fireballs.\n\nNote: Needs a route to function!"},
+            {68, "A ring of fireballs that burn the player upon contact."},
+            {70, "A spikey desert enemy that bends back and forth."},
         };
 
         Dictionary<int, string> indexToObject = new Dictionary<int, string>()
@@ -247,7 +270,7 @@ namespace DouBOLDash
             {
                 if (index == count)
                 {
-                    idLabel.Text = obj.Key;
+                    idLabel.Text = "Object ID: " + obj.Key;
                     break;
                 }
                 else
@@ -275,8 +298,6 @@ namespace DouBOLDash
             }
             else
                 objIDStr = "1"; // item box
-
-            Console.WriteLine(objIDStr);
 
             objID = Convert.ToUInt16(objIDStr, 16);
 

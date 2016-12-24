@@ -178,6 +178,9 @@ namespace DouBOLDash
 
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
+                this.Text = "BCO Editor " + openFileDialog1.FileName;
+                this.Update();
+
                 trisListBox.Items.Clear();
                 vertsListBox.Items.Clear();
 

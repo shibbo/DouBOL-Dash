@@ -125,6 +125,9 @@ namespace DouBOLDash
             this.respList = new System.Windows.Forms.ListBox();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.routeContext = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.addRoutePointToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteRoutePointToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.duplicateRoutePointToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.selectAllInGroupsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.objectContext = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.addObjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -145,6 +148,27 @@ namespace DouBOLDash
             this.insertCheckpointHereToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteCheckpointToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.duplicateCheckpointToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.respawnContext = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.addRespawnToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteRespawnToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.duplicateRespawnToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cameraContext = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.addCameraToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteCameraToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.duplicateCameraToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.areaContext = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.addAreaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteAreaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.duplicateAreaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.kartContext = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.addStartingPointToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteStartingPointToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.duplicateStartingPointToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.routeGroupContext = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.addRouteGroupToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteRouteGroupToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.selectAllInGroupToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.insertRoutePointHereToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -181,6 +205,11 @@ namespace DouBOLDash
             this.enemyRouteContext.SuspendLayout();
             this.checkpointGroupContext.SuspendLayout();
             this.checkpointContext.SuspendLayout();
+            this.respawnContext.SuspendLayout();
+            this.cameraContext.SuspendLayout();
+            this.areaContext.SuspendLayout();
+            this.kartContext.SuspendLayout();
+            this.routeGroupContext.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -922,6 +951,7 @@ namespace DouBOLDash
             this.routeGroupList.Size = new System.Drawing.Size(409, 368);
             this.routeGroupList.TabIndex = 0;
             this.routeGroupList.SelectedIndexChanged += new System.EventHandler(this.routeGroupList_SelectedIndexChanged_1);
+            this.routeGroupList.MouseDown += new System.Windows.Forms.MouseEventHandler(this.routeGroupList_MouseDown);
             // 
             // routeTab
             // 
@@ -1051,6 +1081,7 @@ namespace DouBOLDash
             this.kartPointList.Size = new System.Drawing.Size(415, 191);
             this.kartPointList.TabIndex = 0;
             this.kartPointList.SelectedIndexChanged += new System.EventHandler(this.kartPointList_SelectedIndexChanged);
+            this.kartPointList.MouseDown += new System.Windows.Forms.MouseEventHandler(this.kartPointList_MouseDown);
             // 
             // areaTab
             // 
@@ -1068,11 +1099,11 @@ namespace DouBOLDash
             // 
             // propertyGrid7
             // 
-            this.propertyGrid7.Location = new System.Drawing.Point(3, 289);
+            this.propertyGrid7.Location = new System.Drawing.Point(3, 288);
             this.propertyGrid7.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.propertyGrid7.Name = "propertyGrid7";
             this.propertyGrid7.PropertySort = System.Windows.Forms.PropertySort.Categorized;
-            this.propertyGrid7.Size = new System.Drawing.Size(415, 463);
+            this.propertyGrid7.Size = new System.Drawing.Size(412, 325);
             this.propertyGrid7.TabIndex = 1;
             this.propertyGrid7.ToolbarVisible = false;
             this.propertyGrid7.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.propertyGrid7_PropertyValueChanged);
@@ -1087,6 +1118,7 @@ namespace DouBOLDash
             this.areaList.Size = new System.Drawing.Size(415, 276);
             this.areaList.TabIndex = 0;
             this.areaList.SelectedIndexChanged += new System.EventHandler(this.areaList_SelectedIndexChanged);
+            this.areaList.MouseDown += new System.Windows.Forms.MouseEventHandler(this.areaList_MouseDown);
             // 
             // cameraTab
             // 
@@ -1110,7 +1142,7 @@ namespace DouBOLDash
             this.propertyGrid2.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.propertyGrid2.Name = "propertyGrid2";
             this.propertyGrid2.PropertySort = System.Windows.Forms.PropertySort.Categorized;
-            this.propertyGrid2.Size = new System.Drawing.Size(415, 417);
+            this.propertyGrid2.Size = new System.Drawing.Size(415, 273);
             this.propertyGrid2.TabIndex = 1;
             this.propertyGrid2.ToolbarVisible = false;
             this.propertyGrid2.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.propertyGrid2_PropertyValueChanged);
@@ -1125,6 +1157,7 @@ namespace DouBOLDash
             this.cameraList.Size = new System.Drawing.Size(415, 327);
             this.cameraList.TabIndex = 0;
             this.cameraList.SelectedIndexChanged += new System.EventHandler(this.cameraList_SelectedIndexChanged);
+            this.cameraList.MouseDown += new System.Windows.Forms.MouseEventHandler(this.cameraList_MouseDown);
             // 
             // respawnTab
             // 
@@ -1151,6 +1184,7 @@ namespace DouBOLDash
             this.propertyGrid4.Size = new System.Drawing.Size(415, 531);
             this.propertyGrid4.TabIndex = 1;
             this.propertyGrid4.ToolbarVisible = false;
+            this.propertyGrid4.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.propertyGrid4_PropertyValueChanged);
             // 
             // respList
             // 
@@ -1163,6 +1197,7 @@ namespace DouBOLDash
             this.respList.TabIndex = 0;
             this.respList.SelectedIndexChanged += new System.EventHandler(this.respList_SelectedIndexChanged);
             this.respList.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.respList_MouseDoubleClick);
+            this.respList.MouseDown += new System.Windows.Forms.MouseEventHandler(this.respList_MouseDown);
             // 
             // imageList1
             // 
@@ -1193,14 +1228,39 @@ namespace DouBOLDash
             // routeContext
             // 
             this.routeContext.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.addRoutePointToolStripMenuItem,
+            this.insertRoutePointHereToolStripMenuItem,
+            this.deleteRoutePointToolStripMenuItem1,
+            this.duplicateRoutePointToolStripMenuItem,
             this.selectAllInGroupsToolStripMenuItem});
             this.routeContext.Name = "routeContext";
-            this.routeContext.Size = new System.Drawing.Size(172, 26);
+            this.routeContext.Size = new System.Drawing.Size(197, 114);
+            // 
+            // addRoutePointToolStripMenuItem
+            // 
+            this.addRoutePointToolStripMenuItem.Name = "addRoutePointToolStripMenuItem";
+            this.addRoutePointToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
+            this.addRoutePointToolStripMenuItem.Text = "Add Route Point";
+            this.addRoutePointToolStripMenuItem.Click += new System.EventHandler(this.addRoutePointToolStripMenuItem_Click);
+            // 
+            // deleteRoutePointToolStripMenuItem1
+            // 
+            this.deleteRoutePointToolStripMenuItem1.Name = "deleteRoutePointToolStripMenuItem1";
+            this.deleteRoutePointToolStripMenuItem1.Size = new System.Drawing.Size(189, 22);
+            this.deleteRoutePointToolStripMenuItem1.Text = "Delete Route Point";
+            this.deleteRoutePointToolStripMenuItem1.Click += new System.EventHandler(this.deleteRoutePointToolStripMenuItem1_Click);
+            // 
+            // duplicateRoutePointToolStripMenuItem
+            // 
+            this.duplicateRoutePointToolStripMenuItem.Name = "duplicateRoutePointToolStripMenuItem";
+            this.duplicateRoutePointToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
+            this.duplicateRoutePointToolStripMenuItem.Text = "Duplicate Route Point";
+            this.duplicateRoutePointToolStripMenuItem.Click += new System.EventHandler(this.duplicateRoutePointToolStripMenuItem_Click);
             // 
             // selectAllInGroupsToolStripMenuItem
             // 
             this.selectAllInGroupsToolStripMenuItem.Name = "selectAllInGroupsToolStripMenuItem";
-            this.selectAllInGroupsToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
+            this.selectAllInGroupsToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
             this.selectAllInGroupsToolStripMenuItem.Text = "Select All In Group";
             this.selectAllInGroupsToolStripMenuItem.Click += new System.EventHandler(this.selectAllInGroupsToolStripMenuItem_Click);
             // 
@@ -1352,6 +1412,163 @@ namespace DouBOLDash
             this.duplicateCheckpointToolStripMenuItem.Text = "Duplicate Checkpoint";
             this.duplicateCheckpointToolStripMenuItem.Click += new System.EventHandler(this.duplicateCheckpointToolStripMenuItem_Click);
             // 
+            // respawnContext
+            // 
+            this.respawnContext.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.addRespawnToolStripMenuItem,
+            this.deleteRespawnToolStripMenuItem,
+            this.duplicateRespawnToolStripMenuItem});
+            this.respawnContext.Name = "respawnContext";
+            this.respawnContext.Size = new System.Drawing.Size(175, 70);
+            // 
+            // addRespawnToolStripMenuItem
+            // 
+            this.addRespawnToolStripMenuItem.Name = "addRespawnToolStripMenuItem";
+            this.addRespawnToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+            this.addRespawnToolStripMenuItem.Text = "Add Respawn";
+            this.addRespawnToolStripMenuItem.Click += new System.EventHandler(this.addRespawnToolStripMenuItem_Click);
+            // 
+            // deleteRespawnToolStripMenuItem
+            // 
+            this.deleteRespawnToolStripMenuItem.Name = "deleteRespawnToolStripMenuItem";
+            this.deleteRespawnToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+            this.deleteRespawnToolStripMenuItem.Text = "Delete Respawn";
+            this.deleteRespawnToolStripMenuItem.Click += new System.EventHandler(this.deleteRespawnToolStripMenuItem_Click);
+            // 
+            // duplicateRespawnToolStripMenuItem
+            // 
+            this.duplicateRespawnToolStripMenuItem.Name = "duplicateRespawnToolStripMenuItem";
+            this.duplicateRespawnToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+            this.duplicateRespawnToolStripMenuItem.Text = "Duplicate Respawn";
+            this.duplicateRespawnToolStripMenuItem.Click += new System.EventHandler(this.duplicateRespawnToolStripMenuItem_Click);
+            // 
+            // cameraContext
+            // 
+            this.cameraContext.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.addCameraToolStripMenuItem,
+            this.deleteCameraToolStripMenuItem,
+            this.duplicateCameraToolStripMenuItem});
+            this.cameraContext.Name = "cameraContext";
+            this.cameraContext.Size = new System.Drawing.Size(169, 70);
+            // 
+            // addCameraToolStripMenuItem
+            // 
+            this.addCameraToolStripMenuItem.Name = "addCameraToolStripMenuItem";
+            this.addCameraToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+            this.addCameraToolStripMenuItem.Text = "Add Camera";
+            this.addCameraToolStripMenuItem.Click += new System.EventHandler(this.addCameraToolStripMenuItem_Click);
+            // 
+            // deleteCameraToolStripMenuItem
+            // 
+            this.deleteCameraToolStripMenuItem.Name = "deleteCameraToolStripMenuItem";
+            this.deleteCameraToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+            this.deleteCameraToolStripMenuItem.Text = "Delete Camera";
+            this.deleteCameraToolStripMenuItem.Click += new System.EventHandler(this.deleteCameraToolStripMenuItem_Click);
+            // 
+            // duplicateCameraToolStripMenuItem
+            // 
+            this.duplicateCameraToolStripMenuItem.Name = "duplicateCameraToolStripMenuItem";
+            this.duplicateCameraToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+            this.duplicateCameraToolStripMenuItem.Text = "Duplicate Camera";
+            this.duplicateCameraToolStripMenuItem.Click += new System.EventHandler(this.duplicateCameraToolStripMenuItem_Click);
+            // 
+            // areaContext
+            // 
+            this.areaContext.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.addAreaToolStripMenuItem,
+            this.deleteAreaToolStripMenuItem,
+            this.duplicateAreaToolStripMenuItem});
+            this.areaContext.Name = "areaContext";
+            this.areaContext.Size = new System.Drawing.Size(152, 70);
+            // 
+            // addAreaToolStripMenuItem
+            // 
+            this.addAreaToolStripMenuItem.Name = "addAreaToolStripMenuItem";
+            this.addAreaToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
+            this.addAreaToolStripMenuItem.Text = "Add Area";
+            this.addAreaToolStripMenuItem.Click += new System.EventHandler(this.addAreaToolStripMenuItem_Click);
+            // 
+            // deleteAreaToolStripMenuItem
+            // 
+            this.deleteAreaToolStripMenuItem.Name = "deleteAreaToolStripMenuItem";
+            this.deleteAreaToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
+            this.deleteAreaToolStripMenuItem.Text = "Delete Area";
+            this.deleteAreaToolStripMenuItem.Click += new System.EventHandler(this.deleteAreaToolStripMenuItem_Click);
+            // 
+            // duplicateAreaToolStripMenuItem
+            // 
+            this.duplicateAreaToolStripMenuItem.Name = "duplicateAreaToolStripMenuItem";
+            this.duplicateAreaToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
+            this.duplicateAreaToolStripMenuItem.Text = "Duplicate Area";
+            this.duplicateAreaToolStripMenuItem.Click += new System.EventHandler(this.duplicateAreaToolStripMenuItem_Click);
+            // 
+            // kartContext
+            // 
+            this.kartContext.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.addStartingPointToolStripMenuItem,
+            this.deleteStartingPointToolStripMenuItem,
+            this.duplicateStartingPointToolStripMenuItem});
+            this.kartContext.Name = "kartContext";
+            this.kartContext.Size = new System.Drawing.Size(200, 70);
+            // 
+            // addStartingPointToolStripMenuItem
+            // 
+            this.addStartingPointToolStripMenuItem.Name = "addStartingPointToolStripMenuItem";
+            this.addStartingPointToolStripMenuItem.Size = new System.Drawing.Size(199, 22);
+            this.addStartingPointToolStripMenuItem.Text = "Add Starting Point";
+            this.addStartingPointToolStripMenuItem.Click += new System.EventHandler(this.addStartingPointToolStripMenuItem_Click);
+            // 
+            // deleteStartingPointToolStripMenuItem
+            // 
+            this.deleteStartingPointToolStripMenuItem.Name = "deleteStartingPointToolStripMenuItem";
+            this.deleteStartingPointToolStripMenuItem.Size = new System.Drawing.Size(199, 22);
+            this.deleteStartingPointToolStripMenuItem.Text = "Delete Starting Point";
+            this.deleteStartingPointToolStripMenuItem.Click += new System.EventHandler(this.deleteStartingPointToolStripMenuItem_Click);
+            // 
+            // duplicateStartingPointToolStripMenuItem
+            // 
+            this.duplicateStartingPointToolStripMenuItem.Name = "duplicateStartingPointToolStripMenuItem";
+            this.duplicateStartingPointToolStripMenuItem.Size = new System.Drawing.Size(199, 22);
+            this.duplicateStartingPointToolStripMenuItem.Text = "Duplicate Starting Point";
+            this.duplicateStartingPointToolStripMenuItem.Click += new System.EventHandler(this.duplicateStartingPointToolStripMenuItem_Click);
+            // 
+            // routeGroupContext
+            // 
+            this.routeGroupContext.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.addRouteGroupToolStripMenuItem,
+            this.deleteRouteGroupToolStripMenuItem,
+            this.selectAllInGroupToolStripMenuItem1});
+            this.routeGroupContext.Name = "routeGroupContext";
+            this.routeGroupContext.Size = new System.Drawing.Size(178, 70);
+            // 
+            // addRouteGroupToolStripMenuItem
+            // 
+            this.addRouteGroupToolStripMenuItem.Name = "addRouteGroupToolStripMenuItem";
+            this.addRouteGroupToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
+            this.addRouteGroupToolStripMenuItem.Text = "Add Route Group";
+            this.addRouteGroupToolStripMenuItem.Click += new System.EventHandler(this.addRouteGroupToolStripMenuItem_Click);
+            // 
+            // deleteRouteGroupToolStripMenuItem
+            // 
+            this.deleteRouteGroupToolStripMenuItem.Name = "deleteRouteGroupToolStripMenuItem";
+            this.deleteRouteGroupToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
+            this.deleteRouteGroupToolStripMenuItem.Text = "Delete Route Group";
+            this.deleteRouteGroupToolStripMenuItem.Click += new System.EventHandler(this.deleteRouteGroupToolStripMenuItem_Click);
+            // 
+            // selectAllInGroupToolStripMenuItem1
+            // 
+            this.selectAllInGroupToolStripMenuItem1.Name = "selectAllInGroupToolStripMenuItem1";
+            this.selectAllInGroupToolStripMenuItem1.Size = new System.Drawing.Size(177, 22);
+            this.selectAllInGroupToolStripMenuItem1.Text = "Select All In Group";
+            this.selectAllInGroupToolStripMenuItem1.Click += new System.EventHandler(this.selectAllInGroupToolStripMenuItem1_Click);
+            // 
+            // insertRoutePointHereToolStripMenuItem
+            // 
+            this.insertRoutePointHereToolStripMenuItem.Name = "insertRoutePointHereToolStripMenuItem";
+            this.insertRoutePointHereToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
+            this.insertRoutePointHereToolStripMenuItem.Text = "Insert Route Point Here";
+            this.insertRoutePointHereToolStripMenuItem.Click += new System.EventHandler(this.insertRoutePointHereToolStripMenuItem_Click);
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
@@ -1409,6 +1626,11 @@ namespace DouBOLDash
             this.enemyRouteContext.ResumeLayout(false);
             this.checkpointGroupContext.ResumeLayout(false);
             this.checkpointContext.ResumeLayout(false);
+            this.respawnContext.ResumeLayout(false);
+            this.cameraContext.ResumeLayout(false);
+            this.areaContext.ResumeLayout(false);
+            this.kartContext.ResumeLayout(false);
+            this.routeGroupContext.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1518,6 +1740,30 @@ namespace DouBOLDash
         public System.Windows.Forms.NumericUpDown unknown8;
         public System.Windows.Forms.NumericUpDown unknown7;
         private System.Windows.Forms.ToolStripMenuItem checkForUpdateToolStripMenuItem;
+        private System.Windows.Forms.ContextMenuStrip respawnContext;
+        private System.Windows.Forms.ToolStripMenuItem addRespawnToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem deleteRespawnToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem duplicateRespawnToolStripMenuItem;
+        private System.Windows.Forms.ContextMenuStrip cameraContext;
+        private System.Windows.Forms.ContextMenuStrip areaContext;
+        private System.Windows.Forms.ContextMenuStrip kartContext;
+        private System.Windows.Forms.ToolStripMenuItem addCameraToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem deleteCameraToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem duplicateCameraToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem addAreaToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem deleteAreaToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem duplicateAreaToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem addStartingPointToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem deleteStartingPointToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem duplicateStartingPointToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem addRoutePointToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem deleteRoutePointToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem duplicateRoutePointToolStripMenuItem;
+        private System.Windows.Forms.ContextMenuStrip routeGroupContext;
+        private System.Windows.Forms.ToolStripMenuItem addRouteGroupToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem deleteRouteGroupToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem selectAllInGroupToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem insertRoutePointHereToolStripMenuItem;
     }
 }
 

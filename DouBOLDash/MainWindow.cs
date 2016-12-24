@@ -1499,305 +1499,6 @@ namespace DouBOLDash
             }
         }
 
-        public void UpdateEnemyPoints(bool isUpdate)
-        {
-            GL.DeleteLists(enemyPointList, 1);
-
-            if (isUpdate)
-            {
-                GL.DeleteLists(selectedList, 1);
-                enmRoute.Clear();
-                enemyRouteList.Refresh();
-
-                foreach (EnemyRoute enemyObj in enemyRouteList.Items)
-                {
-                    enmRoute.Add(enemyObj);
-                }
-
-                enemyRouteList.Items.Clear();
-            }
-            uint count = 0;
-            float posX1, posY1, posZ1;
-            float posX2 = 0, posY2 = 0, posZ2 = 0;
-            enemyPointList = GL.GenLists(1);
-
-            GL.NewList(enemyPointList, ListMode.Compile);
-            foreach (EnemyRoute objEntry in enmRoute)
-            {
-                enemyRouteList.Items.Add(objEntry);
-                posX1 = objEntry.xPos;
-                posY1 = objEntry.yPos;
-                posZ1 = objEntry.zPos;
-
-                if (objEntry.link != -1 && count % 2 == 0)
-                {
-                    GL.PushMatrix();
-                    GL.Translate(posX1, posY1, posZ1);
-                    GL.Scale(1f, 1f, 1f);
-                    DrawCube(1f, 0f, 1f, true, true, false);
-                    GL.PopMatrix();
-
-                    posX2 = objEntry.xPos;
-                    posY2 = objEntry.yPos;
-                    posZ2 = objEntry.zPos;
-
-                    count += 1;
-                }
-                else if (objEntry.link != -1)
-                {
-                    GL.PushMatrix();
-                    GL.Translate(posX1, posY1, posZ1);
-                    GL.Scale(1f, 1f, 1f);
-                    DrawCube(1f, 0f, 1f, true, true, false);
-                    GL.PopMatrix();
-
-                    GL.PushMatrix();
-                    GL.Begin(BeginMode.Lines);
-                    GL.Color4(1f, 0f, 1f, 1f);
-                    GL.Vertex3(posX1, posY1, posZ1);
-                    GL.Vertex3(posX2, posY2, posZ2);
-                    GL.End();
-                    GL.PopMatrix();
-
-                    count += 1;
-                }
-                else
-                {
-                    GL.PushMatrix();
-                    GL.Translate(posX1, posY1, posZ1);
-                    GL.Scale(1f, 1f, 1f);
-                    DrawCube(1f, 0f, 1f, true, true, false);
-                    GL.PopMatrix();
-
-                    GL.PushMatrix();
-                    GL.Begin(BeginMode.Lines);
-                    GL.Color4(1f, 0f, 1f, 1f);
-                    GL.Vertex3(posX1, posY1, posZ1);
-                    GL.Vertex3(posX2, posY2, posZ2);
-                    GL.End();
-                    GL.PopMatrix();
-
-                    posX2 = objEntry.xPos;
-                    posY2 = objEntry.yPos;
-                    posZ2 = objEntry.zPos;
-                }
-            }
-            GL.EndList();
-        }
-
-        public void UpdateRouteGroups(bool isUpdate)
-        {
-            if (isUpdate)
-            {
-                routeGroupList.Items.Clear();
-                grpSetup.Clear();
-
-                foreach (RouteGroupSetup routeSetup in routeGroupList.Items)
-                {
-                    grpSetup.Add(routeSetup);
-                }
-            }
-
-            foreach (RouteGroupSetup routeSetup in grpSetup)
-            {
-                routeGroupList.Items.Add(routeSetup);
-            }
-        }
-
-        public void UpdateRoutePoints(bool isUpdate)
-        {
-            GL.DeleteLists(routePointList, 1);
-
-            if (isUpdate)
-            {
-                GL.DeleteLists(selectedList, 1);
-                rpobj.Clear();
-                routeList.Refresh();
-
-                foreach (RoutePointObject routeObj in routeList.Items)
-                {
-                    rpobj.Add(routeObj);
-                }
-            }
-
-            uint groupID;
-            uint currentID = 0;
-            float curX, curY, curZ;
-            float prevX = 0, prevY = 0, prevZ = 0;
-            bool firstEntry = true;
-            int seccount = 0;
-            routePointList = GL.GenLists(1);
-            GL.NewList(routePointList, ListMode.Compile);
-            foreach (RoutePointObject objEntry in rpobj)
-            {
-                routeList.Items.Add(objEntry);
-                loadingLabel.Text = "Loading route point...";
-
-                /* 
-                 * if the group id is the same as the current id, we join it together with a line
-                 * if it isn't we just place a new block and start over
-                 */
-                groupID = objEntry.groupID;
-                curX = objEntry.xPos;
-                curY = objEntry.yPos;
-                curZ = objEntry.zPos;
-
-                if (groupID == currentID)
-                {
-                    // if it's the first entry, we set this to false so it doesn't run through again
-                    if (firstEntry)
-                    {
-                        seccount += 1;
-                        GL.PushMatrix();
-                        GL.Translate(curX, curY, curZ);
-                        GL.Scale(1f, 1f, 1f);
-                        DrawCube(0f, 0f, 1f, true, true, false);
-                        GL.PopMatrix();
-
-                        prevX = objEntry.xPos;
-                        prevY = objEntry.yPos;
-                        prevZ = objEntry.zPos;
-
-                        firstEntry = false;
-                    }
-                    // if it isn't, we draw a line to the next entry
-                    else
-                    {
-                        GL.PushMatrix();
-                        GL.Translate(curX, curY, curZ);
-                        GL.Scale(1f, 1f, 1f);
-                        DrawCube(0f, 0f, 1f, true, true, false);
-                        GL.PopMatrix();
-
-                        GL.PushMatrix();
-                        GL.Begin(BeginMode.Lines);
-                        GL.Color4(0f, 0f, 1f, 1f);
-                        GL.Vertex3(curX, curY, curZ);
-                        GL.Vertex3(prevX, prevY, prevZ);
-                        GL.End();
-                        GL.PopMatrix();
-
-                        prevX = objEntry.xPos;
-                        prevY = objEntry.yPos;
-                        prevZ = objEntry.zPos;
-
-                        firstEntry = false;
-                    }
-                }
-                else
-                {
-                    GL.PushMatrix();
-                    GL.Translate(curX, curY, curZ);
-                    GL.Scale(1f, 1f, 1f);
-                    DrawCube(0f, 0f, 1f, true, true, false);
-                    GL.PopMatrix();
-
-                    currentID += 1;
-                    firstEntry = true;
-                }
-            }
-            GL.EndList();
-
-            glControl1.Invalidate();
-        }
-
-        public void UpdateCheckpointGroups(bool isUpdate)
-        {
-            if (isUpdate)
-            {
-                chkGRP.Clear();
-
-                foreach (CheckpointGroupObject chckPtGrp in chckGroup.Items)
-                {
-                    chkGRP.Add(chckPtGrp);
-                }
-
-                chckGroup.Items.Clear();
-            }
-
-            foreach (CheckpointGroupObject objEntry in chkGRP)
-            {
-                chckGroup.Items.Add(objEntry);
-            }
-        }
-
-        /// <summary>
-        /// Updates checkpoints
-        /// </summary>
-        public void UpdateCheckpoints(bool isUpdate)
-        {
-            GL.DeleteLists(checkpointList, 1);
-
-            if (isUpdate)
-            {
-                GL.DeleteLists(selectedList, 1);
-                chkobj.Clear();
-                chckList.Refresh();
-
-                foreach (CheckpointObject chckPt in chckList.Items)
-                {
-                    chkobj.Add(chckPt);
-                }
-
-                chckList.Items.Clear();
-            }
-
-            float xprev1 = 0, yprev1 = 0, zprev1 = 0;
-            float xprev2 = 0, yprev2 = 0, zprev2 = 0;
-            bool isFirst = true;
-            checkpointList = GL.GenLists(1);
-            GL.NewList(checkpointList, ListMode.Compile);
-            foreach (CheckpointObject objEntry in chkobj)
-            {
-                chckList.Items.Add(objEntry);
-                loadingLabel.Text = "Loading checkpoint...";
-                GL.PushMatrix();
-                GL.Translate(objEntry.xPosStart, objEntry.yPosStart, objEntry.zPosStart);
-                GL.Scale(1f, 1f, 1f);
-                DrawCube(0.5f, 0.25f, 0f, true, true, false);
-                GL.PopMatrix();
-
-                GL.PushMatrix();
-                GL.Translate(objEntry.xPosEnd, objEntry.yPosEnd, objEntry.zPosEnd);
-                GL.Scale(1f, 1f, 1f);
-                DrawCube(0.5f, 0.25f, 0f, true, true, false);
-                GL.PopMatrix();
-
-                GL.PushMatrix();
-                GL.Begin(BeginMode.Lines);
-                GL.Color4(0.5f, 0.25f, 0f, 1f);
-                GL.Vertex3(objEntry.xPosStart, objEntry.yPosStart, objEntry.zPosStart);
-                GL.Vertex3(objEntry.xPosEnd, objEntry.yPosEnd, objEntry.zPosEnd);
-                GL.End();
-                GL.PopMatrix();
-
-                if (!isFirst)
-                {
-                    GL.PushMatrix();
-                    GL.Begin(BeginMode.Lines);
-                    GL.Color4(0.5f, 0.25f, 0f, 1f);
-                    GL.Vertex3(objEntry.xPosStart, objEntry.yPosStart, objEntry.zPosStart);
-                    GL.Vertex3(xprev1, yprev1, zprev1);
-                    GL.Vertex3(objEntry.xPosEnd, objEntry.yPosEnd, objEntry.zPosEnd);
-                    GL.Vertex3(xprev2, yprev2, zprev2);
-                    GL.End();
-                    GL.PopMatrix();
-                }
-
-                xprev1 = objEntry.xPosStart;
-                yprev1 = objEntry.yPosStart;
-                zprev1 = objEntry.zPosStart;
-
-                xprev2 = objEntry.xPosEnd;
-                yprev2 = objEntry.yPosEnd;
-                zprev2 = objEntry.zPosEnd;
-
-                isFirst = false;
-
-            }
-            GL.EndList();
-        }
-
         private void addObjectToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ObjectAddForm objAdd = new ObjectAddForm();
@@ -2063,12 +1764,565 @@ namespace DouBOLDash
             update.doUpdateCheck(true);
         }
 
-        Bmd objModel;
-        public void UpdateObjects(bool isUpdate)
+        private void addRespawnToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            RespawnObject respawnObj = new RespawnObject();
+            respawnObj.respawnID = (ushort)respList.Items.Count; // mind as well, since the IDs are relative to 0
+
+            respList.Items.Add(respawnObj);
+            UpdateRespawns(true);
+        }
+
+        private void deleteRespawnToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (respList.SelectedIndex != -1)
+            {
+                respList.Items.Remove(respList.SelectedItem);
+            }
+        }
+
+        private void duplicateRespawnToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (respList.SelectedIndex != -1)
+            {
+                RespawnObject respObj = (RespawnObject)respList.SelectedItem;
+                respList.Items.Add(respObj);
+            }
+        }
+
+        private void addCameraToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CameraObject camObj = new CameraObject();
+            camObj.name = "null";
+            camObj.unk1 = 1; // 1 is the most common so shrug
+            camObj.type = 1;
+            camObj.routeID = -1;
+            camObj.startZoom = 15;
+            camObj.routeSpeed = 25;
+            cameraList.Items.Add(camObj);
+
+            UpdateCameras(true);
+        }
+
+        private void deleteCameraToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (cameraList.SelectedIndex != -1)
+            {
+                cameraList.Items.Remove(cameraList.SelectedItem);
+                UpdateCameras(true);
+            }
+        }
+
+        private void duplicateCameraToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (cameraList.SelectedIndex != -1)
+            {
+                CameraObject camObj = (CameraObject)cameraList.SelectedItem;
+                cameraList.Items.Add(camObj);
+                UpdateCameras(true);
+            }
+        }
+
+        private void addAreaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AreaObject areaObj = new AreaObject();
+
+            areaList.Items.Add(areaObj);
+
+            UpdateAreas(true);
+        }
+
+        private void deleteAreaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (areaList.SelectedIndex != -1)
+            {
+                areaList.Items.Remove(areaList.SelectedItem);
+                UpdateAreas(true);
+            }
+        }
+
+        private void duplicateAreaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (areaList.SelectedIndex != -1)
+            {
+                AreaObject areaObj = (AreaObject)areaList.SelectedItem;
+                areaList.Items.Add(areaObj);
+                UpdateAreas(true);
+            }
+        }
+
+        private void addStartingPointToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            KartPointObject kartObj = new KartPointObject();
+            kartObj.playerID = 0xFF;
+            kartObj.polePos = 0;
+
+            kartPointList.Items.Add(kartObj);
+            UpdateKartPoints(true);
+        }
+
+        private void deleteStartingPointToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (kartPointList.SelectedIndex != -1)
+            {
+                kartPointList.Items.Remove(kartPointList.SelectedItem);
+                UpdateKartPoints(true);
+            }
+        }
+
+        private void duplicateStartingPointToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (kartPointList.SelectedIndex != -1)
+            {
+                KartPointObject areaObj = (KartPointObject)kartPointList.SelectedItem;
+                kartPointList.Items.Add(areaObj);
+                UpdateKartPoints(true);
+            }
+        }
+
+        private void addRouteGroupToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            RouteGroupSetup routeGroup = new RouteGroupSetup();
+            routeGroupList.Items.Add(routeGroup);
+            UpdateRouteGroups(true);
+        }
+
+        private void deleteRouteGroupToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (routeGroupList.SelectedIndex != -1)
+            {
+                routeGroupList.Items.Remove(routeGroupList.SelectedItem);
+                UpdateRouteGroups(true);
+            }
+        }
+
+        private void selectAllInGroupToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            if (routeGroupList.SelectedIndex != -1)
+            {
+                RouteGroupSetup routeGroup = (RouteGroupSetup)routeGroupList.SelectedItem;
+                uint id = routeGroup.groupID;
+                uint count = 0;
+
+                selectedList = GL.GenLists(1);
+                GL.NewList(selectedList, ListMode.Compile);
+                foreach (RoutePointObject routePoint in routeList.Items)
+                {
+                    if (routePoint.groupID == id)
+                    {
+                        GL.PushMatrix();
+                        GL.Translate(routePoint.xPos, routePoint.yPos, routePoint.zPos);
+                        GL.Scale(2f, 2f, 2f);
+                        DrawCube(1f, 1f, 1f, false, false, false);
+                        GL.PopMatrix();
+                        count += 1;
+                    }
+                }
+                GL.EndList();
+                selectionInfo.Text = "Currently selected: " + count + " points in group " + id + "."; 
+                
+            }
+        }
+
+        private void addRoutePointToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // TODO group id check
+            RoutePointObject routePoint = new RoutePointObject();
+            routeList.Items.Add(routePoint);
+            UpdateRoutePoints(true);
+        }
+
+        private void insertRoutePointHereToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // store the index that we currently have (pretty much where we want to insert our entry)
+            int index = routeList.SelectedIndex;
+            uint id;
+
+            // go to the entry before it to get our group ID
+            routeList.SelectedIndex = routeList.SelectedIndex - 1;
+            RoutePointObject routeObjBefore = (RoutePointObject)routeList.SelectedItem;
+            id = routeObjBefore.groupID;
+
+            // now we go back to our original index
+            routeList.SelectedIndex = index;
+            RoutePointObject routeObj = new RoutePointObject();
+            routeObj.groupID = id;
+
+            routeList.Items.Insert(index, routeObj);
+            UpdateRoutePoints(true);
+        }
+
+        private void deleteRoutePointToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            if (routeList.SelectedIndex != -1)
+            {
+                routeList.Items.Remove(routeList.SelectedItem);
+                UpdateRoutePoints(true);
+            }
+        }
+
+        private void duplicateRoutePointToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            RoutePointObject routeObj = (RoutePointObject)routeList.SelectedItem;
+            routeList.Items.Add(routeObj);
+            UpdateRoutePoints(true);
+        }
+
+        private void routeGroupList_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right && routeGroupList.SelectedIndex != -1)
+            {
+                routeGroupContext.Show(routeGroupList, e.Location);
+            }
+        }
+
+        private void kartPointList_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right && kartPointList.SelectedIndex != -1)
+            {
+                kartContext.Show(kartPointList, e.Location);
+            }
+        }
+
+        private void areaList_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right && areaList.SelectedIndex != -1)
+            {
+                areaContext.Show(areaList, e.Location);
+            }
+        }
+
+        private void cameraList_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right && cameraList.SelectedIndex != -1)
+            {
+                cameraContext.Show(cameraList, e.Location);
+            }
+        }
+
+        private void respList_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right && respList.SelectedIndex != -1)
+            {
+                respawnContext.Show(respList, e.Location);
+            }
+        }
+
+        private void propertyGrid4_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
+        {
+            UpdateRespawns(true);
+        }
+
+        public void UpdateEnemyPoints(bool isUpdate)
+        {
+            GL.DeleteLists(selectedList, 1);
+
+            if (isUpdate)
+            {
+                GL.DeleteLists(enemyPointList, 1);
+                
+                enmRoute.Clear();
+                enemyRouteList.Refresh();
+
+                foreach (EnemyRoute enemyObj in enemyRouteList.Items)
+                {
+                    enmRoute.Add(enemyObj);
+                }
+
+                enemyRouteList.Items.Clear();
+            }
+            uint count = 0;
+            float posX1, posY1, posZ1;
+            float posX2 = 0, posY2 = 0, posZ2 = 0;
+            enemyPointList = GL.GenLists(1);
+
+            GL.NewList(enemyPointList, ListMode.Compile);
+            foreach (EnemyRoute objEntry in enmRoute)
+            {
+                enemyRouteList.Items.Add(objEntry);
+                posX1 = objEntry.xPos;
+                posY1 = objEntry.yPos;
+                posZ1 = objEntry.zPos;
+
+                if (objEntry.link != -1 && count % 2 == 0)
+                {
+                    GL.PushMatrix();
+                    GL.Translate(posX1, posY1, posZ1);
+                    GL.Scale(1f, 1f, 1f);
+                    DrawCube(1f, 0f, 1f, true, true, false);
+                    GL.PopMatrix();
+
+                    posX2 = objEntry.xPos;
+                    posY2 = objEntry.yPos;
+                    posZ2 = objEntry.zPos;
+
+                    count += 1;
+                }
+                else if (objEntry.link != -1)
+                {
+                    GL.PushMatrix();
+                    GL.Translate(posX1, posY1, posZ1);
+                    GL.Scale(1f, 1f, 1f);
+                    DrawCube(1f, 0f, 1f, true, true, false);
+                    GL.PopMatrix();
+
+                    GL.PushMatrix();
+                    GL.Begin(BeginMode.Lines);
+                    GL.Color4(1f, 0f, 1f, 1f);
+                    GL.Vertex3(posX1, posY1, posZ1);
+                    GL.Vertex3(posX2, posY2, posZ2);
+                    GL.End();
+                    GL.PopMatrix();
+
+                    count += 1;
+                }
+                else
+                {
+                    GL.PushMatrix();
+                    GL.Translate(posX1, posY1, posZ1);
+                    GL.Scale(1f, 1f, 1f);
+                    DrawCube(1f, 0f, 1f, true, true, false);
+                    GL.PopMatrix();
+
+                    GL.PushMatrix();
+                    GL.Begin(BeginMode.Lines);
+                    GL.Color4(1f, 0f, 1f, 1f);
+                    GL.Vertex3(posX1, posY1, posZ1);
+                    GL.Vertex3(posX2, posY2, posZ2);
+                    GL.End();
+                    GL.PopMatrix();
+
+                    posX2 = objEntry.xPos;
+                    posY2 = objEntry.yPos;
+                    posZ2 = objEntry.zPos;
+                }
+            }
+            GL.EndList();
+        }
+
+        public void UpdateRouteGroups(bool isUpdate)
         {
             if (isUpdate)
             {
-                GL.DeleteLists(selectedList, 1);
+                routeGroupList.Items.Clear();
+                grpSetup.Clear();
+
+                foreach (RouteGroupSetup routeSetup in routeGroupList.Items)
+                {
+                    grpSetup.Add(routeSetup);
+                }
+            }
+
+            foreach (RouteGroupSetup routeSetup in grpSetup)
+            {
+                routeGroupList.Items.Add(routeSetup);
+            }
+        }
+
+        public void UpdateRoutePoints(bool isUpdate)
+        {
+            GL.DeleteLists(selectedList, 1);
+
+            if (isUpdate)
+            {
+                GL.DeleteLists(routePointList, 1);
+                
+                rpobj.Clear();
+                routeList.Refresh();
+
+                foreach (RoutePointObject routeObj in routeList.Items)
+                {
+                    rpobj.Add(routeObj);
+                }
+            }
+
+            uint groupID;
+            uint currentID = 0;
+            float curX, curY, curZ;
+            float prevX = 0, prevY = 0, prevZ = 0;
+            bool firstEntry = true;
+            int seccount = 0;
+            routePointList = GL.GenLists(1);
+            GL.NewList(routePointList, ListMode.Compile);
+            foreach (RoutePointObject objEntry in rpobj)
+            {
+                routeList.Items.Add(objEntry);
+                loadingLabel.Text = "Loading route point...";
+
+                /* 
+                 * if the group id is the same as the current id, we join it together with a line
+                 * if it isn't we just place a new block and start over
+                 */
+                groupID = objEntry.groupID;
+                curX = objEntry.xPos;
+                curY = objEntry.yPos;
+                curZ = objEntry.zPos;
+
+                if (groupID == currentID)
+                {
+                    // if it's the first entry, we set this to false so it doesn't run through again
+                    if (firstEntry)
+                    {
+                        seccount += 1;
+                        GL.PushMatrix();
+                        GL.Translate(curX, curY, curZ);
+                        GL.Scale(1f, 1f, 1f);
+                        DrawCube(0f, 0f, 1f, true, true, false);
+                        GL.PopMatrix();
+
+                        prevX = objEntry.xPos;
+                        prevY = objEntry.yPos;
+                        prevZ = objEntry.zPos;
+
+                        firstEntry = false;
+                    }
+                    // if it isn't, we draw a line to the next entry
+                    else
+                    {
+                        GL.PushMatrix();
+                        GL.Translate(curX, curY, curZ);
+                        GL.Scale(1f, 1f, 1f);
+                        DrawCube(0f, 0f, 1f, true, true, false);
+                        GL.PopMatrix();
+
+                        GL.PushMatrix();
+                        GL.Begin(BeginMode.Lines);
+                        GL.Color4(0f, 0f, 1f, 1f);
+                        GL.Vertex3(curX, curY, curZ);
+                        GL.Vertex3(prevX, prevY, prevZ);
+                        GL.End();
+                        GL.PopMatrix();
+
+                        prevX = objEntry.xPos;
+                        prevY = objEntry.yPos;
+                        prevZ = objEntry.zPos;
+
+                        firstEntry = false;
+                    }
+                }
+                else
+                {
+                    GL.PushMatrix();
+                    GL.Translate(curX, curY, curZ);
+                    GL.Scale(1f, 1f, 1f);
+                    DrawCube(0f, 0f, 1f, true, true, false);
+                    GL.PopMatrix();
+
+                    currentID += 1;
+                    firstEntry = true;
+                }
+            }
+            GL.EndList();
+
+            glControl1.Invalidate();
+        }
+
+        public void UpdateCheckpointGroups(bool isUpdate)
+        {
+            if (isUpdate)
+            {
+                chkGRP.Clear();
+
+                foreach (CheckpointGroupObject chckPtGrp in chckGroup.Items)
+                {
+                    chkGRP.Add(chckPtGrp);
+                }
+
+                chckGroup.Items.Clear();
+            }
+
+            foreach (CheckpointGroupObject objEntry in chkGRP)
+            {
+                chckGroup.Items.Add(objEntry);
+            }
+        }
+
+        /// <summary>
+        /// Updates checkpoints
+        /// </summary>
+        public void UpdateCheckpoints(bool isUpdate)
+        {
+            GL.DeleteLists(selectedList, 1);
+
+            if (isUpdate)
+            {
+                GL.DeleteLists(checkpointList, 1);
+                
+                chkobj.Clear();
+                chckList.Refresh();
+
+                foreach (CheckpointObject chckPt in chckList.Items)
+                {
+                    chkobj.Add(chckPt);
+                }
+
+                chckList.Items.Clear();
+            }
+
+            float xprev1 = 0, yprev1 = 0, zprev1 = 0;
+            float xprev2 = 0, yprev2 = 0, zprev2 = 0;
+            bool isFirst = true;
+            checkpointList = GL.GenLists(1);
+            GL.NewList(checkpointList, ListMode.Compile);
+            foreach (CheckpointObject objEntry in chkobj)
+            {
+                chckList.Items.Add(objEntry);
+                loadingLabel.Text = "Loading checkpoint...";
+                GL.PushMatrix();
+                GL.Translate(objEntry.xPosStart, objEntry.yPosStart, objEntry.zPosStart);
+                GL.Scale(1f, 1f, 1f);
+                DrawCube(0.5f, 0.25f, 0f, true, true, false);
+                GL.PopMatrix();
+
+                GL.PushMatrix();
+                GL.Translate(objEntry.xPosEnd, objEntry.yPosEnd, objEntry.zPosEnd);
+                GL.Scale(1f, 1f, 1f);
+                DrawCube(0.5f, 0.25f, 0f, true, true, false);
+                GL.PopMatrix();
+
+                GL.PushMatrix();
+                GL.Begin(BeginMode.Lines);
+                GL.Color4(0.5f, 0.25f, 0f, 1f);
+                GL.Vertex3(objEntry.xPosStart, objEntry.yPosStart, objEntry.zPosStart);
+                GL.Vertex3(objEntry.xPosEnd, objEntry.yPosEnd, objEntry.zPosEnd);
+                GL.End();
+                GL.PopMatrix();
+
+                if (!isFirst)
+                {
+                    GL.PushMatrix();
+                    GL.Begin(BeginMode.Lines);
+                    GL.Color4(0.5f, 0.25f, 0f, 1f);
+                    GL.Vertex3(objEntry.xPosStart, objEntry.yPosStart, objEntry.zPosStart);
+                    GL.Vertex3(xprev1, yprev1, zprev1);
+                    GL.Vertex3(objEntry.xPosEnd, objEntry.yPosEnd, objEntry.zPosEnd);
+                    GL.Vertex3(xprev2, yprev2, zprev2);
+                    GL.End();
+                    GL.PopMatrix();
+                }
+
+                xprev1 = objEntry.xPosStart;
+                yprev1 = objEntry.yPosStart;
+                zprev1 = objEntry.zPosStart;
+
+                xprev2 = objEntry.xPosEnd;
+                yprev2 = objEntry.yPosEnd;
+                zprev2 = objEntry.zPosEnd;
+
+                isFirst = false;
+
+            }
+            GL.EndList();
+        }
+
+        Bmd objModel;
+        public void UpdateObjects(bool isUpdate)
+        {
+            GL.DeleteLists(selectedList, 1);
+            if (isUpdate)
+            {
+                GL.DeleteLists(objectList, 1);
+                
                 lvlobj.Clear();
                 objList.Refresh();
 
@@ -2166,6 +2420,8 @@ namespace DouBOLDash
 
             if (isUpdate)
             {
+                GL.DeleteLists(areaObjList, 1);
+
                 areaobj.Clear();
                 areaList.Refresh();
 
@@ -2174,7 +2430,7 @@ namespace DouBOLDash
                     areaobj.Add(areaObj);
                 }
 
-                kartPointList.Items.Clear();
+                areaList.Items.Clear();
             }
 
             int rotation;
@@ -2197,11 +2453,11 @@ namespace DouBOLDash
 
         public void UpdateCameras(bool isUpdate)
         {
-            GL.DeleteLists(camList, 1);
-
+            GL.DeleteLists(selectedList, 1);
             if (isUpdate)
             {
-                GL.DeleteLists(selectedList, 1);
+                GL.DeleteLists(camList, 1);
+                
                 camobj.Clear();
                 cameraList.Refresh();
 
@@ -2209,6 +2465,8 @@ namespace DouBOLDash
                 {
                     camobj.Add(cameraObj);
                 }
+
+                cameraList.Items.Clear();
             }
 
             int rotation;
@@ -2231,11 +2489,10 @@ namespace DouBOLDash
 
         public void UpdateRespawns(bool isUpdate)
         {
-            GL.DeleteLists(respawnList, 1);
-
+            GL.DeleteLists(selectedList, 1);
             if (isUpdate)
             {
-                GL.DeleteLists(selectedList, 1);
+                GL.DeleteLists(respawnList, 1);
                 resObj.Clear();
                 respList.Refresh();
 
@@ -2243,6 +2500,8 @@ namespace DouBOLDash
                 {
                     resObj.Add(respObj);
                 }
+
+                respList.Items.Clear();
             }
 
             int rotation;
