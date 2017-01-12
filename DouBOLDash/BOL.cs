@@ -1243,7 +1243,7 @@ namespace DouBOLDash
             get { return link; }
             set { link = value; }
         }
-        [DisplayName("Group Setting"), Category("Settings"), Description("loldunno.")]
+        [DisplayName("Group Setting"), Category("Settings"), Description("This determines if the group allows items. 0 if items and enemies are allowed, 1 means only items.")]
         public ushort GroupSetting
         {
             get { return groupSetting; }

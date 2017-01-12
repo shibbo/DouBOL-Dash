@@ -150,6 +150,9 @@ namespace DouBOLDash
             {32, "A blimp with a logo of Luigi on it.\n\nNote: Needs a route to function!"},
             {33, "One of the oldest enemies that Mario knows. Waddles back and forth, and will spin the player out upon contact.\n\nNote: Needs a route to function!"},
             {34, "A piranha plant in a pipe. When the player approaches, the piranha plant will attempt to chomp on the player, knocking them over."},
+            {35, "An air balloon with a logo of Mario.\n\nNote: Needs a route to function!"},
+            {36, "A helicopter that flies over Yoshi Circuit.\n\nNote: Needs a route to function!"},
+            {40, "A traffic light found in Mushroom City."},
             {57, "A group of butterflies that fly around.\n\nNote: Needs a route to function!"},
             {58, "A flock of birds.\n\nNote: Needs a route to function!"},
             {59, "A geyser of water that will send the player flying in the air if the player collides with it."},
@@ -162,6 +165,14 @@ namespace DouBOLDash
             {66, "A statue of Bowser that moves back and forth and shoots fireballs.\n\nNote: Needs a route to function!"},
             {68, "A ring of fireballs that burn the player upon contact."},
             {70, "A spikey desert enemy that bends back and forth."},
+            {71, "A tornado that will throw the player into the air!\n\nNote: Needs a route to function!"},
+            {73, "A big piranha plant that sits at the bottom of a sinkhole and will eat players that come into contact."},
+            {76, "A tree found in Dry Dry Desert."},
+            {77, "A iceberg that sits on the ground and will freeze the player for a few seconds upon contact."},
+            {78, "A patch of shy guys that skate across ice.\n\nNote: Needs a route to function!"},
+            {79, "A 2D Snowman that appears out of bounds on Sherbet Land."},
+            {80, "A bright light in sherbet land, for light poles."},
+            {81, "A gust of snow that will blow the player in the direction its placed in."}
         };
 
         Dictionary<int, string> indexToObject = new Dictionary<int, string>()
@@ -284,6 +295,7 @@ namespace DouBOLDash
             setDesc(listBox1.SelectedIndex);
             setObjectID(listBox1.SelectedIndex);
             label1.Text = listBox1.Text;
+            label4.Text = "blarg " + listBox1.SelectedIndex;
         }
 
         private void listBox1_MouseDoubleClick(object sender, MouseEventArgs e)

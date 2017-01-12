@@ -184,6 +184,8 @@ namespace DouBOLDash
                 trisListBox.Items.Clear();
                 vertsListBox.Items.Clear();
 
+                GL.DeleteLists(selectedList, 1);
+
                 using (EndianBinaryReader reader = new EndianBinaryReader(File.Open(openFileDialog1.FileName, FileMode.Open)))
                 {
                     BCO bco = new BCO();

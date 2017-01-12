@@ -43,18 +43,20 @@ namespace DouBOLDash
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ObjectAddForm));
             this.panel1 = new System.Windows.Forms.Panel();
+            this.idLabel = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.idLabel = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.label4);
             this.panel1.Controls.Add(this.idLabel);
             this.panel1.Controls.Add(this.label3);
             this.panel1.Controls.Add(this.button1);
@@ -68,6 +70,16 @@ namespace DouBOLDash
             this.panel1.Size = new System.Drawing.Size(548, 371);
             this.panel1.TabIndex = 0;
             this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
+            // 
+            // idLabel
+            // 
+            this.idLabel.AutoSize = true;
+            this.idLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.idLabel.Location = new System.Drawing.Point(270, 38);
+            this.idLabel.Name = "idLabel";
+            this.idLabel.Size = new System.Drawing.Size(45, 16);
+            this.idLabel.TabIndex = 8;
+            this.idLabel.Text = "label4";
             // 
             // label3
             // 
@@ -126,15 +138,14 @@ namespace DouBOLDash
             this.label2.TabIndex = 2;
             this.label2.Text = "Nothing selected.";
             // 
-            // idLabel
+            // label4
             // 
-            this.idLabel.AutoSize = true;
-            this.idLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.idLabel.Location = new System.Drawing.Point(270, 38);
-            this.idLabel.Name = "idLabel";
-            this.idLabel.Size = new System.Drawing.Size(45, 16);
-            this.idLabel.TabIndex = 8;
-            this.idLabel.Text = "label4";
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(276, 272);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(35, 13);
+            this.label4.TabIndex = 9;
+            this.label4.Text = "label4";
             // 
             // ObjectAddForm
             // 
@@ -162,5 +173,6 @@ namespace DouBOLDash
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label idLabel;
+        private System.Windows.Forms.Label label4;
     }
 }

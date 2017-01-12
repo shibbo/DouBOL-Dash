@@ -126,6 +126,7 @@ namespace DouBOLDash
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.routeContext = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.addRoutePointToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.insertRoutePointHereToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteRoutePointToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.duplicateRoutePointToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.selectAllInGroupsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -168,7 +169,7 @@ namespace DouBOLDash
             this.addRouteGroupToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteRouteGroupToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.selectAllInGroupToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.insertRoutePointHereToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -229,6 +230,7 @@ namespace DouBOLDash
             // fileToolStripMenuItem
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.newToolStripMenuItem,
             this.openToolStripMenuItem,
             this.saveToolStripMenuItem,
             this.saveAsToolStripMenuItem,
@@ -244,6 +246,7 @@ namespace DouBOLDash
             this.openToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
             this.openToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
             this.openToolStripMenuItem.Text = "Open";
+            this.openToolStripMenuItem.ToolTipText = "Opens an existing track.";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
             // saveToolStripMenuItem
@@ -254,6 +257,7 @@ namespace DouBOLDash
             this.saveToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
             this.saveToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
             this.saveToolStripMenuItem.Text = "Save";
+            this.saveToolStripMenuItem.ToolTipText = "Saves the currently open track to the currently opened file.";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
             // saveAsToolStripMenuItem
@@ -265,6 +269,7 @@ namespace DouBOLDash
             | System.Windows.Forms.Keys.S)));
             this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
             this.saveAsToolStripMenuItem.Text = "Save As";
+            this.saveAsToolStripMenuItem.ToolTipText = "Saves the currently opened track to a new specified file.";
             this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.saveAsToolStripMenuItem_Click);
             // 
             // closeToolStripMenuItem
@@ -273,6 +278,7 @@ namespace DouBOLDash
             this.closeToolStripMenuItem.Name = "closeToolStripMenuItem";
             this.closeToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
             this.closeToolStripMenuItem.Text = "Close";
+            this.closeToolStripMenuItem.ToolTipText = "Closes the window.";
             this.closeToolStripMenuItem.Click += new System.EventHandler(this.closeToolStripMenuItem_Click);
             // 
             // toolsToolStripMenuItem
@@ -1239,28 +1245,35 @@ namespace DouBOLDash
             // addRoutePointToolStripMenuItem
             // 
             this.addRoutePointToolStripMenuItem.Name = "addRoutePointToolStripMenuItem";
-            this.addRoutePointToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
+            this.addRoutePointToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
             this.addRoutePointToolStripMenuItem.Text = "Add Route Point";
             this.addRoutePointToolStripMenuItem.Click += new System.EventHandler(this.addRoutePointToolStripMenuItem_Click);
+            // 
+            // insertRoutePointHereToolStripMenuItem
+            // 
+            this.insertRoutePointHereToolStripMenuItem.Name = "insertRoutePointHereToolStripMenuItem";
+            this.insertRoutePointHereToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
+            this.insertRoutePointHereToolStripMenuItem.Text = "Insert Route Point Here";
+            this.insertRoutePointHereToolStripMenuItem.Click += new System.EventHandler(this.insertRoutePointHereToolStripMenuItem_Click);
             // 
             // deleteRoutePointToolStripMenuItem1
             // 
             this.deleteRoutePointToolStripMenuItem1.Name = "deleteRoutePointToolStripMenuItem1";
-            this.deleteRoutePointToolStripMenuItem1.Size = new System.Drawing.Size(189, 22);
+            this.deleteRoutePointToolStripMenuItem1.Size = new System.Drawing.Size(196, 22);
             this.deleteRoutePointToolStripMenuItem1.Text = "Delete Route Point";
             this.deleteRoutePointToolStripMenuItem1.Click += new System.EventHandler(this.deleteRoutePointToolStripMenuItem1_Click);
             // 
             // duplicateRoutePointToolStripMenuItem
             // 
             this.duplicateRoutePointToolStripMenuItem.Name = "duplicateRoutePointToolStripMenuItem";
-            this.duplicateRoutePointToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
+            this.duplicateRoutePointToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
             this.duplicateRoutePointToolStripMenuItem.Text = "Duplicate Route Point";
             this.duplicateRoutePointToolStripMenuItem.Click += new System.EventHandler(this.duplicateRoutePointToolStripMenuItem_Click);
             // 
             // selectAllInGroupsToolStripMenuItem
             // 
             this.selectAllInGroupsToolStripMenuItem.Name = "selectAllInGroupsToolStripMenuItem";
-            this.selectAllInGroupsToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
+            this.selectAllInGroupsToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
             this.selectAllInGroupsToolStripMenuItem.Text = "Select All In Group";
             this.selectAllInGroupsToolStripMenuItem.Click += new System.EventHandler(this.selectAllInGroupsToolStripMenuItem_Click);
             // 
@@ -1562,12 +1575,14 @@ namespace DouBOLDash
             this.selectAllInGroupToolStripMenuItem1.Text = "Select All In Group";
             this.selectAllInGroupToolStripMenuItem1.Click += new System.EventHandler(this.selectAllInGroupToolStripMenuItem1_Click);
             // 
-            // insertRoutePointHereToolStripMenuItem
+            // newToolStripMenuItem
             // 
-            this.insertRoutePointHereToolStripMenuItem.Name = "insertRoutePointHereToolStripMenuItem";
-            this.insertRoutePointHereToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
-            this.insertRoutePointHereToolStripMenuItem.Text = "Insert Route Point Here";
-            this.insertRoutePointHereToolStripMenuItem.Click += new System.EventHandler(this.insertRoutePointHereToolStripMenuItem_Click);
+            this.newToolStripMenuItem.Name = "newToolStripMenuItem";
+            this.newToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
+            this.newToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
+            this.newToolStripMenuItem.Text = "New";
+            this.newToolStripMenuItem.ToolTipText = "Creates a blank track.";
+            this.newToolStripMenuItem.Click += new System.EventHandler(this.newToolStripMenuItem_Click);
             // 
             // MainWindow
             // 
@@ -1764,6 +1779,7 @@ namespace DouBOLDash
         private System.Windows.Forms.ToolStripMenuItem deleteRouteGroupToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem selectAllInGroupToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem insertRoutePointHereToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem newToolStripMenuItem;
     }
 }
 

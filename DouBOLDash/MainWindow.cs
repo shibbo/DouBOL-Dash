@@ -18,6 +18,7 @@ using System.Windows.Forms;
 using System.IO;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
+using System.ComponentModel;
 
 namespace DouBOLDash
 {
@@ -356,7 +357,6 @@ namespace DouBOLDash
                 else
                     MessageBox.Show("The minimap file (" + bti_path + ".bti) doesn't exist.");
 
-
                 // generate the list that the course model will be rendered in
                 // try to find the course model in the same folder the BLO was opened in
                 // if it's not there, show an error andset it to null to avoid crashing
@@ -389,8 +389,7 @@ namespace DouBOLDash
                 GL.EndList();
 
                 BuildScene();
-
-                }
+            }
         }
 
         public void BuildScene()
@@ -424,7 +423,7 @@ namespace DouBOLDash
             UpdateCameras(false);
             UpdateRespawns(false);
 
-            loadingLabel.Text = "Ready!";
+            ChangeText("Ready!");
         }
 
         private void glControl1_Load(object sender, EventArgs e)
@@ -681,6 +680,8 @@ namespace DouBOLDash
             GL.Color4(1f, 1f, 1f, 1f);
 
             glControl1.SwapBuffers();
+
+            UpdateCamera();
         }
 
         private void chooseFolderToolStripMenuItem_Click(object sender, EventArgs e)
@@ -987,6 +988,117 @@ namespace DouBOLDash
                 selectionInfo.Text = "Currently selected: Camera at (" + camObj.xView1 + ", " + camObj.yView1 + ", " + camObj.zView1 + ") (Route ID: " + camObj.routeID + ") with name " + camObj.name + ".";
                 glControl1.Refresh();
             }
+        }
+        
+        // function that gets all of the data needed for a new track
+        private void initNewTrack()
+        {
+            string[] courseModels = getCourseModels();
+            string collisionModel = getCollisionModel();
+            string[] miscFiles = getMiscFiles();
+
+            if (courseModels == null || collisionModel == "")
+            {
+                MessageBox.Show("New course creation failed.");
+                return;
+            }
+
+            MessageBox.Show("You will now be asked to enter an internal track name to reference your track with. The program will then make a folder with this name in your game directory. The program will also add the files you chose earlier.");
+
+            TrackNameBox trackName = new TrackNameBox();
+            trackName.ShowDialog();
+
+            string name = trackName.textBox1.Text;
+
+            if (!Directory.Exists(Properties.Settings.Default.envDir + "/Course/" + name))
+            {
+                Directory.CreateDirectory(Properties.Settings.Default.envDir + "/Course/" + name);
+                Directory.CreateDirectory(Properties.Settings.Default.envDir + "/Course/" + name + "/objects");
+            }
+            else
+            {
+                MessageBox.Show("Folder " + Properties.Settings.Default.envDir + "/Course/" + name + " already exists!");
+                return;
+            }
+
+            foreach (string s in courseModels)
+            {
+                string fileName = Path.GetFileName(s);
+                File.Copy(s, Properties.Settings.Default.envDir + "/Course/" + name + "/" + fileName, true);
+            }
+
+            string colfileName = Path.GetFileName(collisionModel);
+            File.Copy(collisionModel, Properties.Settings.Default.envDir + "/Course/" + colfileName, true);
+
+            foreach (string s in miscFiles)
+            {
+                string fileName = Path.GetFileName(s);
+                File.Copy(s, Properties.Settings.Default.envDir + "/Course/" + name + "/objects/" + fileName, true);
+            }
+
+
+        }
+
+        private string[] getCourseModels()
+        {
+            DialogResult result = MessageBox.Show("Please select the track model and the sky model you will be using.", "Select Track Model", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
+
+            if (result == DialogResult.OK)
+            {
+                OpenFileDialog courseModelDialog = new OpenFileDialog();
+                courseModelDialog.Multiselect = true;
+                courseModelDialog.Filter = "Model files (*.bmd)|*.bmd|All files (*.*)|*.*";
+
+                if (courseModelDialog.ShowDialog() == DialogResult.OK && courseModelDialog.FileNames.Length == 2)
+                {
+                    return courseModelDialog.FileNames;
+                }
+                else
+                    return null;
+            }
+            else
+                return null;
+        }
+
+        private string getCollisionModel()
+        {
+            DialogResult result = MessageBox.Show("Please select the collision model you will be using.", "Select Collision Model", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
+
+            if (result == DialogResult.OK)
+            {
+                OpenFileDialog courseCollisionDialog = new OpenFileDialog();
+                courseCollisionDialog.Filter = "Collision files (*.bco)|*.bco|All files (*.*)|*.*";
+
+                if (courseCollisionDialog.ShowDialog() == DialogResult.OK)
+                {
+                    return courseCollisionDialog.FileName;
+                }
+                else
+                    return "";
+            }
+            else
+                return "";
+        }
+
+        private string[] getMiscFiles()
+        {
+            DialogResult result = MessageBox.Show("If you would like to go ahead and add the needed files to the track in /objects, select 'Yes'. Otherwise, select 'No'.", "Select Misc Files", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+
+            if (result == DialogResult.Yes)
+            {
+                OpenFileDialog miscFilesDialog = new OpenFileDialog();
+                miscFilesDialog.Multiselect = true;
+                miscFilesDialog.Filter = "All files (*.*)|*.*";
+
+                if (miscFilesDialog.ShowDialog() == DialogResult.OK)
+                {
+                    return miscFilesDialog.FileNames;
+                }
+                else
+                    return null;
+            }
+            else
+                return null;
         }
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1400,6 +1512,11 @@ namespace DouBOLDash
         private void propertyGrid3_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
         {
             UpdateObjects(true);
+        }
+
+        public void ChangeText(string text)
+        {
+            loadingLabel.Text = text;
         }
 
         private void bTIViewerToolStripMenuItem_Click(object sender, EventArgs e)
@@ -2013,6 +2130,11 @@ namespace DouBOLDash
             UpdateRespawns(true);
         }
 
+        private void newToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            initNewTrack();
+        }
+
         public void UpdateEnemyPoints(bool isUpdate)
         {
             GL.DeleteLists(selectedList, 1);
@@ -2336,10 +2458,15 @@ namespace DouBOLDash
 
             objectList = GL.GenLists(1);
             GL.NewList(objectList, ListMode.Compile);
+
             foreach (LevelObject objEntry in lvlobj)
             {
                 objList.Items.Add(objEntry);
-                loadingLabel.Text = "Loading object " + objEntry.objID;
+
+                this.Invoke((Action)delegate()
+                {
+                    ChangeText("Loading object " + objEntry.objID);
+                });
 
                 // get the new model name
                 MiscHacks misc = new MiscHacks();
@@ -2367,6 +2494,8 @@ namespace DouBOLDash
                             DrawBMD(obj);
                             objModelList.Add(objEntry.modelName, obj);
                         }
+
+                        objFB.Close();
                     }
                 }
                 else
@@ -2376,6 +2505,7 @@ namespace DouBOLDash
                 }
                 GL.PopMatrix();
             }
+
             GL.EndList();
         }
 

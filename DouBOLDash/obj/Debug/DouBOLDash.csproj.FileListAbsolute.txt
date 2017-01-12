@@ -63,3 +63,4 @@ C:\Users\m\DouBOL-Dash\DouBOLDash\obj\Debug\DouBOLDash.csproj.GenerateResource.C
 C:\Users\m\DouBOL-Dash\DouBOLDash\obj\Debug\DouBOLDash.BCOEditor.resources
 C:\Users\m\DouBOL-Dash\DouBOLDash\obj\Debug\DouBOLDash.AboutBox.resources
 C:\Users\m\DouBOL-Dash\DouBOLDash\obj\Debug\DouBOLDash.UpdateForm.resources
+C:\Users\m\DouBOL-Dash\DouBOLDash\obj\Debug\DouBOLDash.TrackNameBox.resources
